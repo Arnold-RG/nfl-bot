@@ -1,0 +1,53 @@
+# Codemagic — build NFL BOT for iPhone and upload to TestFlight / App Store.
+# Docs: https://docs.codemagic.io/yaml-quick-start/building-a-flutter-app/
+#
+# Before first build:
+# 1. Apple Developer Program enrolled
+# 2. App Store Connect app created (Bundle ID com.nfbot.nfbotApp)
+# 3. App Store Connect API key added in Codemagic → Team → Integrations → Developer Portal
+# 4. Replace ASC_KEY_NAME below with your Codemagic integration key name
+# 5. Push this repo to GitHub/GitLab and connect it in Codemagic
+
+workflows:
+  ios-testflight:
+    name: NFL BOT — iOS TestFlight
+    instance_type: mac_mini_m2
+    max_build_duration: 120
+    integrations:
+      # Exact name of the API key you saved in Codemagic Developer Portal integration
+      app_store_connect: NFLBOT_ASC
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.nfbot.nfbotApp
+      vars:
+        BUNDLE_ID: com.nfbot.nfbotApp
+        APP_STORE_APPLE_ID: REPLACE_WITH_NUMERIC_APPLE_ID
+    scripts:
+      - name: Get Flutter packages
+        script: |
+          flutter pub get
+      - name: Install CocoaPods
+        script: |
+          cd ios && pod install
+      - name: Set up code signing
+        script: |
+          xcode-project use-profiles
+      - name: Flutter build IPA
+        script: |
+          # Build number: use Codemagic build counter (simple + reliable)
+          flutter build ipa --release \
+            --build-name=1.0.$PROJECT_BUILD_NUMBER \
+            --build-number=$PROJECT_BUILD_NUMBER
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true
+        # After listing is complete, you can enable:
+        # submit_to_app_store: true
