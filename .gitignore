@@ -1,0 +1,76 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.build/
+.buildlog/
+.history
+.svn/
+.swiftpm/
+migrate_working_dir/
+
+# IntelliJ / Android Studio
+*.iml
+*.ipr
+*.iws
+.idea/
+.vscode/
+*.code-workspace
+
+# Flutter/Dart/Pub
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub-cache/
+.pub/
+/build/
+/coverage/
+.packages
+
+# Symbolication / obfuscation
+app.*.symbols
+app.*.map.json
+
+# Android build outputs
+/android/app/debug
+/android/app/profile
+/android/app/release
+/android/.gradle/
+/android/local.properties
+
+# Play Store / signing secrets — NEVER commit
+/android/key.properties
+/android/*.jks
+/android/*.keystore
+*.jks
+*.keystore
+*.p8
+*.p12
+NFLBOT_*BACKUP*
+*KEY_BACKUP*
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+**/secrets/
+credentials.json
+google-services.json
+GoogleService-Info.plist
+
+# Backend
+backend/.venv/
+backend/**/__pycache__/
+**/__pycache__/
+
+# OS
+Thumbs.db
+Desktop.ini
+
+/android/build/
+
