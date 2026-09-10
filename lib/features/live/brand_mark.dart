@@ -5,11 +5,7 @@ import 'package:flutter/material.dart';
 import '../../config/app_theme.dart';
 import '../../features/home/presentation/widgets/components/ai_voice_orb.dart';
 
-class BrandMark {
-  static const asset = 'assets/branding/ai-voice.png';
-}
-
-/// Photoreal mic portrait with live listening / speaking rings.
+/// Mic orb with live listening / speaking rings.
 class VoiceArtwork extends StatefulWidget {
   final double size;
   final double pulse;
@@ -127,12 +123,24 @@ class _VoiceArtworkState extends State<VoiceArtwork>
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Image.asset(
-                      BrandMark.asset,
-                      fit: BoxFit.cover,
-                      filterQuality: FilterQuality.high,
+                    DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: RadialGradient(
+                          colors: [
+                            _accent.withValues(alpha: 0.45),
+                            AppTheme.navy,
+                          ],
+                          stops: const [0.15, 1],
+                        ),
+                      ),
                     ),
-                    // Subtle vignette so the photo reads as a polished orb.
+                    Center(
+                      child: Icon(
+                        Icons.mic,
+                        size: widget.size * 0.42,
+                        color: Colors.white.withValues(alpha: 0.92),
+                      ),
+                    ),
                     DecoratedBox(
                       decoration: BoxDecoration(
                         gradient: RadialGradient(
@@ -144,7 +152,6 @@ class _VoiceArtworkState extends State<VoiceArtwork>
                         ),
                       ),
                     ),
-                    // Live specular flash when speaking / listening.
                     if (live)
                       Align(
                         alignment: const Alignment(-0.35, -0.45),

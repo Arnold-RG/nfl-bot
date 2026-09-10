@@ -39,7 +39,7 @@
     <application
         android:label="NFL BOT"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_launcher_foreground"
         android:enableOnBackInvokedCallback="true">
         <activity
             android:name=".MainActivity"

@@ -1,46 +1,19 @@
-<p align="center">
-  <img src="assets/branding/ai-voice.png" alt="NFL BOT Glass AI Stage microphone" width="180" />
-</p>
+# NFL BOT
 
-<h1 align="center">NFL BOT</h1>
-<p align="center"><strong>AI Health Coach · Glass AI Stage</strong></p>
+**AI Health Coach**
 
-<p align="center">
-  One app for movement, training, nutrition, recovery — and a live AI coach that answers<br/>
-  <em>“Given everything about me today, what should I do next?”</em>
-</p>
+One app for movement, training, nutrition, recovery — and a live AI coach that answers  
+*“Given everything about me today, what should I do next?”*
 
-<p align="center">
-  <a href="https://github.com/Arnold-RG/nfl-bot/actions/workflows/ci.yml"><img src="https://github.com/Arnold-RG/nfl-bot/actions/workflows/ci.yml/badge.svg" alt="CI" /></a>
-  <img src="https://img.shields.io/badge/Flutter-stable-02569B?logo=flutter&logoColor=white" alt="Flutter" />
-  <img src="https://img.shields.io/badge/Android-Play%20ready-3DDC84?logo=android&logoColor=white" alt="Android" />
-  <img src="https://img.shields.io/badge/iOS-Codemagic%20ready-000000?logo=apple&logoColor=white" alt="iOS" />
-  <img src="https://img.shields.io/badge/Backend-FastAPI-009688?logo=fastapi&logoColor=white" alt="FastAPI" />
-  <img src="https://img.shields.io/badge/License-Source%20Available-blue" alt="License" />
-</p>
+[CI](https://github.com/Arnold-RG/nfl-bot/actions/workflows/ci.yml) · Flutter · Android · iOS · FastAPI · Source Available
 
-<p align="center">
-  <a href="#-glass-ai-stage">Product</a> ·
-  <a href="#-features">Features</a> ·
-  <a href="#-architecture">Architecture</a> ·
-  <a href="#-quick-start">Quick start</a> ·
-  <a href="#-documentation">Docs</a> ·
-  <a href="#-roadmap">Roadmap</a>
-</p>
+[Features](#-features) ·
+[Architecture](#-architecture) ·
+[Quick start](#-quick-start) ·
+[Docs](#-documentation) ·
+[Roadmap](#-roadmap)
 
 ---
-
-## ✨ Glass AI Stage
-
-The signature experience: a **photoreal live mic** inside a frosted glass interface — readiness, steps, protein, and training status orbit the coach.
-
-<p align="center">
-  <img src="docs/screenshots/nflbot-concept-c-glass-ai-stage.png" alt="Glass AI Stage UI concept" width="320" />
-</p>
-
-| Home — Glass Stage | Train — Volt command | Daylight activity |
-|:---:|:---:|:---:|
-| <img src="docs/screenshots/nflbot-concept-c-glass-ai-stage.png" width="220" alt="Glass AI" /> | <img src="docs/screenshots/nflbot-concept-d-volt-command.png" width="220" alt="Train" /> | <img src="docs/screenshots/nflbot-concept-b-kinetic-daylight.png" width="220" alt="Activity" /> |
 
 > **Wellness only** — NFL BOT provides fitness guidance and is **not** a medical device or substitute for clinical care.  
 > Trademark note: validate commercial use of “NFL” naming before store launch.
@@ -51,7 +24,7 @@ The signature experience: a **photoreal live mic** inside a frosted glass interf
 
 | Module | Highlights |
 |--------|------------|
-| **🏠 Home** | Glassmorphism dashboard, live mic orb, Health / Steps / Protein / Recovery cards |
+| **🏠 Home** | Dashboard with live coach orb, Health / Steps / Protein / Recovery cards |
 | **🏋️ Train** | Dark progressive-overload UI, milestones, muscle recovery, workout sessions |
 | **🍽 Nutrition** | Macros, meal logging, AI food camera estimates (editable before save) |
 | **📈 Track** | Progress, streaks, challenges |
@@ -100,12 +73,12 @@ Wake → health context → AI status → eat / train / move → recovery update
 
 ```text
 nfl-bot/
-├── lib/                 # Flutter app (Glass Stage, Train, Nutrition, Coach…)
+├── lib/                 # Flutter app (Home, Train, Nutrition, Coach…)
 ├── android/ · ios/      # Native shells (Play / App Store ready)
-├── assets/branding/     # Live mic artwork
+├── assets/data/         # Seed / sample data
 ├── backend/             # FastAPI Health Data Platform stubs
 ├── creator_soc/         # Separate creator ops UI
-├── docs/                # Blueprint, architecture, store guides, screenshots
+├── docs/                # Blueprint, architecture, store guides
 ├── test/                # Unit tests
 ├── web/                 # PWA / web entry
 └── .github/workflows/   # CI
@@ -172,7 +145,6 @@ flutter build appbundle --release
 
 ## 🛣 Roadmap
 
-- [x] Glass AI Stage home experience  
 - [x] Unified Health Data Platform + AI orchestrator  
 - [x] Train / Nutrition / Coach / Progress shells  
 - [x] Android signed App Bundle pipeline  
