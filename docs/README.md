@@ -19,10 +19,6 @@ Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arn
 | [APP_STORE_LISTING_DRAFT.md](APP_STORE_LISTING_DRAFT.md) | Apple listing copy |
 | [EMERGENT_APP_STORE.md](EMERGENT_APP_STORE.md) | Why Emergent ≠ this Flutter repo |
 
-## Design
-
-UI direction concepts (including **Glass AI Stage**): [`screenshots/`](screenshots/)
-
 ## Legal starter
 
 - [privacy_policy.html](privacy_policy.html) — host on HTTPS before store review; replace contact email
