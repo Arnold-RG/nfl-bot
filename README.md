@@ -38,10 +38,6 @@ The signature experience: a **photoreal live mic** inside a frosted glass interf
   <img src="docs/screenshots/nflbot-concept-c-glass-ai-stage.png" alt="Glass AI Stage UI concept" width="320" />
 </p>
 
-| Home — Glass Stage | Train — Volt command | Daylight activity |
-|:---:|:---:|:---:|
-| <img src="docs/screenshots/nflbot-concept-c-glass-ai-stage.png" width="220" alt="Glass AI" /> | <img src="docs/screenshots/nflbot-concept-d-volt-command.png" width="220" alt="Train" /> | <img src="docs/screenshots/nflbot-concept-b-kinetic-daylight.png" width="220" alt="Activity" /> |
-
 > **Wellness only** — NFL BOT provides fitness guidance and is **not** a medical device or substitute for clinical care.  
 > Trademark note: validate commercial use of “NFL” naming before store launch.
 
