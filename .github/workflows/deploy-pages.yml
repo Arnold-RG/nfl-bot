@@ -29,8 +29,11 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
+      - name: Stub local secrets for public build
+        run: cp lib/config/local_secrets.example.dart lib/config/local_secrets.dart
+
       - name: Build Flutter web
-        run: flutter build web --release --base-href /nfl-bot/app/
+        run: flutter build web --release --base-href /nfl-bot/app/ --no-wasm-dry-run
 
       - name: Assemble Pages site
         run: |
