@@ -70,7 +70,7 @@ class _LiveStageScreenState extends State<LiveStageScreen> {
               VoiceOrbState.thinking => copy.t('thinking'),
               VoiceOrbState.speaking => copy.t('speaking'),
               VoiceOrbState.idle =>
-                _session.isActive ? copy.t('handsFree') : 'Tap the mic to talk',
+                _session.isActive ? copy.t('handsFree') : 'Say “hey bot” or tap Bot',
             };
             final spoken = _session.liveTranscript.isNotEmpty
                 ? _session.liveTranscript
@@ -127,15 +127,19 @@ class _LiveStageScreenState extends State<LiveStageScreen> {
                             child: GestureDetector(
                               onTap: _session.toggle,
                               child: VoiceArtwork(
-                                size: 148,
+                                size: 240,
                                 pulse: voice.amplitude,
                                 state: voice.state,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 14),
+                          const SizedBox(height: 10),
                           Text(
-                            status,
+                            _session.awaitingWake && !_session.isActive
+                                ? 'Say “hey bot” or tap Bot'
+                                : (_session.awaitingWake
+                                    ? 'Listening for “hey bot”…'
+                                    : status),
                             textAlign: TextAlign.center,
                             style: theme.textTheme.titleSmall,
                           ),

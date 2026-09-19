@@ -1,9 +1,8 @@
 /// The two selectable synthetic voices. There is no human likeness — the
-/// coach is presented as an AI, and the choice only changes how it sounds.
+/// coach is presented as an AI named Bot.
 enum CoachVoice { nova, atlas }
 
-/// The coach's current disposition. Drives the voice orb's colour and energy
-/// and the tone of on-device replies.
+/// The coach's current disposition.
 enum CoachMood { neutral, focused, encouraging, celebrating, concerned, alert }
 
 class CoachPersona {
@@ -19,26 +18,49 @@ class CoachPersona {
     required this.greeting,
   });
 
+  /// Wake phrase users say to activate Bot.
+  static const wakePhrase = 'hey bot';
+
   static const nova = CoachPersona(
     voice: CoachVoice.nova,
-    name: 'NOVA',
-    tagline: 'Recovery & endurance AI',
+    name: 'Bot',
+    tagline: 'Your AI coach — say “hey bot” to start',
     greeting:
-        'I am here. Talk the way you would talk to a coach on a call — food, '
-        'training, sleep, whatever is in front of you.',
+        'I am Bot. Say hey bot anytime you want me. Ask about food, training, '
+        'or recovery — I answer from your data when you have logged it.',
   );
 
   static const atlas = CoachPersona(
     voice: CoachVoice.atlas,
-    name: 'ATLAS',
-    tagline: 'Strength & conditioning AI',
+    name: 'Bot',
+    tagline: 'Your AI coach — say “hey bot” to start',
     greeting:
-        'Ready when you are. Tell me what you ate, how you slept, or whether '
-        'you should train. I will answer out loud.',
+        'Bot here. Say hey bot to wake me. Tell me what you need — I stay '
+        'quiet until you call.',
   );
 
   static CoachPersona forVoice(CoachVoice voice) =>
       voice == CoachVoice.nova ? nova : atlas;
 
   static const all = [nova, atlas];
+
+  /// True when [text] contains the wake phrase (case-insensitive).
+  static bool heardWakePhrase(String text) {
+    final t = text
+        .toLowerCase()
+        .replaceAll(RegExp(r'[^a-z0-9 ]'), ' ')
+        .replaceAll(RegExp(r'\s+'), ' ')
+        .trim();
+    return t.contains('hey bot');
+  }
+
+  /// Strip wake phrase from the start of a transcript.
+  static String stripWakePhrase(String text) {
+    return text
+        .replaceFirst(
+          RegExp(r'^\s*hey[\s,.-]*bot[\s,.-]*', caseSensitive: false),
+          '',
+        )
+        .trim();
+  }
 }

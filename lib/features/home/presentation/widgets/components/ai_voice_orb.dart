@@ -7,7 +7,7 @@ enum VoiceOrbState { idle, listening, thinking, speaking }
 
 extension VoiceOrbStateLabel on VoiceOrbState {
   String get label => switch (this) {
-    VoiceOrbState.idle => 'Tap to talk',
+    VoiceOrbState.idle => 'Say hey bot',
     VoiceOrbState.listening => 'Listening',
     VoiceOrbState.thinking => 'Thinking',
     VoiceOrbState.speaking => 'Speaking',
@@ -29,28 +29,28 @@ class _OrbPalette {
   });
 
   static const _idle = _OrbPalette(
-    core: Color(0xFF2F6BFF),
-    spike: Color(0xFF3D7BFF),
-    accent: Color(0xFF7C4DFF),
-    rim: Color(0xFF6C4BFF),
+    core: Color(0xFFC4A484),
+    spike: Color(0xFFD4A574),
+    accent: Color(0xFFA67C52),
+    rim: Color(0xFFB8956A),
   );
   static const _listening = _OrbPalette(
-    core: Color(0xFF00E5FF),
-    spike: Color(0xFF22D3EE),
-    accent: Color(0xFF2F6BFF),
-    rim: Color(0xFF00E5FF),
+    core: Color(0xFFD4A574),
+    spike: Color(0xFFE8C9A0),
+    accent: Color(0xFFC4A484),
+    rim: Color(0xFFD4A574),
   );
   static const _thinking = _OrbPalette(
-    core: Color(0xFF7C4DFF),
-    spike: Color(0xFF8B5CF6),
-    accent: Color(0xFFE040FB),
-    rim: Color(0xFF9A6BFF),
+    core: Color(0xFFA67C52),
+    spike: Color(0xFFC4A484),
+    accent: Color(0xFFD4A574),
+    rim: Color(0xFFB8956A),
   );
   static const _speaking = _OrbPalette(
-    core: Color(0xFF4FA8FF),
-    spike: Color(0xFF4FA8FF),
-    accent: Color(0xFFFF2D9B),
-    rim: Color(0xFFFF2D9B),
+    core: Color(0xFFE8C9A0),
+    spike: Color(0xFFD4A574),
+    accent: Color(0xFFFFF3C4),
+    rim: Color(0xFFC4A484),
   );
 
   static _OrbPalette of(VoiceOrbState state) => switch (state) {

@@ -27,6 +27,7 @@ class PreferencesService {
   static const _keyFastingProtocol = 'fasting_protocol';
   static const _keyFastingStarted = 'fasting_started_ms';
   static const _keyCustomFastHours = 'custom_fast_hours';
+  static const _keyQuietHours = 'quiet_hours';
 
   late SharedPreferences _prefs;
 
@@ -60,6 +61,10 @@ class PreferencesService {
 
   bool get voiceEnabled => _prefs.getBool(_keyVoiceEnabled) ?? true;
   Future<void> setVoiceEnabled(bool v) => _prefs.setBool(_keyVoiceEnabled, v);
+
+  /// When on, Bot will not initiate after 21:00 (user can still wake him).
+  bool get quietHours => _prefs.getBool(_keyQuietHours) ?? false;
+  Future<void> setQuietHours(bool v) => _prefs.setBool(_keyQuietHours, v);
 
   String get userName => _prefs.getString(_keyUserName) ?? 'Alex';
   Future<void> setUserName(String name) => _prefs.setString(_keyUserName, name);

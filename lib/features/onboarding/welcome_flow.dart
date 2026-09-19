@@ -103,7 +103,7 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
       'Connect health',
     ];
     final subs = [
-      'NFL BOT is your AI Health Coach — talk the way you talk to ChatGPT.',
+      'Bot is your AI Health Coach — say “hey bot” anytime.',
       'Country sets language and currency. You can change them later.',
       'These numbers set calories and protein so the coach is not guessing.',
       'Pick the outcome you want this season.',

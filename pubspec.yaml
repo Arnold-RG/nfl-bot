@@ -27,6 +27,9 @@ dependencies:
   shared_preferences: ^2.3.0
   permission_handler: ^11.3.1
   audioplayers: ^6.1.0
+  geolocator: ^14.0.2
+  flutter_map: ^8.3.2
+  latlong2: ^0.10.1
 
 dev_dependencies:
   flutter_test:
@@ -38,3 +41,5 @@ flutter:
   assets:
     - assets/data/
     - assets/branding/ai-voice.png
+    - assets/branding/bot.jpg
+    - assets/branding/bot.png

@@ -1,23 +1,25 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 import '../../config/app_theme.dart';
-import '../../core/engines/activity_engine.dart';
-import '../../core/providers/app_state.dart';
-import '../../core/utils/pairing_link.dart';
+import '../../core/models/coach_persona.dart';
+import '../account/account_screen.dart';
+import '../activity/map_track_screen.dart';
 import '../coach/coach_hub_screen.dart';
-import '../home/glass_stage_screen.dart';
+import '../home/fuel_home_screen.dart';
+import '../live/live_bot_character.dart';
 import '../nutrition/nutrition_screen.dart';
 import '../plate/plate_screen.dart';
 import '../progress/progress_hub_screen.dart';
+import '../home/presentation/widgets/components/ai_voice_orb.dart';
+import '../shared/nf_design.dart';
 import '../train/train_screen.dart';
+import '../train/workout_anatomy_screen.dart';
+import '../wellness/extras_screens.dart';
+import '../wellness/progress_photos_screen.dart';
+import '../wellness/water_screen.dart';
 
-/// Glass AI Stage shell — Concept C frosted dock.
-///
-/// Page indices: 0 Home · 1 Train · 2 Track · 3 Coach
-/// Nav slot 2 is the Add action (does not switch pages).
+/// Adaptive shell: Today · Diary · Add · Bot · You
 class NflBotShell extends StatefulWidget {
   const NflBotShell({super.key});
 
@@ -26,13 +28,7 @@ class NflBotShell extends StatefulWidget {
 }
 
 class _NflBotShellState extends State<NflBotShell> {
-  late int _index;
-
-  @override
-  void initState() {
-    super.initState();
-    _index = PairingLink.fromCurrentLocation() != null ? 1 : 0;
-  }
+  int _index = 0;
 
   int get _navIndex {
     if (_index <= 1) return _index;
@@ -41,8 +37,11 @@ class _NflBotShellState extends State<NflBotShell> {
   }
 
   void _selectNav(int i) {
+    HapticFeedback.selectionClick();
     if (i == 2) {
-      _openAdd();
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const PlateScreen()),
+      );
       return;
     }
     setState(() {
@@ -56,154 +55,334 @@ class _NflBotShellState extends State<NflBotShell> {
     });
   }
 
-  void _openFromGlass(int legacyTab) {
-    // GlassStage still speaks legacy: 1 Train, 2 Nutrition, 3 Progress, 4 Coach
-    switch (legacyTab) {
-      case 1:
-        setState(() => _index = 1);
-      case 2:
-        Navigator.of(context).push(
-          MaterialPageRoute(builder: (_) => const NutritionScreen()),
-        );
-      case 3:
-        setState(() => _index = 2);
-      case 4:
-        setState(() => _index = 3);
-      default:
-        setState(() => _index = 0);
-    }
-  }
+  @override
+  Widget build(BuildContext context) {
+    final wide = NfLayout.isWide(context);
+    final pages = [
+      FuelHomeScreen(
+        onOpenDiary: () => setState(() => _index = 1),
+        onOpenBody: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => const ProgressScreen()),
+          );
+        },
+        onOpenBot: () => setState(() => _index = 2),
+      ),
+      const NutritionScreen(),
+      const CoachHubScreen(),
+      const _YouHub(),
+    ];
 
-  void _openAdd() {
-    final state = context.read<AppState>();
-    showModalBottomSheet<void>(
-      context: context,
-      backgroundColor: const Color(0xFF12181F),
-      showDragHandle: true,
-      builder: (ctx) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.restaurant_outlined,
-                  color: AppTheme.electric),
-              title: const Text('Log food',
-                  style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pop(ctx);
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const NutritionScreen()),
-                );
-              },
+    final nav = NavigationBar(
+      selectedIndex: _navIndex,
+      onDestinationSelected: _selectNav,
+      destinations: [
+        const NavigationDestination(
+          icon: Icon(Icons.home_outlined),
+          selectedIcon: Icon(Icons.home_rounded),
+          label: 'Today',
+        ),
+        const NavigationDestination(
+          icon: Icon(Icons.menu_book_outlined),
+          selectedIcon: Icon(Icons.menu_book_rounded),
+          label: 'Diary',
+        ),
+        const NavigationDestination(
+          icon: Icon(Icons.add_circle_outline),
+          selectedIcon: Icon(Icons.add_circle),
+          label: 'Add',
+        ),
+        NavigationDestination(
+          icon: SizedBox(
+            width: 28,
+            height: 28,
+            child: LiveBotCharacter(
+              size: 26,
+              showGlow: false,
+              state: _navIndex == 3
+                  ? VoiceOrbState.listening
+                  : VoiceOrbState.idle,
             ),
-            ListTile(
-              leading: const Icon(Icons.directions_walk_rounded,
-                  color: AppTheme.electric),
-              title: const Text('Log walk',
-                  style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pop(ctx);
-                state.logActivity(
-                  type: ActivityType.walk,
-                  minutes: 20,
-                  steps: 2200,
-                );
-              },
+          ),
+          selectedIcon: SizedBox(
+            width: 30,
+            height: 30,
+            child: LiveBotCharacter(
+              size: 28,
+              showGlow: false,
+              state: VoiceOrbState.speaking,
+              pulse: 0.4,
             ),
-            ListTile(
-              leading: const Icon(Icons.fitness_center_rounded,
-                  color: AppTheme.gravlVolt),
-              title: const Text('Start workout',
-                  style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pop(ctx);
-                setState(() => _index = 1);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.photo_camera_outlined,
-                  color: AppTheme.electric),
-              title: const Text('Scan meal',
-                  style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.pop(ctx);
-                Navigator.of(context).push(
-                  MaterialPageRoute(builder: (_) => const PlateScreen()),
-                );
-              },
-            ),
-          ],
+          ),
+          label: 'Bot',
+        ),
+        const NavigationDestination(
+          icon: Icon(Icons.person_outline),
+          selectedIcon: Icon(Icons.person_rounded),
+          label: 'You',
+        ),
+      ],
+    );
+
+    return Theme(
+      data: AppTheme.darkTheme,
+      child: Scaffold(
+        backgroundColor: AppTheme.labBg,
+        body: wide
+            ? Row(
+                children: [
+                  NavigationRail(
+                    selectedIndex: switch (_navIndex) {
+                      0 => 0,
+                      1 => 1,
+                      3 => 2,
+                      _ => 3,
+                    },
+                    onDestinationSelected: (i) {
+                      final map = [0, 1, 3, 4];
+                      _selectNav(map[i.clamp(0, 3)]);
+                    },
+                    backgroundColor: AppTheme.labLift,
+                    indicatorColor: AppTheme.bronze.withValues(alpha: 0.2),
+                    labelType: NavigationRailLabelType.all,
+                    destinations: const [
+                      NavigationRailDestination(
+                        icon: Icon(Icons.home_outlined),
+                        selectedIcon: Icon(Icons.home_rounded),
+                        label: Text('Today'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.menu_book_outlined),
+                        selectedIcon: Icon(Icons.menu_book_rounded),
+                        label: Text('Diary'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.smart_toy_outlined),
+                        selectedIcon: Icon(Icons.smart_toy_rounded),
+                        label: Text('Bot'),
+                      ),
+                      NavigationRailDestination(
+                        icon: Icon(Icons.person_outline),
+                        selectedIcon: Icon(Icons.person_rounded),
+                        label: Text('You'),
+                      ),
+                    ],
+                  ),
+                  const VerticalDivider(width: 1, color: AppTheme.labBorder),
+                  Expanded(
+                    child: IndexedStack(index: _index, children: pages),
+                  ),
+                ],
+              )
+            : IndexedStack(index: _index, children: pages),
+        bottomNavigationBar: wide ? null : nav,
+        floatingActionButton: wide
+            ? FloatingActionButton.extended(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(builder: (_) => const PlateScreen()),
+                  );
+                },
+                backgroundColor: AppTheme.bronze,
+                foregroundColor: AppTheme.labBg,
+                icon: const Icon(Icons.add),
+                label: const Text('Scan meal'),
+              )
+            : null,
+      ),
+    );
+  }
+}
+
+class _YouHub extends StatelessWidget {
+  const _YouHub();
+
+  @override
+  Widget build(BuildContext context) {
+    final pad = NfLayout.pagePad(context);
+    return Scaffold(
+      backgroundColor: AppTheme.labBg,
+      body: NfAmbientBackdrop(
+        child: SafeArea(
+          child: ListView(
+            padding: EdgeInsets.fromLTRB(pad, 12, pad, 40),
+            children: [
+              Text(
+                'You',
+                style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                      color: AppTheme.labInk,
+                      fontWeight: FontWeight.w800,
+                    ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                'Account, vitals, training, and Bot.',
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+              const SizedBox(height: 16),
+              _tile(
+                context,
+                Icons.settings_outlined,
+                'Account',
+                'Preferences & privacy',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const AccountScreen()),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.monitor_heart_outlined,
+                'Readiness',
+                'Sleep · water · steps score',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ReadinessScreen()),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.mood_outlined,
+                'Mood check-in',
+                'Tell Bot how you feel',
+                () => MoodCheckSheet.show(context),
+              ),
+              _tile(
+                context,
+                Icons.notifications_active_outlined,
+                'Reminders',
+                'Water, meals, quiet hours',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const RemindersScreen()),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.photo_library_outlined,
+                'Progress photos',
+                'Check-in timeline',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const ProgressPhotosScreen(),
+                  ),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.insights_outlined,
+                'Weekly recap',
+                'Calories & streak overview',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const WeeklyRecapScreen()),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.water_drop_rounded,
+                'Water',
+                'Daily and workout hydration',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const WaterScreen()),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.map_rounded,
+                'Map & steps',
+                'GPS route + step tracking',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const MapTrackScreen()),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.fitness_center_rounded,
+                'Train',
+                'Workouts when you are ready',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const TrainScreen()),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.accessibility_new_rounded,
+                'Form demos',
+                'Human anatomy workout guides',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const WorkoutAnatomyScreen(),
+                  ),
+                ),
+              ),
+              _tile(
+                context,
+                Icons.monitor_weight_outlined,
+                'Body',
+                'Check-ins stay empty until you add them',
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const ProgressScreen()),
+                ),
+              ),
+              const SizedBox(height: 12),
+              NfGlassCard(
+                child: Text(
+                  'Wake Bot anytime by saying “${CoachPersona.wakePhrase}”. '
+                  'Bot never invents your numbers — only your logs count.',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: AppTheme.labInk,
+                      ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    final pages = [
-      GlassStageScreen(onOpenTab: _openFromGlass),
-      const TrainScreen(),
-      const ProgressScreen(),
-      const CoachHubScreen(),
-    ];
-
-    return Theme(
-      data: AppTheme.darkTheme,
-      child: Scaffold(
-        backgroundColor: const Color(0xFF05070D),
-        body: IndexedStack(index: _index, children: pages),
-        bottomNavigationBar: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(28),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 24, sigmaY: 24),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white.withValues(alpha: 0.08),
-                  borderRadius: BorderRadius.circular(28),
-                  border: Border.all(
-                    color: Colors.white.withValues(alpha: 0.14),
-                  ),
-                ),
-                child: NavigationBar(
-                  height: 68,
-                  backgroundColor: Colors.transparent,
-                  indicatorColor: AppTheme.electric.withValues(alpha: 0.22),
-                  selectedIndex: _navIndex,
-                  onDestinationSelected: _selectNav,
-                  destinations: const [
-                    NavigationDestination(
-                      icon: Icon(Icons.home_outlined),
-                      selectedIcon: Icon(Icons.home_rounded),
-                      label: 'Home',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.fitness_center_outlined),
-                      selectedIcon: Icon(Icons.fitness_center_rounded),
-                      label: 'Train',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.add_circle_outline),
-                      selectedIcon:
-                          Icon(Icons.add_circle, color: AppTheme.electric),
-                      label: 'Add',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.insights_outlined),
-                      selectedIcon: Icon(Icons.insights_rounded),
-                      label: 'Track',
-                    ),
-                    NavigationDestination(
-                      icon: Icon(Icons.graphic_eq_outlined),
-                      selectedIcon: Icon(Icons.graphic_eq_rounded),
-                      label: 'Coach',
-                    ),
-                  ],
-                ),
+  Widget _tile(
+    BuildContext context,
+    IconData icon,
+    String title,
+    String subtitle,
+    VoidCallback onTap,
+  ) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
+      child: NfGlassCard(
+        onTap: onTap,
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        child: Row(
+          children: [
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: AppTheme.bronze.withValues(alpha: 0.14),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(icon, color: AppTheme.bronzeSoft),
+            ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title, style: Theme.of(context).textTheme.titleSmall),
+                  Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
+                ],
               ),
             ),
-          ),
+            const Icon(Icons.chevron_right, color: AppTheme.labMuted),
+          ],
         ),
       ),
     );

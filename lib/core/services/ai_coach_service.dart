@@ -13,10 +13,12 @@ class AiCoachService {
 
   static const _anthropicUrl = 'https://api.anthropic.com/v1/messages';
   static const _openAiUrl = 'https://api.openai.com/v1/chat/completions';
+  static const _xaiUrl = 'https://api.x.ai/v1/chat/completions';
   static const _anthropicVersion = '2023-06-01';
 
   static const anthropicModel = 'claude-sonnet-4-20250514';
   static const openAiModel = 'gpt-4o-mini';
+  static const xaiModel = 'grok-4.6';
 
   final Dio _dio;
   final FlutterSecureStorage _storage;
@@ -49,7 +51,8 @@ class AiCoachService {
       final stored = await _storage.read(key: _keyProvider);
       _provider = AiProvider.values.firstWhere(
         (p) => p.name == stored,
-        orElse: () => _apiKey == null ? AiProvider.offline : AiProvider.anthropic,
+        orElse: () =>
+            _apiKey == null ? AiProvider.offline : AiProvider.anthropic,
       );
     } catch (e) {
       // Secure storage is unavailable on some desktop/web setups.
@@ -100,9 +103,25 @@ class AiCoachService {
     }
 
     try {
-      final text = _provider == AiProvider.anthropic
-          ? await _askAnthropic(userMessage, context, history)
-          : await _askOpenAi(userMessage, context, history);
+      final text = switch (_provider) {
+        AiProvider.anthropic =>
+          await _askAnthropic(userMessage, context, history),
+        AiProvider.openai => await _askOpenAiCompatible(
+            _openAiUrl,
+            openAiModel,
+            userMessage,
+            context,
+            history,
+          ),
+        AiProvider.xai => await _askOpenAiCompatible(
+            _xaiUrl,
+            xaiModel,
+            userMessage,
+            context,
+            history,
+          ),
+        AiProvider.offline => '',
+      };
 
       if (text.trim().isEmpty) {
         return _offlineReply(userMessage, context);
@@ -154,7 +173,10 @@ class AiCoachService {
         'system': _systemPrompt(context),
         'messages': [
           for (final turn in history)
-            {'role': turn.role == 'user' ? 'user' : 'assistant', 'content': turn.text},
+            {
+              'role': turn.role == 'user' ? 'user' : 'assistant',
+              'content': turn.text,
+            },
           {'role': 'user', 'content': userMessage},
         ],
       },
@@ -171,21 +193,26 @@ class AiCoachService {
     return '';
   }
 
-  Future<String> _askOpenAi(
+  Future<String> _askOpenAiCompatible(
+    String url,
+    String model,
     String userMessage,
     CoachContext context,
     List<({String role, String text})> history,
   ) async {
     final response = await _dio.post<Map<String, dynamic>>(
-      _openAiUrl,
+      url,
       options: Options(headers: {'Authorization': 'Bearer $_apiKey'}),
       data: {
-        'model': openAiModel,
+        'model': model,
         'max_tokens': 700,
         'messages': [
           {'role': 'system', 'content': _systemPrompt(context)},
           for (final turn in history)
-            {'role': turn.role == 'user' ? 'user' : 'assistant', 'content': turn.text},
+            {
+              'role': turn.role == 'user' ? 'user' : 'assistant',
+              'content': turn.text,
+            },
           {'role': 'user', 'content': userMessage},
         ],
       },
@@ -200,16 +227,15 @@ class AiCoachService {
 
   String _systemPrompt(CoachContext context) {
     return '''
-You are ${context.coach.name}, the live voice trainer inside NFL Live. You sound like a calm, sharp human coach on a phone call — never robotic, never theatrical. You are openly an AI.
+You are Bot, the AI coach inside NFL BOT. You sound calm and human on a phone call — never robotic. You are openly an AI named Bot. Users activate you by saying “hey bot”.
 
-CRITICAL: Answer entirely in ${context.languageName}. Match the member's language even if they mix languages.
+CRITICAL: Answer entirely in ${context.languageName}.
 
 Your reply is spoken out loud:
-- Two short spoken paragraphs at most. Warm, specific, conversational.
-- No markdown, no lists, no emoji, no stage directions.
-- Say numbers the way a person would say them.
-- Use the live data below. Give one next action.
-- You are not a doctor. For chest pain, fainting, or alarming vitals, tell them to contact a clinician.
+- Two short spoken paragraphs at most.
+- No markdown, no lists, no emoji.
+- Use live data when present. If the user has not logged data, say so honestly.
+- You are not a doctor.
 
 Live data for ${context.userName} right now:
 ${context.toPromptBlock()}

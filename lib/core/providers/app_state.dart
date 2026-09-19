@@ -82,21 +82,193 @@ class AppState extends ChangeNotifier {
 
   // Hydration & sleep
   double _hydrationLiters = 0;
+  double _workoutHydrationLiters = 0;
   int _sleepHours = 0;
   int _sleepQuality = 0;
   double get hydrationLiters => _hydrationLiters;
   double get hydrationGoal => targets.waterLiters;
+  double get workoutHydrationLiters => _workoutHydrationLiters;
+  double get workoutHydrationGoal => 0.6;
   int get sleepHours => _sleepHours;
   int get sleepQuality => _sleepQuality;
   bool get hasSleepLog => _sleepHours > 0;
 
+  // Mood + reminders + progress notes
+  String _moodLabel = '';
+  int _moodScore = 0;
+  bool _remindWater = true;
+  bool _remindMeal = true;
+  bool _remindWindDown = false;
+  bool _quietHours = false;
+  final List<ProgressPhotoNote> _progressPhotoNotes = [];
+
+  String get moodLabel => _moodLabel;
+  int get moodScore => _moodScore;
+  bool get remindWater => _remindWater;
+  bool get remindMeal => _remindMeal;
+  bool get remindWindDown => _remindWindDown;
+  bool get quietHours => _quietHours;
+
+  /// True when quiet hours are enabled and local time is 21:00–05:59.
+  bool get isInQuietHours {
+    if (!_quietHours) return false;
+    final h = DateTime.now().hour;
+    return h >= 21 || h < 6;
+  }
+
+  List<ProgressPhotoNote> get progressPhotoNotes =>
+      List.unmodifiable(_progressPhotoNotes);
+
+  /// Suggested next action from live logs (never invents data).
+  String get nextBestMoveTitle {
+    if (_hydrationLiters < 0.5) return 'Drink a glass of water';
+    if (_mealsLogged == 0) return 'Scan your first meal';
+    if (!hasSleepLog && DateTime.now().hour >= 20) return 'Log tonight’s sleep';
+    if (_steps < 2000) return 'Start a GPS walk';
+    if (_dayStreak > 0) return 'Keep the streak going';
+    return 'Nothing queued — log something real';
+  }
+
+  String get nextBestMoveHint {
+    if (_hydrationLiters < 0.5) {
+      return 'Hydration is empty. Open Water and add 250–500 ml.';
+    }
+    if (_mealsLogged == 0) {
+      return 'Diary is blank until you confirm a plate scan.';
+    }
+    if (!hasSleepLog && DateTime.now().hour >= 20) {
+      return 'Sleep feeds readiness. Log hours before bed.';
+    }
+    if (_steps < 2000) {
+      return 'Open Map, start a track, and let steps accumulate.';
+    }
+    return 'Scan a meal, log water, or open a form demo — Bot coaches from your logs only.';
+  }
+
+  int get readinessScore {
+    final sleepPart = hasSleepLog ? (sleepQuality / 100) * 40 : 8.0;
+    final waterPart =
+        (hydrationLiters / (hydrationGoal <= 0 ? 2.5 : hydrationGoal))
+                .clamp(0.0, 1.0) *
+            30;
+    final stepPart = stepProgress.clamp(0.0, 1.0) * 30;
+    return (sleepPart + waterPart + stepPart).round().clamp(0, 100);
+  }
+
+  String get readinessLabel {
+    final s = readinessScore;
+    if (s >= 80) return 'Ready';
+    if (s >= 55) return 'Steady';
+    if (s >= 30) return 'Recover';
+    return 'Rest';
+  }
+
+  void logMood(String label, int score) {
+    _moodLabel = label;
+    _moodScore = score;
+    markDayActive();
+    setCoachState(
+      CoachMood.encouraging,
+      'Mood logged: $label. I’ll match my tone to how you feel.',
+    );
+    notifyListeners();
+  }
+
+  void setRemindWater(bool v) {
+    _remindWater = v;
+    notifyListeners();
+  }
+
+  void setRemindMeal(bool v) {
+    _remindMeal = v;
+    notifyListeners();
+  }
+
+  void setRemindWindDown(bool v) {
+    _remindWindDown = v;
+    notifyListeners();
+  }
+
+  void setQuietHours(bool v) {
+    _quietHours = v;
+    AppServices.prefs.setQuietHours(v);
+    notifyListeners();
+  }
+
+  void addProgressPhotoNote({String? imagePath, List<int>? imageBytes}) {
+    final n = _progressPhotoNotes.length + 1;
+    _progressPhotoNotes.insert(
+      0,
+      ProgressPhotoNote(
+        label: 'Check-in #$n',
+        when: DateTime.now(),
+        imagePath: imagePath,
+        imageBytes: imageBytes == null ? null : Uint8List.fromList(imageBytes),
+      ),
+    );
+    markDayActive();
+    notifyListeners();
+  }
+
   // Progress tracking
   int _workoutsCompleted = 0;
   int _mealsLogged = 0;
+  int _dayStreak = 0;
+  DateTime? _lastActiveDay;
   List<double> _weeklyCalories = List<double>.filled(7, 0);
   int get workoutsCompleted => _workoutsCompleted;
   int get mealsLogged => _mealsLogged;
+  int get dayStreak => _dayStreak;
   List<double> get weeklyCalories => List.unmodifiable(_weeklyCalories);
+
+  /// Bot-written daily briefing from live numbers (never fake).
+  String get dailyBriefing {
+    final parts = <String>[];
+    if (_steps > 0) {
+      parts.add('$_steps steps so far');
+    } else {
+      parts.add('No steps logged yet — a short walk unlocks today’s streak');
+    }
+    if (_hydrationLiters > 0) {
+      parts.add(
+        '${_hydrationLiters.toStringAsFixed(1)} L water of ${hydrationGoal.toStringAsFixed(1)} L',
+      );
+    } else {
+      parts.add('First glass of water keeps Bot happy');
+    }
+    if (_mealsLogged > 0) {
+      parts.add('$_mealsLogged meal${_mealsLogged == 1 ? '' : 's'} logged');
+    }
+    if (_dayStreak > 0) {
+      parts.add('$_dayStreak-day streak');
+    }
+    return parts.join(' · ');
+  }
+
+  void markDayActive() {
+    final today = DateTime.now();
+    final d = DateTime(today.year, today.month, today.day);
+    if (_lastActiveDay == null) {
+      _dayStreak = 1;
+      _lastActiveDay = d;
+      notifyListeners();
+      return;
+    }
+    final last = DateTime(
+      _lastActiveDay!.year,
+      _lastActiveDay!.month,
+      _lastActiveDay!.day,
+    );
+    final diff = d.difference(last).inDays;
+    if (diff == 0) return;
+    if (diff == 1) {
+      _dayStreak += 1;
+    } else {
+      _dayStreak = 1;
+    }
+    _lastActiveDay = d;
+    notifyListeners();
+  }
 
   // Nutrition
   int _caloriesConsumed = 0;
@@ -180,7 +352,7 @@ class AppState extends ChangeNotifier {
 
   // Coach state
   CoachMood _mood = CoachMood.neutral;
-  String _coachMessage = 'Tap the orb and talk to me.';
+  String _coachMessage = 'Say “hey bot” or tap Bot to talk.';
   CoachMood get coachMood => _mood;
   String get coachMessage => _coachMessage;
 
@@ -291,6 +463,7 @@ class AppState extends ChangeNotifier {
         orElse: () => FastingProtocol.sixteenEight,
       );
       _customFastHours = prefs.customFastHours;
+      _quietHours = prefs.quietHours;
       final startedMs = prefs.fastingStartedAtMs;
       _fastingStartedAt =
           startedMs > 0 ? DateTime.fromMillisecondsSinceEpoch(startedMs) : null;
@@ -418,8 +591,9 @@ class AppState extends ChangeNotifier {
   Future<void> completeWorkout(WorkoutPlan plan) async {
     _workoutsCompleted++;
     await AppServices.storage.recordWorkoutComplete();
-    // Session intensity feeds the acute:chronic load model.
     await AppServices.intelligence.recordTrainingLoad(plan.totalCalories ~/ 10);
+    markDayActive();
+    resetWorkoutHydration();
     setCoachState(
       CoachMood.celebrating,
       'Workout complete. You burned about ${plan.totalCalories} calories.',
@@ -467,6 +641,7 @@ class AppState extends ChangeNotifier {
     if (previous < stepGoal && _steps >= stepGoal) {
       setCoachState(CoachMood.celebrating, 'Step goal cleared. Nicely done.');
     }
+    if (_steps > 500) markDayActive();
     notifyListeners();
   }
 
@@ -481,7 +656,25 @@ class AppState extends ChangeNotifier {
       CoachMood.encouraging,
       'Hydration logged. ${_hydrationLiters.toStringAsFixed(1)} litres today.',
     );
+    markDayActive();
     _persist();
+    notifyListeners();
+  }
+
+  void addWorkoutHydration(double liters) {
+    _workoutHydrationLiters =
+        (_workoutHydrationLiters + liters).clamp(0.0, 3.0);
+    _hydrationLiters = (_hydrationLiters + liters).clamp(0, 10);
+    setCoachState(
+      CoachMood.encouraging,
+      'Workout sip logged. Session ${_workoutHydrationLiters.toStringAsFixed(2)} L.',
+    );
+    _persist();
+    notifyListeners();
+  }
+
+  void resetWorkoutHydration() {
+    _workoutHydrationLiters = 0;
     notifyListeners();
   }
 
@@ -521,6 +714,7 @@ class AppState extends ChangeNotifier {
     );
     _mealsLogged++;
     AppServices.storage.recordMealLogged();
+    markDayActive();
     _persist();
     notifyListeners();
   }
@@ -710,4 +904,24 @@ class ChatMessage {
     this.fromModel = false,
     this.notice,
   }) : timestamp = DateTime.now();
+}
+
+class ProgressPhotoNote {
+  final String label;
+  final DateTime when;
+  final String? imagePath;
+  final Uint8List? imageBytes;
+
+  ProgressPhotoNote({
+    required this.label,
+    required this.when,
+    this.imagePath,
+    this.imageBytes,
+  });
+
+  String get whenLabel {
+    final d = when;
+    return '${d.year}-${d.month.toString().padLeft(2, '0')}-${d.day.toString().padLeft(2, '0')} · '
+        '${d.hour.toString().padLeft(2, '0')}:${d.minute.toString().padLeft(2, '0')}';
+  }
 }

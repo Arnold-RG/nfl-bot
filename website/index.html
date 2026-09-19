@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="description" content="NFL BOT is a real health coach on your phone. Say hey bot. Here’s exactly how it works — step by step.">
+  <meta name="theme-color" content="#0A0908">
+  <title>NFL BOT — how it actually works</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+  <div class="paper-noise" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a class="nav__brand" href="#top">NFL <span>BOT</span></a>
+    <nav class="nav__links" aria-label="Primary">
+      <a href="#story">Story</a>
+      <a href="#guide">How it works</a>
+      <a href="#screens">Screens</a>
+      <a href="#download">Download</a>
+      <a href="#try">Try it</a>
+    </nav>
+    <a class="nav__cta" href="#download">Get the app</a>
+  </header>
+
+  <main id="top">
+    <section class="hero hero--human">
+      <p class="hand-note">Built for people who are tired of fake fitness dashboards.</p>
+      <p class="hero__brand">NFL BOT</p>
+      <h1>A coach that stays quiet until you say <em>hey bot</em>.</h1>
+      <p class="hero__sub">
+        This page walks you through the app the way you’d explain it to a friend —
+        what each screen does, what Bot listens for, and why an empty diary on day one is intentional.
+      </p>
+      <div class="hero__cta">
+        <a class="btn btn--molten" href="#guide">Read how it works</a>
+        <a class="btn btn--ghost" href="#download">Download / QR</a>
+      </div>
+
+      <div class="hero__duo">
+        <figure class="shot">
+          <div class="phone is-live">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="ui ui--bot">
+                <p class="ui__title">Bot</p>
+                <p class="ui__caption">Say “hey bot” — mouth moves when Bot talks</p>
+                <div class="ui__mascot ui__mascot--lg" data-talking>
+                  <img src="assets/branding/bot.jpg" alt="Bot, the orange cartoon coach" class="ui__mascot-img">
+                  <div class="ui__mouth"></div>
+                </div>
+                <div class="ui__status"><i></i> Waiting for you</div>
+                <button type="button" class="ui__btn">Talk with Bot</button>
+              </div>
+            </div>
+          </div>
+          <figcaption>Bot tab — the coach you actually talk to</figcaption>
+        </figure>
+        <figure class="shot">
+          <div class="phone is-live">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="ui ui--today">
+                <header class="ui__top"><span>Good morning</span><span class="ui__avatar"></span></header>
+                <div class="ui__mascot ui__mascot--sm" data-talking>
+                  <img src="assets/branding/bot.jpg" alt="" class="ui__mascot-img">
+                  <div class="ui__mouth"></div>
+                </div>
+                <p class="ui__wake">Say “hey bot”</p>
+                <div class="ui__glass">
+                  <small>BOT BRIEFING</small>
+                  <p>No steps yet · First glass of water keeps Bot honest</p>
+                </div>
+                <div class="ui__vitals">
+                  <div><b>Water</b><span>0.0L</span></div>
+                  <div><b>Steps</b><span>0</span></div>
+                  <div><b>Sleep</b><span>Log</span></div>
+                </div>
+                <nav class="ui__dock"><i class="on"></i><i></i><i></i><i></i><i></i></nav>
+              </div>
+            </div>
+          </div>
+          <figcaption>Today — empty until you log something real</figcaption>
+        </figure>
+      </div>
+      <button class="hero__speak" type="button" id="make-talk"><span></span> Make Bot talk</button>
+    </section>
+
+    <section class="story" id="story">
+      <div class="story__inner">
+        <p class="kicker">Why this exists</p>
+        <h2>Most fitness apps show you a perfect week you never lived.</h2>
+        <p>
+          NFL BOT does the opposite. Open it fresh and the diary is blank, the streak is zero,
+          and Bot has nothing clever to say about calories you didn’t eat.
+          That is not a bug — it is the product rule: <strong>if a number is on screen, you put it there</strong>
+          (or your watch / phone sensors did).
+        </p>
+        <p>
+          Bot is a cartoon coach with a moving head and mouth. You wake him with
+          <em>“hey bot”</em>, ask about food, training, water, sleep, or the walk you just tracked on the map.
+          He answers from your logs. Wellness guidance only — not a doctor.
+        </p>
+      </div>
+    </section>
+
+    <!-- DETAILED HOW IT WORKS -->
+    <section class="guide" id="guide">
+      <header class="guide__head">
+        <p class="kicker">How it works — full walkthrough</p>
+        <h2>From first open to a real coaching loop</h2>
+        <p>Follow the steps below. Each one shows what you see on the phone and what happens behind it.</p>
+      </header>
+
+      <article class="guide-step">
+        <div class="guide-step__text">
+          <span class="guide-step__n">Step 1</span>
+          <h3>Open Today</h3>
+          <p>
+            The home tab greets you by name. In the center sits Bot — floating, blinking, waiting.
+            Under him you get a <strong>Bot briefing</strong> built only from what already exists today
+            (steps, water, meals, streak). If nothing exists yet, the copy says so plainly.
+          </p>
+          <ul>
+            <li>Quick vitals: Water, Steps, Sleep — tap to open each tool</li>
+            <li>Next best move: scan a meal or open a form demo</li>
+            <li>Bottom bar: Today · Diary · Add · Bot · You</li>
+          </ul>
+        </div>
+        <figure class="guide-step__visual">
+          <div class="phone is-live">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="ui ui--today">
+                <header class="ui__top"><span>Good morning</span><span class="ui__avatar"></span></header>
+                <div class="ui__mascot ui__mascot--sm" data-talking>
+                  <img src="assets/branding/bot.jpg" alt="" class="ui__mascot-img">
+                  <div class="ui__mouth"></div>
+                </div>
+                <p class="ui__wake">Say “hey bot”</p>
+                <div class="ui__glass">
+                  <small>NEXT BEST MOVE</small>
+                  <strong>Nothing queued yet</strong>
+                  <button type="button" class="ui__btn ui__btn--sm">Scan meal</button>
+                </div>
+                <nav class="ui__dock"><i class="on"></i><i></i><i></i><i></i><i></i></nav>
+              </div>
+            </div>
+          </div>
+          <figcaption>Fig. A — Today home</figcaption>
+        </figure>
+      </article>
+
+      <article class="guide-step guide-step--flip">
+        <div class="guide-step__text">
+          <span class="guide-step__n">Step 2</span>
+          <h3>Wake Bot with “hey bot”</h3>
+          <p>
+            Open the <strong>Bot</strong> tab (or the live stage). Bot fills most of the screen.
+            Say the wake phrase out loud, or tap Talk. While Bot speaks, the mouth opens and closes;
+            while he thinks, the head turns; while he listens, he leans in.
+          </p>
+          <ul>
+            <li>Hands-free mode: mic reopens after each answer</li>
+            <li>Mute voice anytime in Account → Coach</li>
+            <li>Quiet hours (optional): Bot won’t initiate after 21:00</li>
+          </ul>
+        </div>
+        <figure class="guide-step__visual">
+          <div class="phone is-live">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="ui ui--bot">
+                <p class="ui__title">Bot</p>
+                <p class="ui__caption">Mouth moves while talking</p>
+                <div class="ui__mascot ui__mascot--lg is-talking" data-talking>
+                  <img src="assets/branding/bot.jpg" alt="" class="ui__mascot-img">
+                  <div class="ui__mouth"></div>
+                  <div class="ui__aura"></div>
+                </div>
+                <div class="ui__status"><i></i> Speaking</div>
+                <button type="button" class="ui__btn">Talk with Bot</button>
+              </div>
+            </div>
+          </div>
+          <figcaption>Fig. B — Live talking Bot</figcaption>
+        </figure>
+      </article>
+
+      <article class="guide-step">
+        <div class="guide-step__text">
+          <span class="guide-step__n">Step 3</span>
+          <h3>Scan a meal (Add / Diary)</h3>
+          <p>
+            Tap <strong>Add</strong> or Scan meal. Take a photo of your plate.
+            The vision pipeline suggests foods and macros. <strong>Nothing is saved until you confirm.</strong>
+            That confirmed meal becomes Diary fuel — and Bot can finally talk about your day with real numbers.
+          </p>
+          <ul>
+            <li>Camera permission asked in context</li>
+            <li>No sample meals on a fresh install</li>
+            <li>Confirm screen is the gate to your calorie total</li>
+          </ul>
+        </div>
+        <figure class="guide-step__visual">
+          <div class="illus illus--plate">
+            <div class="illus__cam"></div>
+            <div class="illus__plate"></div>
+            <p class="illus__caption">Camera → analyze → confirm → Diary</p>
+          </div>
+          <figcaption>Fig. C — Plate vision flow</figcaption>
+        </figure>
+      </article>
+
+      <article class="guide-step guide-step--flip">
+        <div class="guide-step__text">
+          <span class="guide-step__n">Step 4</span>
+          <h3>Water, map, sleep</h3>
+          <p>
+            From Today or You: log water for the day and for the workout session,
+            start a GPS track on the map (route line + km + steps), and log sleep hours/quality.
+            Each of these feeds readiness and the daily briefing.
+          </p>
+          <ul>
+            <li>Water chips: +250 ml, +500 ml, workout sips</li>
+            <li>Map: OpenStreetMap tiles, pin follows you</li>
+            <li>Sleep sheet: hours + quality slider</li>
+          </ul>
+        </div>
+        <figure class="guide-step__visual">
+          <div class="phone is-live">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="ui ui--water">
+                <p class="ui__title">Water</p>
+                <div class="ui__ring" style="--p:0.4">
+                  <div class="ui__ring-fill"></div>
+                  <div class="ui__ring-label"><b>1.0</b><small>/ 2.5 L</small></div>
+                </div>
+                <div class="ui__chips">
+                  <button type="button">+250 ml</button>
+                  <button type="button">+500 ml</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Fig. D — Hydration</figcaption>
+        </figure>
+      </article>
+
+      <article class="guide-step">
+        <div class="guide-step__text">
+          <span class="guide-step__n">Step 5</span>
+          <h3>Train with human form demos</h3>
+          <p>
+            Open Form demos (You or Train). You get a black stage with a human figure,
+            blue glow on working muscles, a carousel of moves, set dots, and a <strong>LOG SET</strong> button —
+            same pattern as a serious training coach app, not a vague GIF library.
+          </p>
+          <ul>
+            <li>Example: Sprinter Lunge — 4×10 each side</li>
+            <li>Logging a set advances the session</li>
+            <li>Workout water resets when the session ends</li>
+          </ul>
+        </div>
+        <figure class="guide-step__visual">
+          <div class="phone is-live">
+            <div class="phone__notch"></div>
+            <div class="phone__screen">
+              <div class="ui ui--form">
+                <div class="ui__anatomy">
+                  <div class="ui__figure"></div>
+                  <div class="ui__muscle"></div>
+                </div>
+                <div class="ui__sheet">
+                  <strong>Sprinter Lunge</strong>
+                  <span>4 Sets × 10 reps, each side</span>
+                  <div class="ui__dots"><i class="done"></i><i class="done"></i><i></i><i></i></div>
+                  <button type="button" class="ui__btn ui__btn--blue">LOG SET</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <figcaption>Fig. E — Anatomy form demo</figcaption>
+        </figure>
+      </article>
+
+      <article class="guide-step guide-step--flip">
+        <div class="guide-step__text">
+          <span class="guide-step__n">Step 6</span>
+          <h3>You — readiness, mood, reminders, recap</h3>
+          <p>
+            The You hub is where the quieter tools live: readiness score (sleep + water + steps),
+            mood check-in, reminders, progress photo notes, weekly calorie bars, and a rebuilt Account screen
+            (profile, coach voice toggles, goals, watch, permissions).
+          </p>
+          <ul>
+            <li>Readiness is honest when inputs are missing</li>
+            <li>Mood changes Bot’s tone, not a diagnosis</li>
+            <li>Account was rebuilt from scratch — cleaner, fewer cluttered settings</li>
+          </ul>
+        </div>
+        <figure class="guide-step__visual">
+          <div class="illus illus--you">
+            <div class="illus__ring"><span>72</span></div>
+            <p class="illus__caption">Readiness · Mood · Reminders · Recap · Account</p>
+          </div>
+          <figcaption>Fig. F — You hub tools</figcaption>
+        </figure>
+      </article>
+
+      <div class="guide-loop">
+        <h3>The loop, in one sentence</h3>
+        <p>
+          Wake Bot → log something real (meal, water, walk, set, sleep, mood) →
+          Bot briefings and answers update from that data → streak grows only on active days.
+        </p>
+      </div>
+    </section>
+
+    <!-- SCREENS -->
+    <section class="screens" id="screens">
+      <div class="block__intro block__intro--center">
+        <p class="kicker">Live phone gallery</p>
+        <h2>Flip through the real surfaces</h2>
+        <p class="lead">Auto-rotates. Tap a label to hold a screen. These are the same dark-bronze layouts as the Flutter app.</p>
+      </div>
+      <div class="screens__rail" id="screen-tabs" role="tablist">
+        <button type="button" class="is-on" data-go="today" role="tab">Today</button>
+        <button type="button" data-go="bot" role="tab">Bot</button>
+        <button type="button" data-go="form" role="tab">Form</button>
+        <button type="button" data-go="water" role="tab">Water</button>
+        <button type="button" data-go="map" role="tab">Map</button>
+      </div>
+      <div class="screens__phones">
+        <figure class="phone is-active is-live" data-panel="today">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="ui ui--today">
+              <header class="ui__top"><span>Good morning</span><span class="ui__avatar"></span></header>
+              <div class="ui__mascot ui__mascot--sm" data-talking>
+                <img src="assets/branding/bot.jpg" alt="" class="ui__mascot-img">
+                <div class="ui__mouth"></div>
+              </div>
+              <p class="ui__wake">Say “hey bot”</p>
+              <div class="ui__glass"><small>BOT BRIEFING</small><p>Your real day, summarized</p></div>
+              <nav class="ui__dock"><i class="on"></i><i></i><i></i><i></i><i></i></nav>
+            </div>
+          </div>
+          <figcaption>Today</figcaption>
+        </figure>
+        <figure class="phone is-live" data-panel="bot">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="ui ui--bot">
+              <p class="ui__title">Bot</p>
+              <div class="ui__mascot ui__mascot--lg" data-talking>
+                <img src="assets/branding/bot.jpg" alt="" class="ui__mascot-img">
+                <div class="ui__mouth"></div>
+              </div>
+              <button type="button" class="ui__btn">Talk with Bot</button>
+            </div>
+          </div>
+          <figcaption>Bot</figcaption>
+        </figure>
+        <figure class="phone is-live" data-panel="form">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="ui ui--form">
+              <div class="ui__anatomy"><div class="ui__figure"></div><div class="ui__muscle"></div></div>
+              <div class="ui__sheet">
+                <strong>Sprinter Lunge</strong>
+                <button type="button" class="ui__btn ui__btn--blue">LOG SET</button>
+              </div>
+            </div>
+          </div>
+          <figcaption>Form demo</figcaption>
+        </figure>
+        <figure class="phone is-live" data-panel="water">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="ui ui--water">
+              <p class="ui__title">Water</p>
+              <div class="ui__ring" style="--p:0.35"><div class="ui__ring-label"><b>0.9</b><small>L today</small></div></div>
+            </div>
+          </div>
+          <figcaption>Water</figcaption>
+        </figure>
+        <figure class="phone is-live" data-panel="map">
+          <div class="phone__notch"></div>
+          <div class="phone__screen">
+            <div class="ui ui--map">
+              <div class="ui__map-stats">
+                <div><small>STEPS</small><b class="count-up" data-count="4280">0</b></div>
+                <div><small>ROUTE</small><b>1.2 km</b></div>
+              </div>
+              <div class="ui__map"><div class="ui__trail"></div><div class="ui__pin"></div></div>
+              <button type="button" class="ui__btn">Start GPS track</button>
+            </div>
+          </div>
+          <figcaption>Map</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD -->
+    <section class="block download" id="download">
+      <div class="block__intro block__intro--center">
+        <p class="kicker">Get it on your phone</p>
+        <h2>App Store, Play Store, or scan</h2>
+        <p class="lead">
+          Once published, open the site from any phone at
+          <strong>https://arnold-rg.github.io/nfl-bot/</strong>
+          — no App Store required for the web demo. Scan the QR below.
+        </p>
+      </div>
+      <div class="download__grid">
+        <div class="download__stores">
+          <a class="store" href="https://apps.apple.com/app/nfl-bot" target="_blank" rel="noopener">
+            <span class="store__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+            </span>
+            <span><small>Download on the</small><strong>App Store</strong></span>
+          </a>
+          <a class="store" href="https://play.google.com/store/apps/details?id=com.nfbot.nfbot_app" target="_blank" rel="noopener">
+            <span class="store__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor"><path d="M3.18 23.73c-.15-.07-.28-.2-.35-.36-.07-.16-.07-.34 0-.5L11.1 12 2.83 1.13c-.07-.16-.07-.34 0-.5.07-.16.2-.29.35-.36L14.1 12 3.18 23.73zm.95.54 11.4-6.48-4.55-4.55L4.13 24.27zm11.4-17.54L4.13-.27l6.85 11.79 4.55-4.55zM15.8 18.5l5.37-3.05c.55-.31.55-1.09 0-1.4L15.8 10.99l-4.78 4.78 4.78 2.73z"/></svg>
+            </span>
+            <span><small>Get it on</small><strong>Google Play</strong></span>
+          </a>
+          <p class="phone-url" id="lan-url">Open on phone: loading address…</p>
+        </div>
+        <div class="download__qr">
+          <img id="dl-qr" width="220" height="220" alt="QR code">
+          <p>Scan with your phone camera</p>
+          <div class="qr-switch" role="group">
+            <button type="button" class="is-on" data-qr="site">This website</button>
+            <button type="button" data-qr="play">Play Store</button>
+            <button type="button" data-qr="apple">App Store</button>
+            <button type="button" data-qr="web">Web app</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="try" id="try">
+      <div class="block__intro block__intro--center">
+        <p class="kicker">Attached web app</p>
+        <h2>Run NFL BOT in the browser</h2>
+        <p class="lead">Desktop Chrome works best for mic and camera. On phone, prefer the Flutter install or the LAN site above.</p>
+      </div>
+      <div class="try__frame-wrap">
+        <iframe class="try__frame" title="NFL BOT web app" src="app/index.html" allow="camera; microphone; geolocation" loading="lazy"></iframe>
+        <a class="try__open" href="app/index.html" target="_blank" rel="noopener">Open full screen ↗</a>
+      </div>
+    </section>
+
+    <section class="close">
+      <h2>That’s the whole idea.</h2>
+      <p>Call Bot when you need him. Feed him real data. Ignore the fake dashboards everywhere else.</p>
+      <a class="btn btn--molten" href="#guide">Back to the walkthrough</a>
+    </section>
+  </main>
+
+  <footer class="foot" id="connect">
+    <div class="foot__brand">
+      <strong>NFL BOT</strong>
+      <span>Say hey bot · wellness only</span>
+    </div>
+    <nav class="foot__social" aria-label="Social">
+      <a href="https://github.com/Arnold-RG" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://github.com/Arnold-RG/nfl-bot" target="_blank" rel="noopener">Source</a>
+      <a href="https://arnold-rg.github.io" target="_blank" rel="noopener">Portfolio</a>
+      <a href="https://www.linkedin.com/search/results/all/?keywords=Arnold%20RG" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://x.com/search?q=Arnold%20RG" target="_blank" rel="noopener">X</a>
+      <a href="https://www.instagram.com/explore/tags/nflbot/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.youtube.com/results?search_query=NFL+BOT+AI+coach" target="_blank" rel="noopener">YouTube</a>
+    </nav>
+    <p class="foot__note">Not medical advice. Validate “NFL” branding before commercial launch.</p>
+  </footer>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

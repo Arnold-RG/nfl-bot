@@ -42,6 +42,16 @@ class WorkoutPlan {
 class WorkoutDatabase {
   static const List<Exercise> allExercises = [
     Exercise(
+      name: 'Sprinter Lunge',
+      muscleGroup: 'Quads, Glutes, Hamstrings',
+      durationSec: 0,
+      reps: 10,
+      instructions:
+          'From standing, drive one leg back into a long lunge while the front knee stays over the ankle. Drive through the front heel to stand. Alternate sides.',
+      difficulty: 'Medium',
+      caloriesBurn: 40,
+    ),
+    Exercise(
       name: 'Jumping Jacks',
       muscleGroup: 'Full body',
       durationSec: 45,

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../../config/app_theme.dart';
 import '../../../../../core/models/coach_persona.dart';
 import '../../../../../core/providers/app_state.dart';
 import '../../../../../core/services/app_services.dart';
 import '../../../../../core/services/voice_session_controller.dart';
+import '../../../../live/live_bot_character.dart';
 import '../components/ai_voice_orb.dart';
 
-/// Full-screen live conversation with the AI coach: speak to the orb, it
-/// answers out loud, and in hands-free mode it reopens the microphone so the
-/// exchange keeps going without any tapping.
+/// Full-screen live conversation with Bot: speak, Bot answers out loud,
+/// and hands-free mode reopens listening after each answer.
 class LiveVoiceScreen extends StatefulWidget {
   const LiveVoiceScreen({super.key});
 
@@ -44,7 +45,7 @@ class _LiveVoiceScreenState extends State<LiveVoiceScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF05050F),
+      backgroundColor: AppTheme.labBg,
       body: AnimatedBuilder(
         animation: _session,
         builder: (context, _) {
@@ -59,7 +60,7 @@ class _LiveVoiceScreenState extends State<LiveVoiceScreen> {
   Widget _buildBody(BuildContext context, AppState state) {
     final voice = AppServices.voice;
     final size = MediaQuery.sizeOf(context);
-    final orbSize = (size.shortestSide * 0.58).clamp(180.0, 300.0);
+    final botSize = (size.shortestSide * 0.58).clamp(220.0, 320.0);
     final persona = state.coach;
 
     return Container(
@@ -67,14 +68,12 @@ class _LiveVoiceScreenState extends State<LiveVoiceScreen> {
         gradient: RadialGradient(
           center: Alignment.center,
           radius: 1.1,
-          colors: [Color(0xFF0C0C22), Color(0xFF04040C)],
+          colors: [Color(0xFF1A1512), Color(0xFF0C0A09)],
         ),
       ),
       child: SafeArea(
         child: Stack(
           children: [
-            // Ribbons sit behind the orb and span the full width, as in the
-            // reference artwork.
             Positioned(
               left: 0,
               right: 0,
@@ -82,7 +81,7 @@ class _LiveVoiceScreenState extends State<LiveVoiceScreen> {
               child: VoiceWaveField(
                 state: voice.state,
                 amplitude: voice.amplitude,
-                height: orbSize * 1.5,
+                height: botSize * 1.5,
               ),
             ),
             Column(
@@ -98,11 +97,11 @@ class _LiveVoiceScreenState extends State<LiveVoiceScreen> {
                     padding: const EdgeInsets.symmetric(horizontal: 20),
                     child: Column(
                       children: [
-                        SizedBox(height: size.height * 0.03),
-                        AiVoiceOrb(
-                          size: orbSize,
+                        SizedBox(height: size.height * 0.02),
+                        LiveBotCharacter(
+                          size: botSize,
                           state: voice.state,
-                          amplitude: voice.amplitude,
+                          pulse: voice.amplitude,
                           onTap: _session.toggle,
                         ),
                         const SizedBox(height: 18),
@@ -110,6 +109,7 @@ class _LiveVoiceScreenState extends State<LiveVoiceScreen> {
                           state: voice.state,
                           active: _session.isActive,
                           handsFree: _session.handsFree,
+                          awaitingWake: _session.awaitingWake,
                         ),
                         const SizedBox(height: 14),
                         _TranscriptPanel(
@@ -170,7 +170,7 @@ class _Header extends StatelessWidget {
         children: [
           IconButton(
             onPressed: onClose,
-            icon: const Icon(Icons.close_rounded, color: Colors.white70),
+            icon: const Icon(Icons.close_rounded, color: AppTheme.labMuted),
             tooltip: 'Close',
           ),
           Expanded(
@@ -179,7 +179,7 @@ class _Header extends StatelessWidget {
                 Text(
                   persona.name,
                   style: const TextStyle(
-                    color: Colors.white,
+                    color: AppTheme.labInk,
                     fontSize: 17,
                     fontWeight: FontWeight.w700,
                     letterSpacing: 2.5,
@@ -188,7 +188,7 @@ class _Header extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   persona.tagline,
-                  style: const TextStyle(color: Colors.white38, fontSize: 11),
+                  style: const TextStyle(color: AppTheme.labMuted, fontSize: 11),
                 ),
               ],
             ),
@@ -197,9 +197,9 @@ class _Header extends StatelessWidget {
             onPressed: onToggleMute,
             icon: Icon(
               muted ? Icons.volume_off_rounded : Icons.volume_up_rounded,
-              color: muted ? Colors.white38 : Colors.white70,
+              color: muted ? AppTheme.labMuted : AppTheme.electric,
             ),
-            tooltip: muted ? 'Unmute coach' : 'Mute coach',
+            tooltip: muted ? 'Unmute Bot' : 'Mute Bot',
           ),
         ],
       ),
@@ -211,22 +211,26 @@ class _StatusLine extends StatelessWidget {
   final VoiceOrbState state;
   final bool active;
   final bool handsFree;
+  final bool awaitingWake;
 
   const _StatusLine({
     required this.state,
     required this.active,
     required this.handsFree,
+    this.awaitingWake = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final label = switch (state) {
-      VoiceOrbState.listening => 'Listening — just talk',
-      VoiceOrbState.thinking => 'Thinking',
-      VoiceOrbState.speaking => 'Speaking — tap the orb to interrupt',
+      VoiceOrbState.listening => awaitingWake
+          ? 'Say “hey bot”…'
+          : 'Listening — just talk',
+      VoiceOrbState.thinking => 'Bot is thinking…',
+      VoiceOrbState.speaking => 'Bot speaking — tap to interrupt',
       VoiceOrbState.idle => active
           ? 'Ready for your next question'
-          : 'Tap the orb and speak',
+          : 'Say “hey bot” or tap Bot',
     };
 
     return Column(
@@ -235,7 +239,7 @@ class _StatusLine extends StatelessWidget {
           label,
           textAlign: TextAlign.center,
           style: const TextStyle(
-            color: Colors.white,
+            color: AppTheme.labInk,
             fontSize: 15,
             fontWeight: FontWeight.w600,
           ),
@@ -243,8 +247,8 @@ class _StatusLine extends StatelessWidget {
         if (active && handsFree) ...[
           const SizedBox(height: 4),
           const Text(
-            'Hands-free — the mic reopens after each answer',
-            style: TextStyle(color: Colors.white38, fontSize: 11),
+            'Hands-free — Bot listens again after each answer',
+            style: TextStyle(color: AppTheme.labMuted, fontSize: 11),
           ),
         ],
       ],

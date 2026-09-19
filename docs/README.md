@@ -5,8 +5,9 @@ Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arn
 ## Start here
 
 1. [Product blueprint](PRODUCT_BLUEPRINT.md) — what we’re building and why  
-2. [Architecture](ARCHITECTURE.md) — how the engines and platform fit  
-3. [API contract](API_CONTRACT.md) — backend modules  
+2. [Nutrition Fitness Loop](NUTRITION_FITNESS_LOOP.md) — CalorieLab-class Fuel UX  
+3. [Architecture](ARCHITECTURE.md) — how the engines and platform fit  
+4. [API contract](API_CONTRACT.md) — backend modules  
 
 ## Ship
 
@@ -21,7 +22,7 @@ Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arn
 
 ## Design
 
-UI direction concepts (including **Glass AI Stage**): [`screenshots/`](screenshots/)
+Product UI uses a dark bronze theme. Coach identity: **Bot** (wake phrase **hey bot**).
 
 ## Legal starter
 

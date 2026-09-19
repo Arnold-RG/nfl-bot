@@ -207,17 +207,19 @@ class _GlassStageScreenState extends State<GlassStageScreen>
                                       : voice.state,
                                 ),
                               ),
-                              // Bottom-left protein
+                              // Bottom-left fuel (kcal remaining)
                               Positioned(
                                 bottom: 88,
                                 left: 12,
                                 child: _GlassMetric(
-                                  icon: Icons.local_drink_rounded,
-                                  label: 'PROTEIN',
+                                  icon: Icons.local_fire_department_rounded,
+                                  label: 'FUEL LEFT',
                                   value:
-                                      '${day.proteinG.toStringAsFixed(0)}/${day.proteinGoal.toStringAsFixed(0)}g',
-                                  progress: (day.proteinG / day.proteinGoal)
-                                      .clamp(0.0, 1.0),
+                                      '${(day.calorieGoal - day.caloriesConsumed).clamp(0, 99999).round()} kcal',
+                                  progress: day.calorieGoal <= 0
+                                      ? 0
+                                      : (day.caloriesConsumed / day.calorieGoal)
+                                          .clamp(0.0, 1.0),
                                   onTap: () => widget.onOpenTab?.call(2),
                                 ),
                               ),

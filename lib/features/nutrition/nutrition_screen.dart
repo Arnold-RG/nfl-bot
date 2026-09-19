@@ -2,308 +2,152 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../config/app_theme.dart';
-import '../../core/engines/body_engine.dart';
-import '../../core/engines/fasting_engine.dart';
 import '../../core/providers/app_state.dart';
 import '../plate/plate_screen.dart';
-import '../shared/app_ui.dart';
 
+/// Diary — empty until the user logs real meals.
 class NutritionScreen extends StatelessWidget {
   const NutritionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final state = context.watch<AppState>();
-    final day = BodyEngine.snapshot(state);
     final theme = Theme.of(context);
-    final plan = state.caloriePlan;
-    final fast = state.fastingStatus;
 
-    return AppPage(
-      title: 'Nutrition',
-      subtitle: 'Diary, AI food camera, macros, fasting, and water.',
-      children: [
-        AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              MacroBar(
-                label: 'Calories',
-                current: day.caloriesConsumed,
-                goal: plan.adjustedTarget.toDouble(),
-                color: AppTheme.primaryColor,
+    return Scaffold(
+      backgroundColor: AppTheme.labBg,
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.fromLTRB(20, 12, 20, 120),
+          children: [
+            Text(
+              'Diary',
+              style: theme.textTheme.displaySmall?.copyWith(
+                color: AppTheme.labInk,
+                fontWeight: FontWeight.w800,
               ),
-              MacroBar(
-                label: 'Protein',
-                current: day.proteinG,
-                goal: day.proteinGoal,
-                color: const Color(0xFF2563EB),
-              ),
-              MacroBar(
-                label: 'Carbs',
-                current: day.carbsG,
-                goal: day.carbsGoal,
-                color: AppTheme.amber,
-              ),
-              MacroBar(
-                label: 'Fat',
-                current: day.fatG,
-                goal: day.fatGoal,
-                color: const Color(0xFFDB2777),
-              ),
-              Text(
-                '${(plan.adjustedTarget - day.caloriesConsumed).clamp(0, 99999)} kcal remaining · '
-                'target ${plan.adjustedTarget} (base ${plan.baseTarget}'
-                '${plan.activityAdjustment > 0 ? ' +${plan.activityAdjustment} activity' : ''})',
-                style: theme.textTheme.bodySmall,
-              ),
-              const SizedBox(height: 8),
-              Text(
-                plan.note,
-                style: theme.textTheme.bodySmall,
-              ),
-            ],
-          ),
-        ),
-        AppCard(
-          child: Text(
-            'AI calorie and macro estimates must be confirmed before you log — edit portions if they look wrong.',
-            style: theme.textTheme.bodyMedium?.copyWith(
-              color: AppTheme.warningColor,
             ),
-          ),
-        ),
-        SectionLabel('Food diary'),
-        if (state.todayMeals.isEmpty)
-          AppCard(
-            child: Text(
-              'No meals yet. Scan a plate, barcode, or attach a photo — AI estimates are editable before you log.',
+            const SizedBox(height: 6),
+            Text(
+              'Meals appear here after you confirm a scan. Nothing is pre-filled.',
               style: theme.textTheme.bodyMedium,
             ),
-          )
-        else
-          AppCard(
-            child: Column(
-              children: [
-                for (var i = 0; i < state.todayMeals.length; i++) ...[
-                  if (i > 0) const Divider(height: 1),
-                  ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      state.todayMeals[i].foodName,
-                      style: theme.textTheme.titleSmall,
+            const SizedBox(height: 18),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: AppTheme.labCard,
+                borderRadius: BorderRadius.circular(24),
+                border: Border.all(color: AppTheme.labBorder),
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    'Today',
+                    style: theme.textTheme.labelMedium?.copyWith(
+                      color: AppTheme.electric,
                     ),
-                    subtitle: Text(
-                      '${state.todayMeals[i].proteinG.toStringAsFixed(0)} g protein',
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    state.todayMeals.isEmpty
+                        ? '— / ${state.calorieGoal} kcal'
+                        : '${state.caloriesConsumed} / ${state.calorieGoal} kcal',
+                    style: theme.textTheme.headlineMedium?.copyWith(
+                      color: AppTheme.labInk,
+                      fontWeight: FontWeight.w800,
                     ),
-                    trailing: Text('${state.todayMeals[i].calories} kcal'),
+                  ),
+                  const SizedBox(height: 6),
+                  Text(
+                    state.todayMeals.isEmpty
+                        ? 'Log a meal to start tracking.'
+                        : '${state.todayMeals.length} meal${state.todayMeals.length == 1 ? '' : 's'} confirmed today.',
+                    style: theme.textTheme.bodySmall,
+                  ),
+                  const SizedBox(height: 16),
+                  SizedBox(
+                    width: double.infinity,
+                    child: FilledButton.icon(
+                      onPressed: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(builder: (_) => const PlateScreen()),
+                        );
+                      },
+                      icon: const Icon(Icons.photo_camera_outlined),
+                      label: const Text('Scan meal'),
+                    ),
                   ),
                 ],
-              ],
+              ),
             ),
-          ),
-        SectionLabel('Log food'),
-        AppCard(
-          onTap: () => _openPlate(context),
-          child: SettingTile(
-            icon: Icons.photo_camera_outlined,
-            title: 'Scan or attach a meal photo',
-            subtitle: 'Estimate → edit portions → log',
-            onTap: () => _openPlate(context),
-          ),
-        ),
-        const SizedBox(height: 8),
-        AppCard(
-          onTap: () => _barcodeStub(context),
-          child: SettingTile(
-            icon: Icons.qr_code_scanner_rounded,
-            title: 'Barcode',
-            subtitle: 'Scan or enter a product code (stub)',
-            onTap: () => _barcodeStub(context),
-          ),
-        ),
-        const SizedBox(height: 8),
-        AppCard(
-          onTap: () => _recipeStub(context),
-          child: SettingTile(
-            icon: Icons.auto_awesome_outlined,
-            title: 'Recipe AI',
-            subtitle: 'Suggest a high-protein meal',
-            onTap: () => _recipeStub(context),
-          ),
-        ),
-        SectionLabel('Fasting'),
-        AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Wrap(
-                spacing: 8,
-                children: [
-                  for (final p in FastingProtocol.values)
-                    ChoiceChip(
-                      label: Text(p.label),
-                      selected: state.fastingProtocol == p,
-                      onSelected: (_) => state.setFastingProtocol(p),
+            const SizedBox(height: 18),
+            Text(
+              'Logged meals',
+              style: theme.textTheme.titleMedium?.copyWith(color: AppTheme.labInk),
+            ),
+            const SizedBox(height: 10),
+            if (state.todayMeals.isEmpty)
+              Container(
+                padding: const EdgeInsets.all(28),
+                decoration: BoxDecoration(
+                  color: AppTheme.labCard,
+                  borderRadius: BorderRadius.circular(22),
+                  border: Border.all(color: AppTheme.labBorder),
+                ),
+                child: Column(
+                  children: [
+                    const Icon(Icons.no_meals_outlined,
+                        size: 40, color: AppTheme.labMuted),
+                    const SizedBox(height: 12),
+                    Text(
+                      'Empty diary',
+                      style: theme.textTheme.titleSmall?.copyWith(
+                        color: AppTheme.labInk,
+                      ),
                     ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              Text(
-                fast.active
-                    ? 'Elapsed ${fast.elapsedLabel} · remaining ${fast.remainingLabel}'
-                    : 'Not fasting · ${fast.protocol.label} window ready',
-                style: theme.textTheme.titleMedium,
-              ),
-              if (fast.active) ...[
-                const SizedBox(height: 8),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(99),
-                  child: LinearProgressIndicator(
-                    value: fast.progress,
-                    minHeight: 8,
-                    color: AppTheme.electric,
-                    backgroundColor: AppTheme.dividerColor,
+                    const SizedBox(height: 4),
+                    Text(
+                      'Snap → analyze → confirm. No demo meals.',
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
+                ),
+              )
+            else
+              ...state.todayMeals.map(
+                (m) => Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Container(
+                    padding: const EdgeInsets.all(14),
+                    decoration: BoxDecoration(
+                      color: AppTheme.labCard,
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: AppTheme.labBorder),
+                    ),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            m.foodName,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.w700,
+                              color: AppTheme.labInk,
+                            ),
+                          ),
+                        ),
+                        Text(
+                          '${m.calories} kcal',
+                          style: const TextStyle(color: AppTheme.electric),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ],
-              const SizedBox(height: 12),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: fast.active
-                          ? () => state.stopFasting()
-                          : null,
-                      child: const Text('End fast'),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: fast.active
-                          ? null
-                          : () => state.startFasting(),
-                      child: const Text('Start fast'),
-                    ),
-                  ),
-                ],
               ),
-            ],
-          ),
-        ),
-        SectionLabel('Water'),
-        AppCard(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                '${day.waterLiters.toStringAsFixed(1)} / ${day.waterGoal.toStringAsFixed(1)} L',
-                style: theme.textTheme.headlineMedium,
-              ),
-              const SizedBox(height: 10),
-              Row(
-                children: [
-                  Expanded(
-                    child: OutlinedButton(
-                      onPressed: () => state.addHydration(0.25),
-                      child: const Text('+250 ml'),
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Expanded(
-                    child: FilledButton(
-                      onPressed: () => state.addHydration(0.5),
-                      child: const Text('+500 ml'),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  void _openPlate(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => Scaffold(
-          appBar: AppBar(title: const Text('Scan food')),
-          body: const PlateScreen(),
-        ),
-      ),
-    );
-  }
-
-  Future<void> _barcodeStub(BuildContext context) async {
-    final controller = TextEditingController();
-    await showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Barcode'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              'Scan with the camera on mobile, or enter a barcode manually. '
-              'Lookup is a stub in this build.',
-            ),
-            const SizedBox(height: 12),
-            TextField(
-              controller: controller,
-              decoration: const InputDecoration(
-                labelText: 'Scan / enter barcode',
-              ),
-              keyboardType: TextInputType.number,
-            ),
           ],
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Cancel'),
-          ),
-          FilledButton(
-            onPressed: () {
-              Navigator.pop(ctx);
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text(
-                    controller.text.trim().isEmpty
-                        ? 'No barcode entered'
-                        : 'Barcode ${controller.text.trim()} — product lookup coming soon',
-                  ),
-                ),
-              );
-            },
-            child: const Text('Look up'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> _recipeStub(BuildContext context) async {
-    await showDialog<void>(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Recipe AI'),
-        content: const Text(
-          'High-protein suggestion (stub):\n\n'
-          '• Greek yogurt bowl — 250 g yogurt, berries, 20 g whey, '
-          'handful of almonds (~45 g protein)\n'
-          '• Chicken + rice plate — 150 g chicken breast, 120 g cooked rice, '
-          'broccoli (~42 g protein)\n\n'
-          'Confirm portions before logging. AI estimates are not nutrition labels.',
-        ),
-        actions: [
-          FilledButton(
-            onPressed: () => Navigator.pop(ctx),
-            child: const Text('Got it'),
-          ),
-        ],
       ),
     );
   }

@@ -153,7 +153,7 @@ class _AiConnectionCard extends StatefulWidget {
 
 class _AiConnectionCardState extends State<_AiConnectionCard> {
   final _keyCtrl = TextEditingController();
-  AiProvider _provider = AiProvider.anthropic;
+  AiProvider _provider = AiProvider.xai;
   bool _saving = false;
 
   @override
@@ -245,6 +245,11 @@ class _AiConnectionCardState extends State<_AiConnectionCard> {
           SegmentedButton<AiProvider>(
             segments: const [
               ButtonSegment(
+                value: AiProvider.xai,
+                label: Text('xAI'),
+                icon: Icon(Icons.bolt_outlined, size: 16),
+              ),
+              ButtonSegment(
                 value: AiProvider.anthropic,
                 label: Text('Claude'),
                 icon: Icon(Icons.psychology_rounded, size: 16),
@@ -266,7 +271,12 @@ class _AiConnectionCardState extends State<_AiConnectionCard> {
             enableSuggestions: false,
             decoration: InputDecoration(
               labelText: connected ? 'Replace API key' : 'API key',
-              hintText: _provider == AiProvider.anthropic ? 'sk-ant-…' : 'sk-…',
+              hintText: switch (_provider) {
+                AiProvider.xai => 'xai-…',
+                AiProvider.anthropic => 'sk-ant-…',
+                AiProvider.openai => 'sk-…',
+                AiProvider.offline => '',
+              },
               prefixIcon: const Icon(Icons.key_rounded),
             ),
           ),

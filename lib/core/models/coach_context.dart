@@ -1,7 +1,7 @@
 import 'coach_persona.dart';
 import 'health_intelligence.dart';
 
-enum AiProvider { anthropic, openai, offline }
+enum AiProvider { anthropic, openai, xai, offline }
 
 /// Snapshot of everything the coach should know before answering.
 class CoachContext {

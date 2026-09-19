@@ -15,10 +15,12 @@ import 'ai_coach_service.dart';
 class FoodVisionService {
   static const _anthropicUrl = 'https://api.anthropic.com/v1/messages';
   static const _openAiUrl = 'https://api.openai.com/v1/chat/completions';
+  static const _xaiUrl = 'https://api.x.ai/v1/chat/completions';
   static const _anthropicVersion = '2023-06-01';
 
   static const _anthropicVisionModel = 'claude-sonnet-4-20250514';
   static const _openAiVisionModel = 'gpt-4o';
+  static const _xaiVisionModel = 'grok-4.6';
 
   static const _prompt = '''
 You are a nutrition analyst. Identify the food in this photo and estimate its nutrition.
@@ -69,9 +71,22 @@ Rules:
     }
 
     try {
-      final raw = creds.provider == AiProvider.anthropic
-          ? await _askAnthropic(imageBytes, creds.apiKey)
-          : await _askOpenAi(imageBytes, creds.apiKey);
+      final raw = switch (creds.provider) {
+        AiProvider.anthropic => await _askAnthropic(imageBytes, creds.apiKey),
+        AiProvider.openai => await _askOpenAiCompatible(
+          _openAiUrl,
+          _openAiVisionModel,
+          imageBytes,
+          creds.apiKey,
+        ),
+        AiProvider.xai => await _askOpenAiCompatible(
+          _xaiUrl,
+          _xaiVisionModel,
+          imageBytes,
+          creds.apiKey,
+        ),
+        AiProvider.offline => '',
+      };
       return _parse(raw);
     } on DioException catch (e) {
       debugPrint('FoodVisionService request failed: ${e.message}');
@@ -123,13 +138,18 @@ Rules:
     return '';
   }
 
-  Future<String> _askOpenAi(Uint8List bytes, String apiKey) async {
+  Future<String> _askOpenAiCompatible(
+    String url,
+    String model,
+    Uint8List bytes,
+    String apiKey,
+  ) async {
     final dataUrl = 'data:${_mediaType(bytes)};base64,${base64Encode(bytes)}';
     final response = await _dio.post<Map<String, dynamic>>(
-      _openAiUrl,
+      url,
       options: Options(headers: {'Authorization': 'Bearer $apiKey'}),
       data: {
-        'model': _openAiVisionModel,
+        'model': model,
         'max_tokens': 700,
         'messages': [
           {

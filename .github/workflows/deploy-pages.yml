@@ -1,0 +1,58 @@
+# Deploy marketing site + Flutter web app to GitHub Pages
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Build Flutter web
+        run: flutter build web --release --base-href /nfl-bot/app/
+
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site/app
+          cp -r website/* _site/
+          # Prefer freshly built web app
+          rm -rf _site/app
+          cp -r build/web _site/app
+          # SPA fallback for Flutter routes
+          cp _site/app/index.html _site/app/404.html
+          touch _site/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

@@ -334,3 +334,194 @@ class SettingTile extends StatelessWidget {
     );
   }
 }
+
+/// CalorieLab-style daily calorie hero ring + remaining energy.
+class DayFuelRing extends StatelessWidget {
+  final num consumed;
+  final num target;
+  final double size;
+
+  const DayFuelRing({
+    super.key,
+    required this.consumed,
+    required this.target,
+    this.size = 148,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final goal = target <= 0 ? 1.0 : target.toDouble();
+    final progress = (consumed / goal).clamp(0.0, 1.0);
+    final remaining = (target - consumed).clamp(0, 99999).round();
+    final over = consumed > target;
+
+    return SizedBox(
+      width: size,
+      height: size,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          SizedBox(
+            width: size,
+            height: size,
+            child: CircularProgressIndicator(
+              value: progress,
+              strokeWidth: 10,
+              backgroundColor: Colors.white.withValues(alpha: 0.08),
+              color: over ? AppTheme.amber : AppTheme.electric,
+              strokeCap: StrokeCap.round,
+            ),
+          ),
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                over ? '+${(consumed - target).round()}' : '$remaining',
+                style: theme.textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                ),
+              ),
+              Text(
+                over ? 'kcal over' : 'kcal left',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: Colors.white70,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+/// Compact macro progress chip (Protein / Carbs / Fat).
+class MacroChip extends StatelessWidget {
+  final String label;
+  final num current;
+  final num goal;
+  final Color color;
+
+  const MacroChip({
+    super.key,
+    required this.label,
+    required this.current,
+    required this.goal,
+    required this.color,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final g = goal <= 0 ? 1.0 : goal.toDouble();
+    final p = (current / g).clamp(0.0, 1.0);
+    return Expanded(
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: Colors.white.withValues(alpha: 0.05),
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: Colors.white.withValues(alpha: 0.08)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              label,
+              style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                    color: color,
+                  ),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              '${current is double ? (current as double).toStringAsFixed(0) : current}g',
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                  ),
+            ),
+            Text(
+              'of ${goal is double ? (goal as double).toStringAsFixed(0) : goal}g',
+              style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.white54,
+                  ),
+            ),
+            const SizedBox(height: 8),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(99),
+              child: LinearProgressIndicator(
+                value: p,
+                minHeight: 5,
+                color: color,
+                backgroundColor: Colors.white.withValues(alpha: 0.1),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// Three-step loop hint: Snap → Confirm → Track.
+class FuelLoopSteps extends StatelessWidget {
+  final int activeStep;
+
+  const FuelLoopSteps({super.key, this.activeStep = 0});
+
+  @override
+  Widget build(BuildContext context) {
+    const steps = ['Snap', 'Confirm', 'Track'];
+    return Row(
+      children: [
+        for (var i = 0; i < steps.length; i++) ...[
+          if (i > 0)
+            Expanded(
+              child: Container(
+                height: 2,
+                margin: const EdgeInsets.symmetric(horizontal: 6),
+                color: i <= activeStep
+                    ? AppTheme.electric.withValues(alpha: 0.7)
+                    : Colors.white.withValues(alpha: 0.12),
+              ),
+            ),
+          Column(
+            children: [
+              Container(
+                width: 28,
+                height: 28,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: i <= activeStep
+                      ? AppTheme.electric
+                      : Colors.white.withValues(alpha: 0.08),
+                ),
+                child: Text(
+                  '${i + 1}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: i <= activeStep ? AppTheme.navy : Colors.white70,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                steps[i],
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: i <= activeStep
+                          ? Colors.white
+                          : Colors.white54,
+                      fontWeight:
+                          i == activeStep ? FontWeight.w700 : FontWeight.w500,
+                    ),
+              ),
+            ],
+          ),
+        ],
+      ],
+    );
+  }
+}

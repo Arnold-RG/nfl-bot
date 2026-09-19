@@ -62,6 +62,7 @@ NFLBOT_*BACKUP*
 credentials.json
 google-services.json
 GoogleService-Info.plist
+lib/config/local_secrets.dart
 
 # Backend
 backend/.venv/
@@ -73,4 +74,8 @@ Thumbs.db
 Desktop.ini
 
 /android/build/
+
+
+# Built web embed (CI rebuilds for Pages)
+/website/app/
 

@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 
 import 'config/app_config.dart';
 import 'config/app_theme.dart';
+import 'config/local_secrets.dart';
 import 'config/routes.dart';
 import 'core/ai/ai_orchestrator.dart';
+import 'core/models/coach_context.dart';
 import 'core/platform/health_data_platform.dart';
 import 'core/providers/app_state.dart';
 import 'core/services/ai_coach_service.dart';
@@ -85,6 +87,16 @@ Future<void> _bootstrap() async {
 
   AppServices.coach = AiCoachService();
   await _safe('coach', AppServices.coach.init);
+
+  // Local xAI key (gitignored). Secure storage may be empty on first web run.
+  await _safe('xai-key', () async {
+    const key = LocalSecrets.xaiApiKey;
+    if (key.isEmpty) return;
+    await AppServices.coach.configure(
+      provider: AiProvider.xai,
+      apiKey: key,
+    );
+  });
 
   AppServices.foodVision = FoodVisionService(coach: AppServices.coach);
 

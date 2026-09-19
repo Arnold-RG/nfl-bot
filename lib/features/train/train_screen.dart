@@ -8,6 +8,7 @@ import '../../core/models/user_profile.dart';
 import '../../core/providers/app_state.dart';
 import '../../features/home/presentation/widgets/screens/workout_session_screen.dart';
 import '../watch/watch_connect_screen.dart';
+import 'workout_anatomy_screen.dart';
 
 /// Opens the active workout session if one exists.
 class TrainSessionLauncher extends StatelessWidget {
@@ -79,6 +80,16 @@ class TrainScreen extends StatelessWidget {
                       IconButton(
                         onPressed: () => Navigator.of(context).push(
                           MaterialPageRoute(
+                            builder: (_) => const WorkoutAnatomyScreen(),
+                          ),
+                        ),
+                        icon: const Icon(Icons.accessibility_new_rounded),
+                        color: AppTheme.labMuscle,
+                        tooltip: 'Form demos',
+                      ),
+                      IconButton(
+                        onPressed: () => Navigator.of(context).push(
+                          MaterialPageRoute(
                             builder: (_) => const WatchConnectScreen(),
                           ),
                         ),
@@ -86,6 +97,21 @@ class TrainScreen extends StatelessWidget {
                         color: AppTheme.gravlVolt,
                       ),
                     ],
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    width: double.infinity,
+                    child: OutlinedButton.icon(
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => WorkoutAnatomyScreen(
+                            plan: state.currentWorkout,
+                          ),
+                        ),
+                      ),
+                      icon: const Icon(Icons.play_circle_outline),
+                      label: const Text('Open form demos (human anatomy)'),
+                    ),
                   ),
                   const SizedBox(height: 16),
                   _DarkCard(

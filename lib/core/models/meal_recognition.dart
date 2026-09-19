@@ -48,6 +48,43 @@ class RecognizedFood {
       fiberG: num_('fiber_g'),
     );
   }
+
+  RecognizedFood copyWith({
+    String? name,
+    double? portionG,
+    int? calories,
+    double? proteinG,
+    double? carbsG,
+    double? fatG,
+    double? fiberG,
+  }) {
+    return RecognizedFood(
+      name: name ?? this.name,
+      portionG: portionG ?? this.portionG,
+      calories: calories ?? this.calories,
+      proteinG: proteinG ?? this.proteinG,
+      carbsG: carbsG ?? this.carbsG,
+      fatG: fatG ?? this.fatG,
+      fiberG: fiberG ?? this.fiberG,
+    );
+  }
+
+  /// Scale macros when the user corrects portion size.
+  RecognizedFood scaledToPortion(double newPortionG) {
+    if (portionG <= 0 || newPortionG <= 0) {
+      return copyWith(portionG: newPortionG);
+    }
+    final f = newPortionG / portionG;
+    return RecognizedFood(
+      name: name,
+      portionG: newPortionG,
+      calories: (calories * f).round(),
+      proteinG: proteinG * f,
+      carbsG: carbsG * f,
+      fatG: fatG * f,
+      fiberG: fiberG * f,
+    );
+  }
 }
 
 /// Outcome of a meal photo analysis. Carries its own failure reason so the UI
@@ -76,6 +113,18 @@ class MealRecognition {
   double get totalProteinG => items.fold(0.0, (sum, i) => sum + i.proteinG);
   double get totalCarbsG => items.fold(0.0, (sum, i) => sum + i.carbsG);
   double get totalFatG => items.fold(0.0, (sum, i) => sum + i.fatG);
+
+  MealRecognition copyWith({
+    List<RecognizedFood>? items,
+    String? insight,
+    String? failure,
+  }) {
+    return MealRecognition(
+      items: items ?? this.items,
+      insight: insight ?? this.insight,
+      failure: failure,
+    );
+  }
 
   /// Combines a multi-item plate into a single loggable entry.
   FoodItem asSingleEntry() {

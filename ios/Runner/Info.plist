@@ -42,6 +42,10 @@
 	<string>NFLBot uses Bluetooth to find and pair your smart watch.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>NFLBot uses Bluetooth to connect to your smart watch.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>NFLBot uses your location to show your map route and track outdoor activity.</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>NFLBot can keep tracking your route while you train outdoors.</string>
 	<key>NSMotionUsageDescription</key>
 	<string>NFLBot uses motion data to count your steps.</string>
 	<key>NSFaceIDUsageDescription</key>
