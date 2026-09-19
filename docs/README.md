@@ -2,12 +2,16 @@
 
 Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arnold-RG/nfl-bot)**.
 
+**Live:** [Website](https://arnold-rg.github.io/nfl-bot/) · [Web app](https://arnold-rg.github.io/nfl-bot/app/)  
+**Visuals:** **[SHOWCASE.md](SHOWCASE.md)** — every screen with images
+
 ## Start here
 
-1. [Product blueprint](PRODUCT_BLUEPRINT.md) — what we’re building and why  
-2. [Nutrition Fitness Loop](NUTRITION_FITNESS_LOOP.md) — CalorieLab-class Fuel UX  
-3. [Architecture](ARCHITECTURE.md) — how the engines and platform fit  
-4. [API contract](API_CONTRACT.md) — backend modules  
+1. [SHOWCASE](SHOWCASE.md) — screenshots & how each surface works  
+2. [Product blueprint](PRODUCT_BLUEPRINT.md) — what we’re building and why  
+3. [Nutrition Fitness Loop](NUTRITION_FITNESS_LOOP.md) — Fuel / diary UX  
+4. [Architecture](ARCHITECTURE.md) — engines and platform  
+5. [API contract](API_CONTRACT.md) — backend modules  
 
 ## Ship
 
@@ -22,7 +26,8 @@ Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arn
 
 ## Design
 
-Product UI uses a dark bronze theme. Coach identity: **Bot** (wake phrase **hey bot**).
+Product UI uses a **dark bronze** theme. Coach identity: **Bot** (wake phrase **hey bot**).  
+Screenshots live in [`screenshots/`](screenshots/).
 
 ## Legal starter
 
@@ -30,4 +35,5 @@ Product UI uses a dark bronze theme. Coach identity: **Bot** (wake phrase **hey 
 
 ## Disclaimer
 
-NFL BOT is a wellness / fitness product concept. It is not intended for medical diagnosis or treatment.
+NFL BOT is a wellness / fitness product. It is not intended for medical diagnosis or treatment.  
+Not affiliated with the National Football League.

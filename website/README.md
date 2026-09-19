@@ -1,18 +1,20 @@
-# NFL BOT website
+# NFL BOT — marketing site
 
-Marketing site for the NFL BOT mobile app — dark bronze “forge cathedral” aesthetic.
+Public how-it-works site for the Flutter app.
 
-## Run locally
+**Live:** https://arnold-rg.github.io/nfl-bot/
+
+## Local
 
 ```bash
-cd website
 python -m http.server 5500
 ```
 
-Open [http://localhost:5500](http://localhost:5500).
+The `/app` path is filled by CI from `flutter build web` (see `.github/workflows/deploy-pages.yml`).
 
 ## Contents
 
-- `index.html` — single-page site
-- `assets/css/styles.css` — forge atmosphere + live CSS Bot
-- `assets/js/main.js` — particles, talk demo, parallax, reveals
+- Human-written walkthrough of Today → Bot → Diary → Water/Map → Form → You
+- Live phone UI mocks
+- App Store / Play / QR download block
+- Embedded web app iframe
