@@ -134,7 +134,7 @@
 
   // Scroll reveals
   const targets = document.querySelectorAll(
-    ".story__inner, .guide-step, .guide-loop, .block__intro, .close, .download__grid"
+    ".story__inner, .vision__card, .vision__quote, .guide-step, .guide-loop, .block__intro, .close, .download__grid"
   );
   targets.forEach((el) => el.classList.add("reveal"));
   if ("IntersectionObserver" in window) {

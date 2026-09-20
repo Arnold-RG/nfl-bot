@@ -1111,6 +1111,112 @@ li { margin: 0.35rem 0; }
 }
 .story__inner p:last-child { margin-bottom: 0; }
 
+/* Vision — body & health coach promise */
+.vision {
+  position: relative;
+  z-index: 1;
+  padding: 3.5rem clamp(1rem, 4vw, 2.5rem) 4rem;
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(224, 138, 69, 0.04), transparent 40%);
+}
+.vision__head {
+  max-width: 40rem;
+  margin: 0 auto 2.5rem;
+  text-align: center;
+}
+.vision__head h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  line-height: 1.25;
+  margin: 0 0 0.75rem;
+}
+.vision__lead {
+  margin: 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+}
+.vision__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.25rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.vision__card {
+  padding: 1.35rem 1.4rem;
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: rgba(26, 21, 18, 0.85);
+}
+.vision__card--wide {
+  grid-column: 1 / -1;
+}
+.vision__n {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--copper);
+  margin-bottom: 0.45rem;
+}
+.vision__card h3 {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin: 0 0 0.65rem;
+}
+.vision__card p {
+  margin: 0 0 0.55rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+.vision__card p[lang="fr"] {
+  color: var(--bronze-soft);
+  font-style: italic;
+}
+.vision__card p:last-of-type { margin-bottom: 0; }
+.vision__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+}
+.vision__tags li {
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201, 162, 122, 0.35);
+  font-size: 0.78rem;
+  color: var(--bronze-soft);
+}
+.vision__quote {
+  max-width: 36rem;
+  margin: 2.5rem auto 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 3px solid var(--copper);
+  background: rgba(224, 138, 69, 0.07);
+  border-radius: 0 14px 14px 0;
+}
+.vision__quote p {
+  margin: 0 0 0.4rem;
+  font-family: var(--display);
+  font-size: 1.2rem;
+}
+.vision__quote p:last-child {
+  margin: 0;
+  font-family: var(--body);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+@media (max-width: 700px) {
+  .vision__grid { grid-template-columns: 1fr; }
+  .vision__card--wide { grid-column: auto; }
+}
+
 .guide {
   position: relative;
   z-index: 1;

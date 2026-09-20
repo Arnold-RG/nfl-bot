@@ -31,6 +31,18 @@ Most fitness apps greet you with a perfect week you never lived.
 
 **Product rule:** if a number is on screen, you put it there — or your sensors did.
 
+### Une application connectée avec ton corps et ta santé
+
+| Promise | Meaning |
+|---------|---------|
+| **Real-time follow** | Goal like losing weight → Bot tracks meals & movement as the day unfolds |
+| **What to eat** | Proteins, vitamins, daily targets from your logs |
+| **Catch-up** | Miss a meal or overeat → alternatives to recover the day |
+| **Sport coach** | From what you ate → how long to train & which exercises |
+| **Sports you love** | Swim, dance, gym, walk — movement that fits you |
+
+Full bilingual write-up → **[docs/VISION.md](docs/VISION.md)** · Live site section → [Vision](https://arnold-rg.github.io/nfl-bot/#vision)
+
 > Wellness guidance only — not medical diagnosis or treatment.  
 > Trademark note: validate “NFL” branding before any commercial launch.
 

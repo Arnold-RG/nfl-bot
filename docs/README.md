@@ -8,10 +8,11 @@ Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arn
 ## Start here
 
 1. [SHOWCASE](SHOWCASE.md) — screenshots & how each surface works  
-2. [Product blueprint](PRODUCT_BLUEPRINT.md) — what we’re building and why  
-3. [Nutrition Fitness Loop](NUTRITION_FITNESS_LOOP.md) — Fuel / diary UX  
-4. [Architecture](ARCHITECTURE.md) — engines and platform  
-5. [API contract](API_CONTRACT.md) — backend modules  
+2. [VISION](VISION.md) — body & health coach promise (FR + EN)  
+3. [Product blueprint](PRODUCT_BLUEPRINT.md) — what we’re building and why  
+4. [Nutrition Fitness Loop](NUTRITION_FITNESS_LOOP.md) — Fuel / diary UX  
+5. [Architecture](ARCHITECTURE.md) — engines and platform  
+6. [API contract](API_CONTRACT.md) — backend modules  
 
 ## Ship
 

@@ -32,6 +32,55 @@ class CoachKnowledge {
       return 'You are at ${ctx.proteinG.toStringAsFixed(0)} g protein so far. A good working range is 1.6 to 2.2 g per kilogram of bodyweight when you are training regularly.\n\nThe easiest fix is anchoring every meal with a protein source first — eggs, yoghurt, chicken, fish, lentils — then building the rest of the plate around it.';
     }
 
+    if (_matches(q, [
+      'vitamin',
+      'vitamins',
+      'what should i eat',
+      'que manger',
+      'quoi manger',
+      'mangé trop',
+      'mange trop',
+      'missed a meal',
+      'missed meal',
+      'skip meal',
+      'skipped meal',
+      'rattrap',
+      'catch up',
+      'alternative',
+    ])) {
+      if (caloriesLeft < -200) {
+        return 'You are about ${caloriesLeft.abs()} kcal over today’s target and at ${ctx.proteinG.toStringAsFixed(0)} g protein.\n\nCatch-up plan: water, a 20–30 min walk, and keep the next meal lighter — vegetables + lean protein. One overshoot day is fine; we adjust the rest of the day, not your whole week.';
+      }
+      if (ctx.caloriesConsumed < 200) {
+        return 'Almost nothing logged yet. For a solid first plate: lean protein (palm-sized), colourful vegetables, and a complex carb if you train later.\n\nAim for protein early — it steadies hunger and vitamins come easier with a varied plate.';
+      }
+      if (caloriesLeft > 500) {
+        return 'You still have about $caloriesLeft kcal left (protein so far: ${ctx.proteinG.toStringAsFixed(0)} g).\n\nIf you missed a meal, don’t binge later — split what’s left into one solid plate + a protein snack. Think chicken/fish/tofu, greens, and fruit for vitamins.';
+      }
+      return 'You have about $caloriesLeft kcal left and ${ctx.proteinG.toStringAsFixed(0)} g protein logged.\n\nNext meal idea: protein first, then vegetables for vitamins/minerals, then carbs around training. If you overate earlier, shrink this plate and add a short walk.';
+    }
+
+    if (_matches(q, [
+      'swim',
+      'natation',
+      'dance',
+      'danse',
+      'sport i like',
+      'sports i love',
+      'how long',
+      'combien de temps',
+      'salle',
+      'gym time',
+      'type of exercise',
+      'quel exercice',
+    ])) {
+      final over = caloriesLeft < 0;
+      final minutes = over
+          ? 35
+          : (caloriesLeft > 600 ? 25 : 45);
+      return 'From today’s food (${ctx.caloriesConsumed} kcal in, protein ${ctx.proteinG.toStringAsFixed(0)} g), I’d plan about $minutes minutes of training.\n\nMix: strength or form demos if you want muscle tone; or a sport you enjoy — swimming, dance, brisk walk — so you actually stick with it. Open Form demos or Map when you’re ready.';
+    }
+
     if (_matches(q, ['step', 'walk', 'cardio'])) {
       if (stepsLeft > 0) {
         return 'You are on ${ctx.steps} steps, so $stepsLeft short of your ${ctx.stepGoal} goal. A 20 minute walk usually covers about 2,000 of those.\n\nWalking after your largest meal gives you the best blood-sugar return for the time spent.';
