@@ -79,3 +79,7 @@ Desktop.ini
 # Built web embed (CI rebuilds for Pages)
 /website/app/
 
+
+.cursor/
+
+.cursorrules
