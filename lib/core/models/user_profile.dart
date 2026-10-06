@@ -83,6 +83,8 @@ class UserProfile {
   final int age;
   final double heightCm;
   final double weightKg;
+  /// Optional goal weight for real-time progress (e.g. fat loss).
+  final double? targetWeightKg;
   final ActivityLevel activity;
   final FitnessGoal goal;
 
@@ -95,6 +97,7 @@ class UserProfile {
     required this.age,
     required this.heightCm,
     required this.weightKg,
+    this.targetWeightKg,
     required this.activity,
     required this.goal,
     this.isComplete = true,
@@ -113,6 +116,25 @@ class UserProfile {
 
   double get bmi => FitnessCalculator.bmi(weightKg, heightCm);
   String get bmiCategory => FitnessCalculator.bmiCategory(bmi);
+
+  /// 0–1 progress toward target weight when set; null if no target.
+  double? get weightGoalProgress {
+    final t = targetWeightKg;
+    if (t == null || t <= 0) return null;
+    final start = weightKg;
+    if ((start - t).abs() < 0.05) return 1;
+    // Progress from current toward target (works for loss or gain).
+    // Without a stored start weight we show proximity: closer = higher.
+    final distance = (weightKg - t).abs();
+    final span = (start - t).abs().clamp(0.5, 80.0);
+    return (1 - (distance / span)).clamp(0.0, 1.0);
+  }
+
+  double? get kgToTarget {
+    final t = targetWeightKg;
+    if (t == null) return null;
+    return weightKg - t;
+  }
 
   DailyTargets get targets {
     final maintenance = FitnessCalculator.dailyCalories(
@@ -144,6 +166,8 @@ class UserProfile {
     int? age,
     double? heightCm,
     double? weightKg,
+    double? targetWeightKg,
+    bool clearTargetWeight = false,
     ActivityLevel? activity,
     FitnessGoal? goal,
     bool? isComplete,
@@ -153,6 +177,9 @@ class UserProfile {
       age: age ?? this.age,
       heightCm: heightCm ?? this.heightCm,
       weightKg: weightKg ?? this.weightKg,
+      targetWeightKg: clearTargetWeight
+          ? null
+          : (targetWeightKg ?? this.targetWeightKg),
       activity: activity ?? this.activity,
       goal: goal ?? this.goal,
       isComplete: isComplete ?? this.isComplete,
@@ -164,6 +191,7 @@ class UserProfile {
     'age': age,
     'height_cm': heightCm,
     'weight_kg': weightKg,
+    if (targetWeightKg != null) 'target_weight_kg': targetWeightKg,
     'activity': activity.name,
     'goal': goal.name,
     'is_complete': isComplete,
@@ -178,6 +206,7 @@ class UserProfile {
       age: (json['age'] as num?)?.toInt() ?? 30,
       heightCm: (json['height_cm'] as num?)?.toDouble() ?? 175,
       weightKg: (json['weight_kg'] as num?)?.toDouble() ?? 75,
+      targetWeightKg: (json['target_weight_kg'] as num?)?.toDouble(),
       activity: ActivityLevel.values.firstWhere(
         (e) => e.name == json['activity'],
         orElse: () => ActivityLevel.moderate,

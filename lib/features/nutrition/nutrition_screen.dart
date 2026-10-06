@@ -83,6 +83,50 @@ class NutritionScreen extends StatelessWidget {
             ),
             const SizedBox(height: 18),
             Text(
+              state.nutritionPlan.headline,
+              style: theme.textTheme.titleMedium?.copyWith(color: AppTheme.labInk),
+            ),
+            const SizedBox(height: 6),
+            Text(
+              state.nutritionPlan.coachNote,
+              style: theme.textTheme.bodySmall,
+            ),
+            const SizedBox(height: 10),
+            ...state.nutritionPlan.suggestions.map(
+              (s) => Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: Container(
+                  width: double.infinity,
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: AppTheme.labCard,
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: AppTheme.labBorder),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        s.title,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w700,
+                          color: AppTheme.labInk,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        '${s.calories} kcal · ${s.proteinG.toStringAsFixed(0)} g protein · ${s.vitaminsHint}',
+                        style: const TextStyle(color: AppTheme.bronzeSoft, fontSize: 12),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(s.reason, style: theme.textTheme.bodySmall),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 18),
+            Text(
               'Logged meals',
               style: theme.textTheme.titleMedium?.copyWith(color: AppTheme.labInk),
             ),

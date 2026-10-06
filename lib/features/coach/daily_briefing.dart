@@ -4,11 +4,9 @@ import 'package:provider/provider.dart';
 
 import '../../config/app_theme.dart';
 import '../../core/providers/app_state.dart';
-import '../live/live_bot_character.dart';
-import '../home/presentation/widgets/components/ai_voice_orb.dart';
 import '../shared/nf_design.dart';
 
-/// Daily Bot briefing + streak — unique coach surface.
+/// Daily Bot briefing — text-led, no redundant mascot.
 class DailyBriefingCard extends StatelessWidget {
   final VoidCallback? onTalk;
 
@@ -19,68 +17,42 @@ class DailyBriefingCard extends StatelessWidget {
     final state = context.watch<AppState>();
     final streak = state.dayStreak;
     final brief = state.dailyBriefing;
+    final theme = Theme.of(context);
 
     return NfGlassCard(
       onTap: () {
         HapticFeedback.mediumImpact();
         onTalk?.call();
       },
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [
-          AppTheme.bronzeDeep.withValues(alpha: 0.35),
-          AppTheme.labCard,
-          AppTheme.labLift,
-        ],
-      ),
-      child: Row(
+      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const LiveBotCharacter(
-            size: 64,
-            state: VoiceOrbState.idle,
-            showGlow: false,
+          Row(
+            children: [
+              Text(
+                'TODAY’S BRIEFING',
+                style: theme.textTheme.labelMedium?.copyWith(
+                  color: AppTheme.bronze,
+                  letterSpacing: 1.1,
+                ),
+              ),
+              const Spacer(),
+              NfMetricPill(
+                icon: Icons.local_fire_department_rounded,
+                label: 'STREAK',
+                value: '$streak d',
+                color: AppTheme.copper,
+              ),
+            ],
           ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'BOT BRIEFING',
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: AppTheme.bronzeSoft,
-                            letterSpacing: 1.3,
-                          ),
-                    ),
-                    const Spacer(),
-                    NfMetricPill(
-                      icon: Icons.local_fire_department_rounded,
-                      label: 'STREAK',
-                      value: '$streak d',
-                      color: AppTheme.copper,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  brief,
-                  style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                        color: AppTheme.labInk,
-                        height: 1.35,
-                      ),
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  'Tap to talk · say “hey bot”',
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        color: AppTheme.bronze,
-                      ),
-                ),
-              ],
+          const SizedBox(height: 12),
+          Text(
+            brief,
+            style: theme.textTheme.titleSmall?.copyWith(
+              color: AppTheme.labInk,
+              height: 1.4,
+              fontWeight: FontWeight.w500,
             ),
           ),
         ],
@@ -89,7 +61,7 @@ class DailyBriefingCard extends StatelessWidget {
   }
 }
 
-/// Quick log strip: water, steps glance, sleep.
+/// Quick log strip: water, steps, sleep.
 class QuickVitalStrip extends StatelessWidget {
   final VoidCallback? onWater;
   final VoidCallback? onMap;
@@ -109,15 +81,14 @@ class QuickVitalStrip extends StatelessWidget {
       children: [
         Expanded(
           child: _VitalTile(
-            icon: Icons.water_drop_rounded,
+            icon: Icons.water_drop_outlined,
             label: 'Water',
-            value:
-                '${state.hydrationLiters.toStringAsFixed(1)}L',
+            value: '${state.hydrationLiters.toStringAsFixed(1)}L',
             color: AppTheme.labWater,
             onTap: onWater,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
           child: _VitalTile(
             icon: Icons.directions_walk_rounded,
@@ -127,10 +98,10 @@ class QuickVitalStrip extends StatelessWidget {
             onTap: onMap,
           ),
         ),
-        const SizedBox(width: 10),
+        const SizedBox(width: 8),
         Expanded(
           child: _VitalTile(
-            icon: Icons.bedtime_rounded,
+            icon: Icons.bedtime_outlined,
             label: 'Sleep',
             value: state.hasSleepLog ? '${state.sleepHours}h' : 'Log',
             color: AppTheme.copper,
@@ -166,25 +137,26 @@ class _VitalTile extends StatelessWidget {
           HapticFeedback.selectionClick();
           onTap?.call();
         },
-        borderRadius: BorderRadius.circular(18),
+        borderRadius: BorderRadius.circular(AppTheme.radiusMd),
         child: Ink(
           padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 10),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(18),
+            borderRadius: BorderRadius.circular(AppTheme.radiusMd),
             color: AppTheme.labCard,
             border: Border.all(color: AppTheme.labBorder),
           ),
           child: Column(
             children: [
-              Icon(icon, color: color, size: 20),
-              const SizedBox(height: 6),
+              Icon(icon, color: color, size: 18),
+              const SizedBox(height: 8),
               Text(
                 value,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: AppTheme.labInk,
-                      fontWeight: FontWeight.w700,
+                      fontWeight: FontWeight.w600,
                     ),
               ),
+              const SizedBox(height: 2),
               Text(label, style: Theme.of(context).textTheme.bodySmall),
             ],
           ),
@@ -202,7 +174,7 @@ Future<void> showSleepLogSheet(BuildContext context) async {
     context: context,
     backgroundColor: AppTheme.labCard,
     shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
     ),
     builder: (ctx) {
       return StatefulBuilder(
@@ -213,10 +185,21 @@ Future<void> showSleepLogSheet(BuildContext context) async {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Text('Log sleep',
-                    style: Theme.of(ctx).textTheme.titleLarge),
-                const SizedBox(height: 12),
-                Text('Hours: $hours'),
+                Center(
+                  child: Container(
+                    width: 36,
+                    height: 4,
+                    decoration: BoxDecoration(
+                      color: AppTheme.labBorder,
+                      borderRadius: BorderRadius.circular(99),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text('Log sleep', style: Theme.of(ctx).textTheme.titleLarge),
+                const SizedBox(height: 16),
+                Text('Hours: $hours',
+                    style: Theme.of(ctx).textTheme.bodyMedium),
                 Slider(
                   value: hours.toDouble(),
                   min: 3,
@@ -225,7 +208,8 @@ Future<void> showSleepLogSheet(BuildContext context) async {
                   activeColor: AppTheme.bronze,
                   onChanged: (v) => setModal(() => hours = v.round()),
                 ),
-                Text('Quality: $quality%'),
+                Text('Quality: $quality%',
+                    style: Theme.of(ctx).textTheme.bodyMedium),
                 Slider(
                   value: quality.toDouble(),
                   min: 20,

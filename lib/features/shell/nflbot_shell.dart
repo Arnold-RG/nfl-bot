@@ -15,6 +15,7 @@ import '../home/presentation/widgets/components/ai_voice_orb.dart';
 import '../shared/nf_design.dart';
 import '../train/train_screen.dart';
 import '../train/workout_anatomy_screen.dart';
+import '../wellness/body_coach_screen.dart';
 import '../wellness/extras_screens.dart';
 import '../wellness/progress_photos_screen.dart';
 import '../wellness/water_screen.dart';
@@ -76,6 +77,7 @@ class _NflBotShellState extends State<NflBotShell> {
     final nav = NavigationBar(
       selectedIndex: _navIndex,
       onDestinationSelected: _selectNav,
+      labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
       destinations: [
         const NavigationDestination(
           icon: Icon(Icons.home_outlined),
@@ -200,189 +202,185 @@ class _YouHub extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final pad = NfLayout.pagePad(context);
+    final theme = Theme.of(context);
     return Scaffold(
       backgroundColor: AppTheme.labBg,
       body: NfAmbientBackdrop(
         child: SafeArea(
           child: ListView(
-            padding: EdgeInsets.fromLTRB(pad, 12, pad, 40),
+            padding: EdgeInsets.fromLTRB(pad, 8, pad, 40),
             children: [
               Text(
                 'You',
-                style: Theme.of(context).textTheme.displaySmall?.copyWith(
-                      color: AppTheme.labInk,
-                      fontWeight: FontWeight.w800,
-                    ),
+                style: theme.textTheme.displaySmall?.copyWith(
+                  color: AppTheme.labInk,
+                ),
               ),
-              const SizedBox(height: 6),
+              const SizedBox(height: 4),
               Text(
-                'Account, vitals, training, and Bot.',
-                style: Theme.of(context).textTheme.bodyMedium,
+                'Health, training, and account.',
+                style: theme.textTheme.bodyMedium,
               ),
-              const SizedBox(height: 16),
-              _tile(
-                context,
-                Icons.settings_outlined,
-                'Account',
-                'Preferences & privacy',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const AccountScreen()),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.monitor_heart_outlined,
-                'Readiness',
-                'Sleep · water · steps score',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ReadinessScreen()),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.mood_outlined,
-                'Mood check-in',
-                'Tell Bot how you feel',
-                () => MoodCheckSheet.show(context),
-              ),
-              _tile(
-                context,
-                Icons.notifications_active_outlined,
-                'Reminders',
-                'Water, meals, quiet hours',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const RemindersScreen()),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.photo_library_outlined,
-                'Progress photos',
-                'Check-in timeline',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const ProgressPhotosScreen(),
-                  ),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.insights_outlined,
-                'Weekly recap',
-                'Calories & streak overview',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const WeeklyRecapScreen()),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.water_drop_rounded,
-                'Water',
-                'Daily and workout hydration',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const WaterScreen()),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.map_rounded,
-                'Map & steps',
-                'GPS route + step tracking',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const MapTrackScreen()),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.fitness_center_rounded,
-                'Train',
-                'Workouts when you are ready',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const TrainScreen()),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.accessibility_new_rounded,
-                'Form demos',
-                'Human anatomy workout guides',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => const WorkoutAnatomyScreen(),
-                  ),
-                ),
-              ),
-              _tile(
-                context,
-                Icons.monitor_weight_outlined,
-                'Body',
-                'Check-ins stay empty until you add them',
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => const ProgressScreen()),
-                ),
-              ),
-              const SizedBox(height: 12),
-              NfGlassCard(
-                child: Text(
-                  'Wake Bot anytime by saying “${CoachPersona.wakePhrase}”. '
-                  'Bot never invents your numbers — only your logs count.',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: AppTheme.labInk,
+              const SizedBox(height: 20),
+              const NfSectionLabel('Coach'),
+              NfGroup(
+                children: [
+                  NfListRow(
+                    icon: Icons.favorite_outline_rounded,
+                    title: 'Body Coach',
+                    subtitle: 'Goals, meals, and gym from your food',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const BodyCoachScreen(),
                       ),
-                ),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.monitor_heart_outlined,
+                    title: 'Readiness',
+                    subtitle: 'Sleep · water · steps',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ReadinessScreen(),
+                      ),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.mood_outlined,
+                    title: 'Mood check-in',
+                    subtitle: 'Tell Bot how you feel',
+                    onTap: () => MoodCheckSheet.show(context),
+                    showDivider: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              const NfSectionLabel('Training'),
+              NfGroup(
+                children: [
+                  NfListRow(
+                    icon: Icons.fitness_center_rounded,
+                    title: 'Train',
+                    subtitle: 'Workouts when you are ready',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const TrainScreen()),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.accessibility_new_rounded,
+                    title: 'Form demos',
+                    subtitle: 'Anatomy workout guides',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const WorkoutAnatomyScreen(),
+                      ),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.map_outlined,
+                    title: 'Map & steps',
+                    subtitle: 'GPS route and step tracking',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const MapTrackScreen(),
+                      ),
+                    ),
+                    showDivider: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              const NfSectionLabel('Body'),
+              NfGroup(
+                children: [
+                  NfListRow(
+                    icon: Icons.water_drop_outlined,
+                    title: 'Water',
+                    subtitle: 'Daily hydration',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const WaterScreen()),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.monitor_weight_outlined,
+                    title: 'Progress',
+                    subtitle: 'Body check-ins',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ProgressScreen(),
+                      ),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.photo_library_outlined,
+                    title: 'Progress photos',
+                    subtitle: 'Check-in timeline',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const ProgressPhotosScreen(),
+                      ),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.insights_outlined,
+                    title: 'Weekly recap',
+                    subtitle: 'Calories and streak overview',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const WeeklyRecapScreen(),
+                      ),
+                    ),
+                    showDivider: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 8),
+              const NfSectionLabel('Settings'),
+              NfGroup(
+                children: [
+                  NfListRow(
+                    icon: Icons.notifications_active_outlined,
+                    title: 'Reminders',
+                    subtitle: 'Water, meals, quiet hours',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const RemindersScreen(),
+                      ),
+                    ),
+                  ),
+                  NfListRow(
+                    icon: Icons.settings_outlined,
+                    title: 'Account',
+                    subtitle: 'Preferences and privacy',
+                    onTap: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const AccountScreen(),
+                      ),
+                    ),
+                    showDivider: false,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'Wake Bot anytime with “${CoachPersona.wakePhrase}”. '
+                'Bot never invents numbers — only your logs count.',
+                style: theme.textTheme.bodySmall,
+                textAlign: TextAlign.center,
               ),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _tile(
-    BuildContext context,
-    IconData icon,
-    String title,
-    String subtitle,
-    VoidCallback onTap,
-  ) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
-      child: NfGlassCard(
-        onTap: onTap,
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
-        child: Row(
-          children: [
-            Container(
-              width: 42,
-              height: 42,
-              decoration: BoxDecoration(
-                color: AppTheme.bronze.withValues(alpha: 0.14),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(icon, color: AppTheme.bronzeSoft),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(title, style: Theme.of(context).textTheme.titleSmall),
-                  Text(subtitle, style: Theme.of(context).textTheme.bodySmall),
-                ],
-              ),
-            ),
-            const Icon(Icons.chevron_right, color: AppTheme.labMuted),
-          ],
         ),
       ),
     );

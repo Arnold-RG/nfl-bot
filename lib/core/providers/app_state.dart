@@ -3,6 +3,8 @@ import '../engines/activity_engine.dart';
 import '../engines/body_engine.dart';
 import '../engines/calorie_engine.dart';
 import '../engines/fasting_engine.dart';
+import '../engines/food_aware_training_engine.dart';
+import '../engines/nutrition_plan_engine.dart';
 import '../engines/overload_engine.dart';
 import '../models/coach_context.dart';
 import '../models/coach_persona.dart';
@@ -142,7 +144,111 @@ class AppState extends ChangeNotifier {
     if (_steps < 2000) {
       return 'Open Map, start a track, and let steps accumulate.';
     }
-    return 'Scan a meal, log water, or open a form demo — Bot coaches from your logs only.';
+    return nutritionPlan.coachNote;
+  }
+
+  // —— Body-connected coaching (food ↔ training ↔ goal) ——
+  final Set<MealSlot> _skippedMeals = {};
+  final Map<String, double> _vitaminsToday = {};
+  List<ActivityType> _preferredSports = [];
+  Set<String> _dietPrefs = {};
+
+  Set<MealSlot> get skippedMeals => Set.unmodifiable(_skippedMeals);
+  Map<String, double> get vitaminsToday => Map.unmodifiable(_vitaminsToday);
+  List<ActivityType> get preferredSports => List.unmodifiable(_preferredSports);
+  Set<String> get dietPrefs => Set.unmodifiable(_dietPrefs);
+
+  FitnessGoalHint get _goalHint => switch (_profile.goal) {
+        FitnessGoal.maintain => FitnessGoalHint.maintain,
+        FitnessGoal.muscle => FitnessGoalHint.muscle,
+        FitnessGoal.cut => FitnessGoalHint.cut,
+        FitnessGoal.endurance => FitnessGoalHint.endurance,
+      };
+
+  NutritionDayPlan get nutritionPlan => NutritionPlanEngine.build(
+        calorieGoal: calorieGoal,
+        caloriesConsumed: _caloriesConsumed,
+        proteinGoalG: targets.proteinG,
+        proteinConsumedG: _proteinG,
+        mealsLogged: _todayMeals.length,
+        skippedSlots: _skippedMeals,
+        goal: _goalHint,
+        dietPrefs: _dietPrefs,
+      );
+
+  FoodAwareTrainingAdvice get trainingAdvice => FoodAwareTrainingEngine.build(
+        caloriesConsumed: _caloriesConsumed,
+        calorieGoal: calorieGoal,
+        proteinG: _proteinG,
+        proteinGoalG: targets.proteinG,
+        goal: _goalHint,
+        readinessScore: readinessScore,
+        preferredSports: _preferredSports,
+        workoutAlreadyDone: _trainedToday,
+      );
+
+  bool get _trainedToday {
+    // Heuristic: a generated workout was completed today via streak/session.
+    return _activitySessions.any(
+      (s) =>
+          s.startedAt.day == DateTime.now().day &&
+          s.startedAt.month == DateTime.now().month &&
+          (s.type == ActivityType.gym || s.minutes >= 20),
+    );
+  }
+
+  /// Real-time goal progress line for home / Body Coach.
+  String get bodyGoalSummary {
+    if (!_profile.isComplete) {
+      return 'Add your body metrics so Bot can connect food and training to you.';
+    }
+    final kg = _profile.kgToTarget;
+    if (_profile.goal == FitnessGoal.cut && kg != null) {
+      if (kg.abs() < 0.3) return 'You are on your target weight — hold the habits.';
+      return kg > 0
+          ? '${kg.toStringAsFixed(1)} kg to lose · tracking in real time from your logs'
+          : '${kg.abs().toStringAsFixed(1)} kg under target — ease the deficit';
+    }
+    if (_profile.goal == FitnessGoal.muscle) {
+      return 'Muscle goal active · ${targets.proteinG.toStringAsFixed(0)} g protein/day · ${_proteinG.toStringAsFixed(0)} g so far';
+    }
+    return '${_profile.goal.label} · ${calorieGoal} kcal/day · ${_caloriesConsumed} logged';
+  }
+
+  void skipMeal(MealSlot slot) {
+    _skippedMeals.add(slot);
+    setCoachState(
+      CoachMood.focused,
+      'Marked ${slot.name} skipped. Bot updated your next plates.',
+    );
+    notifyListeners();
+  }
+
+  void clearSkippedMeal(MealSlot slot) {
+    _skippedMeals.remove(slot);
+    notifyListeners();
+  }
+
+  Future<void> setPreferredSports(List<ActivityType> sports) async {
+    _preferredSports = List.of(sports);
+    await AppServices.prefs
+        .setPreferredSports(sports.map((e) => e.name).toList());
+    notifyListeners();
+  }
+
+  Future<void> setDietPrefs(Set<String> prefs) async {
+    _dietPrefs = Set.of(prefs);
+    await AppServices.prefs.setDietPrefs(prefs.toList());
+    notifyListeners();
+  }
+
+  Future<void> setTargetWeightKg(double? kg) async {
+    _profile = _profile.copyWith(
+      targetWeightKg: kg,
+      clearTargetWeight: kg == null,
+    );
+    await AppServices.storage.saveProfile(_profile);
+    notifyListeners();
   }
 
   int get readinessScore {
@@ -224,6 +330,7 @@ class AppState extends ChangeNotifier {
   /// Bot-written daily briefing from live numbers (never fake).
   String get dailyBriefing {
     final parts = <String>[];
+    parts.add(bodyGoalSummary);
     if (_steps > 0) {
       parts.add('$_steps steps so far');
     } else {
@@ -234,10 +341,16 @@ class AppState extends ChangeNotifier {
         '${_hydrationLiters.toStringAsFixed(1)} L water of ${hydrationGoal.toStringAsFixed(1)} L',
       );
     } else {
-      parts.add('First glass of water keeps Bot happy');
+      parts.add('First glass of water keeps Bot honest');
     }
     if (_mealsLogged > 0) {
       parts.add('$_mealsLogged meal${_mealsLogged == 1 ? '' : 's'} logged');
+    } else if (nutritionPlan.suggestions.isNotEmpty) {
+      parts.add('Eat next: ${nutritionPlan.suggestions.first.title}');
+    }
+    final advice = trainingAdvice;
+    if (advice.gymMinutes > 0) {
+      parts.add('${advice.gymMinutes} min ${advice.focus}');
     }
     if (_dayStreak > 0) {
       parts.add('$_dayStreak-day streak');
@@ -417,26 +530,40 @@ class AppState extends ChangeNotifier {
   bool get coachThinking => _coachThinking;
 
   /// Context handed to the AI coach so answers reference real numbers.
-  CoachContext get coachContext => CoachContext(
-        userName: _userName,
-        coach: coach,
-        caloriesConsumed: _caloriesConsumed,
-        calorieGoal: calorieGoal,
-        proteinG: _proteinG,
-        steps: _steps,
-        stepGoal: stepGoal,
-        hydrationLiters: _hydrationLiters,
-        sleepHours: _sleepHours.toDouble(),
-        workoutsCompleted: _workoutsCompleted,
-        watchConnected: _watchConnected,
-        heartRate: _watchConnected ? _watchHeartRate : null,
-        spo2: _watchConnected ? _watchSpo2 : null,
-        hrv: _watchConnected ? _watchHrv : null,
-        readiness: AppServices.intelligence.readiness,
-        languageName: AppServices.locale.language.englishName,
-        languageCode: AppServices.locale.language.code,
-        countryName: AppServices.locale.country.name,
-      );
+  CoachContext get coachContext {
+    final plan = nutritionPlan;
+    final advice = trainingAdvice;
+    return CoachContext(
+      userName: _userName,
+      coach: coach,
+      caloriesConsumed: _caloriesConsumed,
+      calorieGoal: calorieGoal,
+      proteinG: _proteinG,
+      proteinGoalG: targets.proteinG,
+      steps: _steps,
+      stepGoal: stepGoal,
+      hydrationLiters: _hydrationLiters,
+      sleepHours: _sleepHours.toDouble(),
+      workoutsCompleted: _workoutsCompleted,
+      watchConnected: _watchConnected,
+      heartRate: _watchConnected ? _watchHeartRate : null,
+      spo2: _watchConnected ? _watchSpo2 : null,
+      hrv: _watchConnected ? _watchHrv : null,
+      readiness: AppServices.intelligence.readiness,
+      languageName: AppServices.locale.language.englishName,
+      languageCode: AppServices.locale.language.code,
+      countryName: AppServices.locale.country.name,
+      bodyGoalSummary: bodyGoalSummary,
+      nextMealSuggestion: plan.suggestions.isEmpty
+          ? null
+          : '${plan.suggestions.first.title} (~${plan.suggestions.first.calories} kcal, ${plan.suggestions.first.proteinG.toStringAsFixed(0)} g protein)',
+      suggestedGymMinutes: advice.gymMinutes,
+      trainingFocus: advice.focus,
+      suggestedSport: advice.suggestedSport?.label,
+      overTarget: plan.overTarget,
+      hadMealSkip: plan.hadSkip,
+    );
+  }
 
   bool _initialized = false;
   bool get initialized => _initialized;
@@ -464,6 +591,16 @@ class AppState extends ChangeNotifier {
       );
       _customFastHours = prefs.customFastHours;
       _quietHours = prefs.quietHours;
+      _preferredSports = prefs.preferredSports
+          .map(
+            (n) => ActivityType.values.firstWhere(
+              (t) => t.name == n,
+              orElse: () => ActivityType.other,
+            ),
+          )
+          .where((t) => t != ActivityType.other || prefs.preferredSports.contains('other'))
+          .toList();
+      _dietPrefs = prefs.dietPrefs.toSet();
       final startedMs = prefs.fastingStartedAtMs;
       _fastingStartedAt =
           startedMs > 0 ? DateTime.fromMillisecondsSinceEpoch(startedMs) : null;
@@ -695,6 +832,9 @@ class AppState extends ChangeNotifier {
     _proteinG += food.proteinG;
     _carbsG += food.carbsG;
     _fatG += food.fatG;
+    food.vitamins.forEach((k, v) {
+      _vitaminsToday[k] = (_vitaminsToday[k] ?? 0) + v;
+    });
     _todayMeals.add(
       MealLogItem(
         id: DateTime.now().millisecondsSinceEpoch.toString(),
@@ -708,9 +848,12 @@ class AppState extends ChangeNotifier {
       ),
     );
     final left = (calorieGoal - _caloriesConsumed).clamp(0, 99999);
+    final tip = nutritionPlan.suggestions.isEmpty
+        ? ''
+        : ' Next: ${nutritionPlan.suggestions.first.title}.';
     setCoachState(
       CoachMood.encouraging,
-      '${food.name} logged. $left calories left today.',
+      '${food.name} logged. $left calories left today.$tip',
     );
     _mealsLogged++;
     AppServices.storage.recordMealLogged();
@@ -724,14 +867,18 @@ class AppState extends ChangeNotifier {
     int minutes = 25,
     String level = 'Medium',
   }) {
+    final advice = trainingAdvice;
+    final resolvedFocus = focus == 'Full Body' ? advice.focus : focus;
+    final resolvedMinutes =
+        minutes == 25 ? advice.gymMinutes.clamp(15, 60) : minutes;
     _currentWorkout = WorkoutDatabase.generateDailyWorkout(
-      focus: focus,
-      targetMinutes: minutes,
+      focus: resolvedFocus,
+      targetMinutes: resolvedMinutes,
       fitnessLevel: level,
     );
     setCoachState(
-      CoachMood.celebrating,
-      'Your $focus session is ready. $minutes minutes of work.',
+      CoachMood.focused,
+      'Session ready: $resolvedMinutes min · $resolvedFocus. ${advice.reason}',
     );
     notifyListeners();
   }

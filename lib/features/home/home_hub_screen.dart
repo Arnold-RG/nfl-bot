@@ -330,7 +330,7 @@ class _HomeHubScreenState extends State<HomeHubScreen> {
                         color: AppTheme.pacerGreen,
                       ),
                     ),
-                    Expanded(
+                Expanded(
                       child: _MetricCol(
                         value: km.toStringAsFixed(1),
                         label: 'Km',
@@ -350,9 +350,9 @@ class _HomeHubScreenState extends State<HomeHubScreen> {
                       progressColor: AppTheme.pacerBlue,
                     ),
                     child: Center(
-                      child: Column(
+                  child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                    children: [
                           Text(
                             DateFormat('EEE, MMM d').format(DateTime.now()),
                             style: theme.textTheme.bodySmall,
@@ -366,12 +366,12 @@ class _HomeHubScreenState extends State<HomeHubScreen> {
                               height: 1,
                             ),
                           ),
-                          const SizedBox(height: 6),
-                          Text(
+                      const SizedBox(height: 6),
+                      Text(
                             'Step Goal: ${NumberFormat.decimalPattern().format(goal)}',
-                            style: theme.textTheme.bodySmall,
-                          ),
-                          Text(
+                        style: theme.textTheme.bodySmall,
+                      ),
+                        Text(
                             '${(pct * 100).round()}% Completed',
                             style: theme.textTheme.titleSmall?.copyWith(
                               color: AppTheme.pacerBlue,
@@ -445,44 +445,44 @@ class _HomeHubScreenState extends State<HomeHubScreen> {
           AppCard(
             onTap: () => widget.onOpenTab?.call(1),
             child: Row(
-              children: [
-                Container(
+                  children: [
+                    Container(
                   width: 48,
                   height: 48,
-                  decoration: BoxDecoration(
+                      decoration: BoxDecoration(
                     color: AppTheme.gravlVolt.withValues(alpha: 0.25),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Icon(Icons.fitness_center_rounded,
                       color: AppTheme.navy),
-                ),
-                const SizedBox(width: 12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(day.workoutTitle,
-                          style: theme.textTheme.titleMedium),
-                      Text(
+                    ),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(day.workoutTitle,
+                              style: theme.textTheme.titleMedium),
+                          Text(
                         'Train · ${day.workoutFocus} · ${day.workoutMinutes} min',
-                        style: theme.textTheme.bodySmall,
+                            style: theme.textTheme.bodySmall,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
+                    ),
                 FilledButton(
-                  onPressed: () {
-                    state.generateWorkout(
-                      focus: day.workoutFocus.split('+').first.trim(),
-                      minutes: day.workoutMinutes,
-                    );
+                    onPressed: () {
+                      state.generateWorkout(
+                        focus: day.workoutFocus.split('+').first.trim(),
+                        minutes: day.workoutMinutes,
+                      );
                     widget.onOpenTab?.call(1);
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (_) => const TrainSessionLauncher(),
-                      ),
-                    );
-                  },
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (_) => const TrainSessionLauncher(),
+                        ),
+                      );
+                    },
                   style: FilledButton.styleFrom(
                     backgroundColor: AppTheme.gravlVolt,
                     foregroundColor: AppTheme.navy,
@@ -549,8 +549,8 @@ class _TopTab extends StatelessWidget {
       borderRadius: BorderRadius.circular(8),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-        child: Column(
-          children: [
+            child: Column(
+              children: [
             Text(
               label,
               style: TextStyle(
@@ -567,10 +567,10 @@ class _TopTab extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppTheme.pacerBlue,
                 borderRadius: BorderRadius.circular(99),
-              ),
-            ),
-          ],
-        ),
+                      ),
+                    ),
+                  ],
+                ),
       ),
     );
   }
@@ -590,7 +590,7 @@ class _MetricCol extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
+            children: [
         Text(
           value,
           style: Theme.of(context).textTheme.headlineSmall?.copyWith(

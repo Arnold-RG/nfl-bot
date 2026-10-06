@@ -28,6 +28,8 @@ class PreferencesService {
   static const _keyFastingStarted = 'fasting_started_ms';
   static const _keyCustomFastHours = 'custom_fast_hours';
   static const _keyQuietHours = 'quiet_hours';
+  static const _keyPreferredSports = 'preferred_sports';
+  static const _keyDietPrefs = 'diet_prefs';
 
   late SharedPreferences _prefs;
 
@@ -144,4 +146,23 @@ class PreferencesService {
 
   Future<void> setDataPerm(String key, bool v) =>
       _prefs.setBool('data_perm_$key', v);
+
+  /// Comma-separated ActivityType names, e.g. "swim,dance,cycle".
+  List<String> get preferredSports {
+    final raw = _prefs.getString(_keyPreferredSports) ?? '';
+    if (raw.trim().isEmpty) return const [];
+    return raw.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+  }
+
+  Future<void> setPreferredSports(List<String> sports) =>
+      _prefs.setString(_keyPreferredSports, sports.join(','));
+
+  List<String> get dietPrefs {
+    final raw = _prefs.getString(_keyDietPrefs) ?? '';
+    if (raw.trim().isEmpty) return const [];
+    return raw.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
+  }
+
+  Future<void> setDietPrefs(List<String> prefs) =>
+      _prefs.setString(_keyDietPrefs, prefs.join(','));
 }

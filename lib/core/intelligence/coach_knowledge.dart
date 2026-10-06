@@ -18,67 +18,61 @@ class CoachKnowledge {
       return 'Your readiness is ${r.score} out of 100, which puts you in the ${r.bandLabel.toLowerCase()} range. ${r.detail}\n\nMy call for today: ${r.recommendationLabel.toLowerCase()}.';
     }
 
-    if (_matches(q, ['calorie', 'how much can i eat', 'eat more', 'deficit'])) {
+    if (_matches(q, ['calorie', 'how much can i eat', 'eat more', 'deficit', 'what to eat', 'dinner', 'lunch', 'breakfast', 'meal idea'])) {
+      if (ctx.nextMealSuggestion != null) {
+        final status = ctx.overTarget
+            ? 'You are over target — here is a lighter close: '
+            : ctx.hadMealSkip
+                ? 'You skipped a meal — catch-up plate: '
+                : 'Eat this next: ';
+        return '$status${ctx.nextMealSuggestion}.\n\nYou have ${caloriesLeft > 0 ? caloriesLeft : 0} kcal and protein at ${ctx.proteinG.toStringAsFixed(0)} of ${ctx.proteinGoalG.toStringAsFixed(0)} g. Open Body Coach for vitamin-focused plates.';
+      }
       if (caloriesLeft > 400) {
         return 'You have $caloriesLeft kcal left of your ${ctx.calorieGoal} target, and you are at ${ctx.proteinG.toStringAsFixed(0)} g protein.\n\nSpend most of that on protein and vegetables — a palm-sized portion of chicken, fish, or tofu with a big salad gets you close without much else.';
       }
       if (caloriesLeft > 0) {
         return 'Only $caloriesLeft kcal left today, so keep it light. Greek yoghurt or a protein shake fits and still adds to your ${ctx.proteinG.toStringAsFixed(0)} g protein total.';
       }
-      return 'You are ${caloriesLeft.abs()} kcal over your target. Not a problem on its own — one day rarely moves the needle. Close the day with water and a walk, and reset tomorrow.';
+      return 'You are ${caloriesLeft.abs()} kcal over your target. Not a problem on its own — one day rarely moves the needle. Close the day with water and a walk, and reset tomorrow. Body Coach has lighter alternatives.';
+    }
+
+    if (_matches(q, ['skip', 'skipped', 'missed breakfast', 'missed lunch', 'missed dinner', 'ate too much', 'overeating', 'over ate'])) {
+      return ctx.hadMealSkip || ctx.overTarget
+          ? 'I already adapted your plan. ${ctx.nextMealSuggestion ?? 'Open Body Coach for catch-up or lighter plates.'}\n\nMark skips in Body Coach so the next suggestions stay accurate.'
+          : 'Tell Body Coach which meal you skipped, or if you ate too much — I will redistribute protein/calories and suggest alternatives. You can also say what you ate and ask for a lighter close.';
     }
 
     if (_matches(q, ['protein'])) {
-      return 'You are at ${ctx.proteinG.toStringAsFixed(0)} g protein so far. A good working range is 1.6 to 2.2 g per kilogram of bodyweight when you are training regularly.\n\nThe easiest fix is anchoring every meal with a protein source first — eggs, yoghurt, chicken, fish, lentils — then building the rest of the plate around it.';
+      return 'You are at ${ctx.proteinG.toStringAsFixed(0)} g of ${ctx.proteinGoalG.toStringAsFixed(0)} g protein today.\n\nAnchor every meal with eggs, yoghurt, chicken, fish, tofu, or lentils first — then build the plate. Body Coach lists vitamin-aware options that still hit protein.';
     }
 
-    if (_matches(q, [
-      'vitamin',
-      'vitamins',
-      'what should i eat',
-      'que manger',
-      'quoi manger',
-      'mangé trop',
-      'mange trop',
-      'missed a meal',
-      'missed meal',
-      'skip meal',
-      'skipped meal',
-      'rattrap',
-      'catch up',
-      'alternative',
-    ])) {
-      if (caloriesLeft < -200) {
-        return 'You are about ${caloriesLeft.abs()} kcal over today’s target and at ${ctx.proteinG.toStringAsFixed(0)} g protein.\n\nCatch-up plan: water, a 20–30 min walk, and keep the next meal lighter — vegetables + lean protein. One overshoot day is fine; we adjust the rest of the day, not your whole week.';
-      }
-      if (ctx.caloriesConsumed < 200) {
-        return 'Almost nothing logged yet. For a solid first plate: lean protein (palm-sized), colourful vegetables, and a complex carb if you train later.\n\nAim for protein early — it steadies hunger and vitamins come easier with a varied plate.';
-      }
-      if (caloriesLeft > 500) {
-        return 'You still have about $caloriesLeft kcal left (protein so far: ${ctx.proteinG.toStringAsFixed(0)} g).\n\nIf you missed a meal, don’t binge later — split what’s left into one solid plate + a protein snack. Think chicken/fish/tofu, greens, and fruit for vitamins.';
-      }
-      return 'You have about $caloriesLeft kcal left and ${ctx.proteinG.toStringAsFixed(0)} g protein logged.\n\nNext meal idea: protein first, then vegetables for vitamins/minerals, then carbs around training. If you overate earlier, shrink this plate and add a short walk.';
+    if (_matches(q, ['vitamin', 'supplement', 'micronutrient'])) {
+      final meal = ctx.nextMealSuggestion;
+      return 'Food first: colourful vegetables and fruit cover most micronutrients.\n\n${meal == null ? 'Open Body Coach for plates tagged with vitamins C, D, iron, and B12.' : 'Right now I would run: $meal'}\n\nEvidence-backed extras: creatine for training, vitamin D if you get little sun, protein powder for convenience.';
     }
 
-    if (_matches(q, [
-      'swim',
-      'natation',
-      'dance',
-      'danse',
-      'sport i like',
-      'sports i love',
-      'how long',
-      'combien de temps',
-      'salle',
-      'gym time',
-      'type of exercise',
-      'quel exercice',
-    ])) {
-      final over = caloriesLeft < 0;
-      final minutes = over
-          ? 35
-          : (caloriesLeft > 600 ? 25 : 45);
-      return 'From today’s food (${ctx.caloriesConsumed} kcal in, protein ${ctx.proteinG.toStringAsFixed(0)} g), I’d plan about $minutes minutes of training.\n\nMix: strength or form demos if you want muscle tone; or a sport you enjoy — swimming, dance, brisk walk — so you actually stick with it. Open Form demos or Map when you’re ready.';
+    if (_matches(q, ['workout', 'exercise', 'routine', 'plan', 'session', 'gym', 'how long'])) {
+      final mins = ctx.suggestedGymMinutes;
+      final focus = ctx.trainingFocus;
+      final r = ctx.readiness;
+      final guard = r == null
+          ? ''
+          : ' Readiness ${r.score} → ${r.recommendationLabel.toLowerCase()}.';
+      if (mins != null && focus != null) {
+        return 'Based on what you have eaten today: about $mins minutes of $focus.$guard\n\n${ctx.suggestedSport == null ? '' : 'Or do ${ctx.suggestedSport} if you prefer that sport today. '}Open Body Coach or Train to start the session.';
+      }
+      return 'Open Train and generate today\'s session — it builds around your fuel and readiness.$guard';
+    }
+
+    if (_matches(q, ['swim', 'dance', 'sport', 'cycling', 'yoga instead'])) {
+      return ctx.suggestedSport == null
+          ? 'Add sports you like in Body Coach (swim, dance, cycle, run, yoga). I will suggest them when they fit your fuel and goal.'
+          : 'Today I would pick ${ctx.suggestedSport}. ${ctx.suggestedGymMinutes ?? 30} minutes is enough if you keep a steady effort.';
+    }
+
+    if (_matches(q, ['weight', 'lose', 'fat loss', 'gain', 'plateau', 'progress', 'goal'])) {
+      final goal = ctx.bodyGoalSummary;
+      return '${goal == null ? 'Set a target weight in Body Coach to track fat-loss progress in real time.' : goal}\n\nWeight moves on weekly averages — weigh at the same time each morning. If the trend is flat for two weeks, change one lever: food, steps, or training volume.';
     }
 
     if (_matches(q, ['step', 'walk', 'cardio'])) {
@@ -89,53 +83,21 @@ class CoachKnowledge {
     }
 
     if (_matches(q, ['water', 'hydrat', 'drink'])) {
-      return 'You are at ${ctx.hydrationLiters.toStringAsFixed(1)} L today. Aim for roughly 35 ml per kilogram of bodyweight, plus another 500 ml for each hour of hard training.\n\nA practical check: pale straw-coloured urine means you are on track.';
+      return 'You are at ${ctx.hydrationLiters.toStringAsFixed(1)} L today. Aim for roughly 35 ml per kilogram of bodyweight, plus another 500 ml for each hour of hard training.';
     }
 
     if (_matches(q, ['sleep', 'tired', 'exhausted', 'insomnia'])) {
       if (ctx.sleepHours < 6.5) {
-        return 'You logged ${ctx.sleepHours.toStringAsFixed(1)} hours, which is short. Under about seven hours, strength output drops and hunger signals get noisier the next day.\n\nTreat today as a moderate session rather than a hard one, and move bedtime 30 minutes earlier tonight instead of trying to bank it all at the weekend.';
+        return 'You logged ${ctx.sleepHours.toStringAsFixed(1)} hours, which is short. Treat today as moderate, and move bedtime earlier tonight.';
       }
-      return 'At ${ctx.sleepHours.toStringAsFixed(1)} hours you are in decent shape. The bigger lever now is consistency — going to bed within the same 30 minute window every night does more for recovery than one long night.';
+      return 'At ${ctx.sleepHours.toStringAsFixed(1)} hours you are in decent shape. Consistency beats one long night.';
     }
 
-    if (_matches(q, ['workout', 'exercise', 'routine', 'plan', 'session'])) {
-      final r = ctx.readiness;
-      final guard = r == null
-          ? ''
-          : ' Your readiness is ${r.score}, so ${r.recommendationLabel.toLowerCase()}.';
-      return 'Open the Workout tab and generate today\'s session — it builds around the time and equipment you actually have.$guard\n\nIf you only have 20 minutes, a full-body circuit beats an isolated body part every time.';
-    }
-
-    if (_matches(q, ['heart', 'bpm', 'hrv', 'pulse'])) {
+    if (_matches(q, ['heart', 'bpm', 'hrv', 'pulse', 'watch', 'pair', 'connect'])) {
       if (!ctx.watchConnected) {
-        return 'I am not reading a watch right now. Pair one in the Watch Hub over Bluetooth, QR, Wi-Fi, or your health account and I can track heart rate, HRV, and oxygen live.';
+        return 'Pair a watch in the Watch Hub so I can read heart rate, HRV, and recovery live.';
       }
-      final hr = ctx.heartRate;
-      final hrv = ctx.hrv;
-      return 'Your watch is reporting ${hr ?? '--'} bpm${hrv == null ? '' : ' with HRV at $hrv ms'}.\n\nHRV is most useful compared against your own average rather than anyone else\'s — a sustained drop usually means training load, alcohol, or illness rather than anything sinister.';
-    }
-
-    if (_matches(q, ['watch', 'pair', 'connect', 'bluetooth', 'sync'])) {
-      return ctx.watchConnected
-          ? 'Your watch is connected and syncing. You can force a fresh pull any time with Sync now in the Watch Hub.'
-          : 'Head to the Watch Hub tab. You can pair four ways — Bluetooth scan, QR code, Wi-Fi with an IP and PIN, or signing into your health cloud account.';
-    }
-
-    if (_matches(q, ['weight', 'lose', 'fat loss', 'gain', 'plateau'])) {
-      return 'Weight moves on weekly averages, not daily readings — water shifts easily hide real change. Weigh at the same time each morning and only judge the seven-day trend.\n\nIf that trend has been flat for two or more weeks, change one thing at a time: usually intake first, then step count, then training volume.';
-    }
-
-    if (_matches(q, ['sore', 'pain', 'hurt', 'injur'])) {
-      return 'Muscle soreness that eases as you warm up is normal and safe to train around. Sharp, joint-centred, or one-sided pain is not — back off that movement and give it a few days.\n\nIf pain persists beyond a week or affects how you walk, get it looked at properly rather than pushing through.';
-    }
-
-    if (_matches(q, ['stress', 'anxious', 'overwhelm'])) {
-      return 'Slow breathing is the fastest lever you have — four seconds in, six out, for five minutes. It shifts you out of a sympathetic state measurably.\n\nAfter that, a walk outdoors does more than another hard session when stress is already high.';
-    }
-
-    if (_matches(q, ['vitamin', 'supplement', 'micronutrient'])) {
-      return 'Food first: varied colours across your vegetables and fruit covers most micronutrients without much thought.\n\nThe supplements with the strongest evidence are creatine for training output, vitamin D if you get little sun, and protein powder purely for convenience. Most of the rest are optional.';
+      return 'Your watch is reporting ${ctx.heartRate ?? '--'} bpm${ctx.hrv == null ? '' : ' with HRV at ${ctx.hrv} ms'}.';
     }
 
     if (_matches(q, ['hello', 'hi ', 'hey', 'morning', 'good evening'])) {

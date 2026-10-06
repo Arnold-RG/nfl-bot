@@ -10,6 +10,7 @@ class CoachContext {
   final int caloriesConsumed;
   final int calorieGoal;
   final double proteinG;
+  final double proteinGoalG;
   final int steps;
   final int stepGoal;
   final double hydrationLiters;
@@ -23,6 +24,13 @@ class CoachContext {
   final String languageName;
   final String languageCode;
   final String countryName;
+  final String? bodyGoalSummary;
+  final String? nextMealSuggestion;
+  final int? suggestedGymMinutes;
+  final String? trainingFocus;
+  final String? suggestedSport;
+  final bool overTarget;
+  final bool hadMealSkip;
 
   const CoachContext({
     required this.userName,
@@ -30,6 +38,7 @@ class CoachContext {
     required this.caloriesConsumed,
     required this.calorieGoal,
     required this.proteinG,
+    this.proteinGoalG = 0,
     required this.steps,
     required this.stepGoal,
     required this.hydrationLiters,
@@ -43,13 +52,20 @@ class CoachContext {
     this.languageName = 'English',
     this.languageCode = 'en',
     this.countryName = 'Poland',
+    this.bodyGoalSummary,
+    this.nextMealSuggestion,
+    this.suggestedGymMinutes,
+    this.trainingFocus,
+    this.suggestedSport,
+    this.overTarget = false,
+    this.hadMealSkip = false,
   });
 
   String toPromptBlock() {
     final lines = <String>[
       'User name: $userName',
       'Calories: $caloriesConsumed of $calorieGoal kcal today',
-      'Protein so far: ${proteinG.toStringAsFixed(0)} g',
+      'Protein so far: ${proteinG.toStringAsFixed(0)} g of ${proteinGoalG.toStringAsFixed(0)} g goal',
       'Steps: $steps of $stepGoal',
       'Hydration: ${hydrationLiters.toStringAsFixed(1)} L',
       'Last night sleep: ${sleepHours.toStringAsFixed(1)} h',
@@ -58,6 +74,18 @@ class CoachContext {
       'Reply language: $languageName ($languageCode)',
       'Member country: $countryName',
     ];
+    if (bodyGoalSummary != null) lines.add('Body goal: $bodyGoalSummary');
+    if (nextMealSuggestion != null) {
+      lines.add('Next meal suggestion: $nextMealSuggestion');
+    }
+    if (suggestedGymMinutes != null) {
+      lines.add(
+        'Suggested training: $suggestedGymMinutes min · ${trainingFocus ?? 'session'}',
+      );
+    }
+    if (suggestedSport != null) lines.add('Preferred sport idea: $suggestedSport');
+    if (overTarget) lines.add('Status: over calorie target today — suggest light alternatives');
+    if (hadMealSkip) lines.add('Status: meal skipped — suggest catch-up plates');
     if (heartRate != null) lines.add('Current heart rate: $heartRate bpm');
     if (spo2 != null) lines.add('Blood oxygen: $spo2%');
     if (hrv != null) lines.add('HRV: $hrv ms');
