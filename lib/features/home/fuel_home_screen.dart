@@ -8,7 +8,7 @@ import '../../core/providers/app_state.dart';
 import '../account/account_screen.dart';
 import '../activity/map_track_screen.dart';
 import '../coach/daily_briefing.dart';
-import '../live/live_bot_character.dart';
+import '../live/coach_mark.dart';
 import '../plate/plate_screen.dart';
 import '../shared/nf_design.dart';
 import '../train/workout_anatomy_screen.dart';
@@ -299,8 +299,8 @@ class _CoachHero extends StatelessWidget {
           AnimatedBuilder(
             animation: pulse,
             builder: (context, _) {
-              return LiveBotCharacter(
-                size: 72,
+              return CoachMark(
+                size: 64,
                 state: VoiceOrbState.listening,
                 pulse: pulse.value * 0.28,
                 showGlow: false,
@@ -313,7 +313,7 @@ class _CoachHero extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Talk to Bot',
+                  'Talk to coach',
                   style: theme.textTheme.titleMedium?.copyWith(
                     color: AppTheme.labInk,
                   ),

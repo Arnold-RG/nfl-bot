@@ -7,11 +7,11 @@ import '../account/account_screen.dart';
 import '../activity/map_track_screen.dart';
 import '../coach/coach_hub_screen.dart';
 import '../home/fuel_home_screen.dart';
-import '../live/live_bot_character.dart';
 import '../nutrition/nutrition_screen.dart';
 import '../plate/plate_screen.dart';
 import '../progress/progress_hub_screen.dart';
 import '../home/presentation/widgets/components/ai_voice_orb.dart';
+import '../live/coach_mark.dart';
 import '../shared/nf_design.dart';
 import '../train/train_screen.dart';
 import '../train/workout_anatomy_screen.dart';
@@ -98,7 +98,7 @@ class _NflBotShellState extends State<NflBotShell> {
           icon: SizedBox(
             width: 28,
             height: 28,
-            child: LiveBotCharacter(
+            child: CoachMark(
               size: 26,
               showGlow: false,
               state: _navIndex == 3
@@ -109,14 +109,14 @@ class _NflBotShellState extends State<NflBotShell> {
           selectedIcon: SizedBox(
             width: 30,
             height: 30,
-            child: LiveBotCharacter(
+            child: CoachMark(
               size: 28,
               showGlow: false,
               state: VoiceOrbState.speaking,
               pulse: 0.4,
             ),
           ),
-          label: 'Bot',
+          label: 'Coach',
         ),
         const NavigationDestination(
           icon: Icon(Icons.person_outline),

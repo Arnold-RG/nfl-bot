@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 import '../home/presentation/widgets/components/ai_voice_orb.dart';
-import 'live_bot_character.dart';
+import 'coach_mark.dart';
 
 class BrandMark {
-  static const asset = LiveBotCharacter.asset;
+  static const asset = 'assets/branding/bot.jpg';
 }
 
-/// Live Bot coach artwork — jump / rotate / talk (API kept for call sites).
+/// Live coach artwork — geometric signal mark.
 class VoiceArtwork extends StatelessWidget {
   final double size;
   final double pulse;
@@ -22,7 +22,7 @@ class VoiceArtwork extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return LiveBotCharacter(
+    return CoachMark(
       size: size,
       pulse: pulse,
       state: state,

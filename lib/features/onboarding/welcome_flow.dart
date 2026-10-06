@@ -8,9 +8,11 @@ import '../../core/data/world_languages.dart';
 import '../../core/models/user_profile.dart';
 import '../../core/providers/app_state.dart';
 import '../../core/services/app_services.dart';
-import '../live/brand_mark.dart';
-import '../shared/app_ui.dart';
+import '../home/presentation/widgets/components/ai_voice_orb.dart';
+import '../live/coach_mark.dart';
+import '../shared/nf_design.dart';
 
+/// First-run setup — calm, short steps, new coach mark.
 class WelcomeFlow extends StatefulWidget {
   final VoidCallback onComplete;
   const WelcomeFlow({super.key, required this.onComplete});
@@ -20,7 +22,7 @@ class WelcomeFlow extends StatefulWidget {
 }
 
 class _WelcomeFlowState extends State<WelcomeFlow> {
-  static const _totalSteps = 9;
+  static const _totalSteps = 7;
 
   int _step = 0;
   final _name = TextEditingController();
@@ -93,85 +95,106 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
     final theme = Theme.of(context);
     final titles = [
       'Meet your coach',
-      'Where are you?',
-      'Your body basics',
+      'You',
+      'Body basics',
       'Your goal',
-      'Experience',
-      'Days per week',
-      'Equipment',
-      'Diet preferences',
-      'Connect health',
+      'Training',
+      'Food prefs',
+      'Ready',
     ];
     final subs = [
-      'Bot is your AI Health Coach — say “hey bot” anytime.',
-      'Country sets language and currency. You can change them later.',
-      'These numbers set calories and protein so the coach is not guessing.',
-      'Pick the outcome you want this season.',
-      'We scale progressive overload to your level.',
-      'How many training days fit your week?',
-      'Home or gym changes exercise selection.',
+      'NFL BOT coaches from your real logs — never invented numbers.',
+      'Name and where you train from.',
+      'These set calories and protein so coaching is not a guess.',
+      'What are you working toward this season?',
+      'Experience, days, and equipment shape your plan.',
       'Optional filters for meal suggestions.',
       kIsWeb
-          ? 'On web, health platforms are labeled only — native apps use HealthKit / Health Connect.'
-          : 'Link Apple Health or Health Connect when you are ready. Optional for now.',
+          ? 'Health platforms on web are labeled only — native apps sync HealthKit / Health Connect.'
+          : 'Link health data later from Account when you are ready.',
     ];
 
     return Scaffold(
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  const VoiceArtwork(size: 56),
-                  const Spacer(),
-                  Text(
-                    '${_step + 1} / $_totalSteps',
-                    style: theme.textTheme.bodySmall,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 12),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(4),
-                child: LinearProgressIndicator(
-                  value: (_step + 1) / _totalSteps,
-                  minHeight: 4,
-                  backgroundColor: AppTheme.dividerColor,
-                  color: AppTheme.primaryColor,
+      backgroundColor: AppTheme.labBg,
+      body: NfAmbientBackdrop(
+        child: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(
+              NfLayout.pagePad(context),
+              12,
+              NfLayout.pagePad(context),
+              16,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const CoachMark(
+                      size: 44,
+                      showGlow: false,
+                      state: VoiceOrbState.idle,
+                    ),
+                    const SizedBox(width: 12),
+                    Text(
+                      'NFL BOT',
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        color: AppTheme.labInk,
+                      ),
+                    ),
+                    const Spacer(),
+                    Text(
+                      '${_step + 1} / $_totalSteps',
+                      style: theme.textTheme.bodySmall,
+                    ),
+                  ],
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(titles[_step], style: theme.textTheme.displaySmall),
-              const SizedBox(height: 8),
-              Text(subs[_step], style: theme.textTheme.bodyMedium),
-              const SizedBox(height: 20),
-              Expanded(child: _stepBody()),
-              Row(
-                children: [
-                  if (_step > 0)
-                    TextButton(
-                      onPressed: () => setState(() => _step--),
-                      child: const Text('Back'),
-                    ),
-                  const Spacer(),
-                  FilledButton(
-                    onPressed: () {
-                      if (_step < _totalSteps - 1) {
-                        setState(() => _step++);
-                      } else {
-                        _finish();
-                      }
-                    },
-                    child: Text(
-                      _step < _totalSteps - 1 ? 'Continue' : 'I\'m ready',
-                    ),
+                const SizedBox(height: 14),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(99),
+                  child: LinearProgressIndicator(
+                    value: (_step + 1) / _totalSteps,
+                    minHeight: 3,
+                    backgroundColor: AppTheme.labBorder,
+                    color: AppTheme.bronze,
                   ),
-                ],
-              ),
-            ],
+                ),
+                const SizedBox(height: 22),
+                Text(
+                  titles[_step],
+                  style: theme.textTheme.displaySmall?.copyWith(
+                    color: AppTheme.labInk,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Text(subs[_step], style: theme.textTheme.bodyMedium),
+                const SizedBox(height: 18),
+                Expanded(child: _stepBody()),
+                const SizedBox(height: 8),
+                Row(
+                  children: [
+                    if (_step > 0)
+                      TextButton(
+                        onPressed: () => setState(() => _step--),
+                        child: const Text('Back'),
+                      ),
+                    const Spacer(),
+                    FilledButton(
+                      onPressed: () {
+                        if (_step < _totalSteps - 1) {
+                          setState(() => _step++);
+                        } else {
+                          _finish();
+                        }
+                      },
+                      child: Text(
+                        _step < _totalSteps - 1 ? 'Continue' : 'Start coaching',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -184,19 +207,19 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
       1 => _place(),
       2 => _body(),
       3 => _goalStep(),
-      4 => _experienceStep(),
-      5 => _frequencyStep(),
-      6 => _equipmentStep(),
-      7 => _dietStep(),
-      _ => _healthStep(),
+      4 => _trainingStep(),
+      5 => _dietStep(),
+      _ => _readyStep(),
     };
   }
+
+  Widget _panel(Widget child) => NfGlassCard(child: child);
 
   Widget _hello() {
     return ListView(
       children: [
-        AppCard(
-          child: Column(
+        _panel(
+          Column(
             children: [
               TextField(
                 controller: _name,
@@ -204,11 +227,11 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
                   labelText: 'What should the coach call you?',
                 ),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               TextField(
                 controller: _email,
                 keyboardType: TextInputType.emailAddress,
-                decoration: const InputDecoration(labelText: 'Email'),
+                decoration: const InputDecoration(labelText: 'Email (optional)'),
               ),
             ],
           ),
@@ -221,8 +244,8 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
     final locale = AppServices.locale;
     return ListView(
       children: [
-        AppCard(
-          child: Column(
+        _panel(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               DropdownButtonFormField<String>(
@@ -241,7 +264,7 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
                   setState(() {});
                 },
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               DropdownButtonFormField<String>(
                 initialValue: locale.language.code,
                 decoration: const InputDecoration(labelText: 'Language'),
@@ -255,12 +278,6 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
                   setState(() {});
                 },
               ),
-              const SizedBox(height: 14),
-              Text(
-                'Billing: ${locale.currency.code} · Ultra from '
-                '${locale.currency.format(22)} / month',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
             ],
           ),
         ),
@@ -271,8 +288,8 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
   Widget _body() {
     return ListView(
       children: [
-        AppCard(
-          child: Column(
+        _panel(
+          Column(
             children: [
               Row(
                 children: [
@@ -301,7 +318,7 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
                   ),
                 ],
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               DropdownButtonFormField<BiologicalSex>(
                 initialValue: _sex,
                 decoration: const InputDecoration(labelText: 'Sex'),
@@ -311,7 +328,7 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
                 ],
                 onChanged: (v) => setState(() => _sex = v ?? _sex),
               ),
-              const SizedBox(height: 10),
+              const SizedBox(height: 12),
               DropdownButtonFormField<ActivityLevel>(
                 initialValue: _activity,
                 decoration: const InputDecoration(labelText: 'Daily activity'),
@@ -328,80 +345,66 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
     );
   }
 
+  Widget _chipWrap(List<Widget> children) => Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: children,
+      );
+
   Widget _goalStep() {
     return ListView(
       children: [
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final g in FitnessGoal.values)
-              ChoiceChip(
-                label: Text(g.label),
-                selected: _goal == g,
-                onSelected: (_) => setState(() => _goal = g),
-              ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _experienceStep() {
-    return ListView(
-      children: [
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final e in ['beginner', 'intermediate', 'advanced'])
-              ChoiceChip(
-                label: Text(e[0].toUpperCase() + e.substring(1)),
-                selected: _experience == e,
-                onSelected: (_) => setState(() => _experience = e),
-              ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _frequencyStep() {
-    return ListView(
-      children: [
-        Wrap(
-          spacing: 8,
-          children: [
-            for (final d in [2, 3, 4, 5, 6])
-              ChoiceChip(
-                label: Text('$d days'),
-                selected: _daysPerWeek == d,
-                onSelected: (_) => setState(() => _daysPerWeek = d),
-              ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _equipmentStep() {
-    return ListView(
-      children: [
-        Wrap(
-          spacing: 8,
-          children: [
+        _chipWrap([
+          for (final g in FitnessGoal.values)
             ChoiceChip(
-              label: const Text('Home'),
-              selected: _equipment == 'home',
-              onSelected: (_) => setState(() => _equipment = 'home'),
+              label: Text(g.label),
+              selected: _goal == g,
+              onSelected: (_) => setState(() => _goal = g),
             ),
+        ]),
+      ],
+    );
+  }
+
+  Widget _trainingStep() {
+    return ListView(
+      children: [
+        Text('Experience', style: Theme.of(context).textTheme.labelMedium),
+        const SizedBox(height: 8),
+        _chipWrap([
+          for (final e in ['beginner', 'intermediate', 'advanced'])
             ChoiceChip(
-              label: const Text('Gym'),
-              selected: _equipment == 'gym',
-              onSelected: (_) => setState(() => _equipment = 'gym'),
+              label: Text(e[0].toUpperCase() + e.substring(1)),
+              selected: _experience == e,
+              onSelected: (_) => setState(() => _experience = e),
             ),
-          ],
-        ),
+        ]),
+        const SizedBox(height: 18),
+        Text('Days per week', style: Theme.of(context).textTheme.labelMedium),
+        const SizedBox(height: 8),
+        _chipWrap([
+          for (final d in [2, 3, 4, 5, 6])
+            ChoiceChip(
+              label: Text('$d'),
+              selected: _daysPerWeek == d,
+              onSelected: (_) => setState(() => _daysPerWeek = d),
+            ),
+        ]),
+        const SizedBox(height: 18),
+        Text('Equipment', style: Theme.of(context).textTheme.labelMedium),
+        const SizedBox(height: 8),
+        _chipWrap([
+          ChoiceChip(
+            label: const Text('Home'),
+            selected: _equipment == 'home',
+            onSelected: (_) => setState(() => _equipment = 'home'),
+          ),
+          ChoiceChip(
+            label: const Text('Gym'),
+            selected: _equipment == 'gym',
+            onSelected: (_) => setState(() => _equipment = 'gym'),
+          ),
+        ]),
       ],
     );
   }
@@ -409,56 +412,61 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
   Widget _dietStep() {
     return ListView(
       children: [
-        Wrap(
-          spacing: 8,
-          runSpacing: 8,
-          children: [
-            for (final d in _dietOptions)
-              FilterChip(
-                label: Text(d),
-                selected: _dietPrefs.contains(d),
-                onSelected: (on) {
-                  setState(() {
-                    if (on) {
-                      if (d == 'No preference') {
-                        _dietPrefs
-                          ..clear()
-                          ..add(d);
-                      } else {
-                        _dietPrefs.remove('No preference');
-                        _dietPrefs.add(d);
-                      }
+        _chipWrap([
+          for (final d in _dietOptions)
+            FilterChip(
+              label: Text(d),
+              selected: _dietPrefs.contains(d),
+              onSelected: (on) {
+                setState(() {
+                  if (on) {
+                    if (d == 'No preference') {
+                      _dietPrefs
+                        ..clear()
+                        ..add(d);
                     } else {
-                      _dietPrefs.remove(d);
+                      _dietPrefs.remove('No preference');
+                      _dietPrefs.add(d);
                     }
-                  });
-                },
-              ),
-          ],
-        ),
+                  } else {
+                    _dietPrefs.remove(d);
+                  }
+                });
+              },
+            ),
+        ]),
       ],
     );
   }
 
-  Widget _healthStep() {
+  Widget _readyStep() {
     return ListView(
       children: [
-        AppCard(
-          child: Column(
+        _panel(
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const CoachMark(size: 72, state: VoiceOrbState.listening),
+              const SizedBox(height: 16),
+              Text(
+                'You’re set.',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: AppTheme.labInk,
+                    ),
+              ),
+              const SizedBox(height: 8),
               Text(
                 kIsWeb
-                    ? 'Web build: health connections are informational. '
-                        'Use the iOS/Android app for HealthKit or Health Connect.'
-                    : 'You can link Apple Health or Health Connect later from Account → Connected devices.',
-                style: Theme.of(context).textTheme.bodyLarge,
+                    ? 'On web, health connections are informational. Use iOS/Android for HealthKit or Health Connect.'
+                    : 'Link Apple Health or Health Connect anytime from Account → Connected devices.',
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               const SizedBox(height: 12),
               Text(
-                'You are ready. Your AI Health Coach will use body metrics, '
-                'training, nutrition, and recovery — estimates stay labeled until a wearable is linked.',
-                style: Theme.of(context).textTheme.bodyMedium,
+                'Say “hey bot” for food, training, water, and recovery — always from your logs.',
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: AppTheme.bronzeSoft,
+                    ),
               ),
             ],
           ),
