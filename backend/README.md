@@ -1,6 +1,6 @@
-# NFL BOT Backend
+# Elvora Backend
 
-Python **FastAPI modular monolith** for the NFL BOT member app. Modules live in one deployable service (Auth, Users, Nutrition, Training, Activity, Recovery, AI, Social, Billing) — not a microservice mesh.
+Python **FastAPI modular monolith** for the Elvora member app. Modules live in one deployable service (Auth, Users, Nutrition, Training, Activity, Recovery, AI, Social, Billing) — not a microservice mesh.
 
 Docs: [`../docs/PRODUCT_BLUEPRINT.md`](../docs/PRODUCT_BLUEPRINT.md) · [`../docs/ARCHITECTURE.md`](../docs/ARCHITECTURE.md) · [`../docs/API_CONTRACT.md`](../docs/API_CONTRACT.md)
 

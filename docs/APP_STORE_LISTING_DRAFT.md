@@ -1,9 +1,9 @@
-# App Store listing draft — NFL BOT
+# App Store listing draft — Elvora
 
 Use this in App Store Connect. Edit before submit.
 
 ## Name
-NFL BOT
+Elvora
 
 ## Subtitle (30 chars max)
 AI Health & Fitness Coach
@@ -12,7 +12,7 @@ AI Health & Fitness Coach
 Glass AI Stage coach for steps, training, nutrition and recovery — tap the mic and get what to do next.
 
 ## Description
-NFL BOT is your AI health and fitness coach.
+Elvora is your AI health and fitness coach.
 
 Open one app for:
 • Movement & steps
@@ -23,7 +23,7 @@ Open one app for:
 
 Ask “What should I do now?” and get a clear next action based on your day — not a random chatbot.
 
-Important: NFL BOT provides wellness and fitness guidance and is not a substitute for professional medical advice, diagnosis, or treatment.
+Important: Elvora provides wellness and fitness guidance and is not a substitute for professional medical advice, diagnosis, or treatment.
 
 ## Keywords
 fitness,ai coach,steps,workout,nutrition,recovery,health,training,calories,voice

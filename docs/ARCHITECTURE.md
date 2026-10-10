@@ -1,4 +1,4 @@
-# NFL BOT — Technical Architecture
+# Elvora — Technical Architecture
 
 Engineer-facing companion to [PRODUCT_BLUEPRINT.md](./PRODUCT_BLUEPRINT.md). Describes system shape, Flutter module map, engine contracts, sync, API outline, Creator SOC boundary, and privacy.
 

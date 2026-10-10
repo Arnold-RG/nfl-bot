@@ -465,7 +465,7 @@ class AppState extends ChangeNotifier {
 
   // Coach state
   CoachMood _mood = CoachMood.neutral;
-  String _coachMessage = 'Say “hey bot” or tap Bot to talk.';
+  String _coachMessage = 'Say “hey elvora” or tap Coach to talk.';
   CoachMood get coachMood => _mood;
   String get coachMessage => _coachMessage;
 

@@ -103,7 +103,7 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
       'Ready',
     ];
     final subs = [
-      'NFL BOT coaches from your real logs — never invented numbers.',
+      'Elvora coaches from your real logs — never invented numbers.',
       'Name and where you train from.',
       'These set calories and protein so coaching is not a guess.',
       'What are you working toward this season?',
@@ -137,7 +137,7 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
                     ),
                     const SizedBox(width: 12),
                     Text(
-                      'NFL BOT',
+                      'ELVORA',
                       style: theme.textTheme.titleMedium?.copyWith(
                         color: AppTheme.labInk,
                       ),
@@ -463,7 +463,7 @@ class _WelcomeFlowState extends State<WelcomeFlow> {
               ),
               const SizedBox(height: 12),
               Text(
-                'Say “hey bot” for food, training, water, and recovery — always from your logs.',
+                'Say “hey elvora” for food, training, water, and recovery — always from your logs.',
                 style: Theme.of(context).textTheme.bodySmall?.copyWith(
                       color: AppTheme.bronzeSoft,
                     ),

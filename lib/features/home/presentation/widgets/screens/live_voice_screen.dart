@@ -224,13 +224,13 @@ class _StatusLine extends StatelessWidget {
   Widget build(BuildContext context) {
     final label = switch (state) {
       VoiceOrbState.listening => awaitingWake
-          ? 'Say “hey bot”…'
+          ? 'Say “hey elvora”…'
           : 'Listening — just talk',
       VoiceOrbState.thinking => 'Bot is thinking…',
       VoiceOrbState.speaking => 'Bot speaking — tap to interrupt',
       VoiceOrbState.idle => active
           ? 'Ready for your next question'
-          : 'Say “hey bot” or tap Bot',
+          : 'Say “hey elvora” or tap Coach',
     };
 
     return Column(

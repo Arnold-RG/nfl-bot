@@ -1,11 +1,11 @@
 {
-    "name": "NFL BOT — Glass AI Stage",
-    "short_name": "NFL BOT",
+    "name": "Elvora — Premium AI Fitness & Nutrition",
+    "short_name": "Elvora",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#05070D",
-    "theme_color": "#22E38A",
-    "description": "Glass AI Stage — live mic coach for movement, training, nutrition and recovery.",
+    "background_color": "#0C0C0B",
+    "theme_color": "#C4A484",
+    "description": "Premium AI-powered personal health and performance platform for workouts, nutrition, recovery, and coaching.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

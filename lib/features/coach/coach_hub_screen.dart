@@ -88,7 +88,7 @@ class CoachHubScreen extends StatelessWidget {
                     children: [
                       Text(
                         state.messages.length <= 1
-                            ? 'Tap the mark or say hey bot — coaching stays tied to your data.'
+                            ? 'Tap the mark or say hey elvora — coaching stays tied to your data.'
                             : 'Continue your session · ${_statusLabel(voice.state)}',
                         textAlign: TextAlign.center,
                         style: theme.textTheme.bodyMedium?.copyWith(

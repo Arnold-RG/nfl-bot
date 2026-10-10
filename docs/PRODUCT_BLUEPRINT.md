@@ -1,6 +1,6 @@
-# NFL BOT — Product Development Blueprint
+# Elvora — Product Development Blueprint
 
-**Product name:** NFL BOT — AI Health Coach  
+**Product name:** Elvora — Premium AI Fitness & Nutrition Platform  
 **Working tagline:** *Given everything about me today, what should I do next?*  
 **Audience:** Product, engineering, design, and early investors  
 **Status:** Implementation-ready blueprint (vision sections 98–197, organized as build chapters)
@@ -19,7 +19,7 @@ The AI is only as good as the clean, unified health data underneath it. If steps
 
 ## 1. One-sentence investor description
 
-> **NFL BOT is a cross-platform AI health and fitness platform that combines activity tracking, GPS, strength training, progressive overload, nutrition and calorie tracking, AI food recognition, recovery monitoring, wearable data and personalized coaching into one continuously adaptive health system.**
+> **Elvora is a cross-platform AI health and fitness platform that combines activity tracking, GPS, strength training, progressive overload, nutrition and calorie tracking, AI food recognition, recovery monitoring, wearable data and personalized coaching into one continuously adaptive health system.**
 
 ---
 
@@ -28,7 +28,7 @@ The AI is only as good as the clean, unified health data underneath it. If steps
 At the highest level:
 
 ```text
-                    NFL BOT
+                    Elvora
                        │
         ┌──────────────┼──────────────┐
         │              │              │
@@ -46,7 +46,7 @@ At the highest level:
                  USER EXPERIENCE
 ```
 
-All engines read/write through a central **NFL BOT Health Data Platform** (not per-feature silos).
+All engines read/write through a central **Elvora Health Data Platform** (not per-feature silos).
 
 | Engine | Job | Inspired by (problem, not UI clone) |
 |--------|-----|-------------------------------------|
@@ -82,7 +82,7 @@ Canonical backend model: `backend/app/core/health_profile.py` (`HealthProfile`).
 
 ---
 
-## 4. The NFL BOT data loop
+## 4. The Elvora data loop
 
 Every user action must produce useful, joinable data:
 
@@ -122,7 +122,7 @@ Wake → health import → AI status → calorie target → log food
 
 ### First ~5 minutes
 1. Main goal (single): lose fat / build muscle / get stronger / healthier / fitness / maintain  
-2. Multi-select: what NFL BOT should help with  
+2. Multi-select: what Elvora should help with  
 3. Body profile: sex, age, height, weight  
 4. Training profile: experience, equipment, days/week  
 5. Realistic goals (conservative rate of change)  
@@ -139,7 +139,7 @@ Wake → health import → AI status → calorie target → log food
 | Bluetooth / wearables | watch pairing | Optional; estimates labeled until linked |
 
 ### Medical boundary (non-negotiable)
-> NFL BOT provides wellness and fitness guidance and is **not** a substitute for professional medical advice, diagnosis, or treatment.
+> Elvora provides wellness and fitness guidance and is **not** a substitute for professional medical advice, diagnosis, or treatment.
 
 - No diagnosis language  
 - Serious symptoms → redirect to appropriate medical care  
@@ -238,7 +238,7 @@ Same activity from Watch + Strava (or HealthKit + in-app) → merge by time wind
 **Start: modular monolith** (not 50 microservices).
 
 ```text
-NFL BOT Backend
+Elvora Backend
 ├── Auth
 ├── Users
 ├── Nutrition
@@ -333,7 +333,7 @@ Why this long: you are shipping a **health-data platform** + fitness app + nutri
 | **1.5** | AI food recognition, barcode, GPS, progressive overload, better recovery, Watch / Wear OS |
 | **2.0** | Social, challenges, leaderboards, recipes, grocery list, strength score, advanced reports |
 | **3.0** | Form analysis, trainer marketplace, gym partnerships, corporate wellness, more wearables |
-| **4.0 / “NFL BOT OS”** | Platform where food, exercise, movement, recovery, wearables, AI, goals, and social all meet |
+| **4.0 / “Elvora OS”** | Platform where food, exercise, movement, recovery, wearables, AI, goals, and social all meet |
 
 ---
 
@@ -352,7 +352,7 @@ PR / streak / challenge finish → **premium minimal share card** → Instagram 
 
 ### Share card example
 ```text
-NFL BOT
+Elvora
 NEW PERSONAL RECORD
 BENCH PRESS · 80 KG · +5 KG
 6 SEPTEMBER 2026

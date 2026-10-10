@@ -5,7 +5,7 @@ import '../providers/app_state.dart';
 import 'app_services.dart';
 import 'voice_coach_service.dart';
 
-/// Spoken back-and-forth with Bot. Activate with “hey bot”.
+/// Spoken back-and-forth with Elvora. Activate with “hey elvora”.
 class VoiceSessionController extends ChangeNotifier {
   final VoiceCoachService voice;
   final AppState state;
@@ -66,7 +66,7 @@ class VoiceSessionController extends ChangeNotifier {
     _active = true;
     _awaitingWake = requireWakePhrase;
     _notice =
-        requireWakePhrase ? 'Say “hey bot” to activate Bot.' : null;
+        requireWakePhrase ? 'Say “hey elvora” to activate Elvora.' : null;
     notifyListeners();
     await _runTurns();
   }
@@ -85,18 +85,18 @@ class VoiceSessionController extends ChangeNotifier {
 
       if (heard == null || heard.trim().isEmpty) {
         if (_awaitingWake) {
-          _notice = 'Still waiting — say “hey bot”.';
+          _notice = 'Still waiting — say “hey elvora”.';
           notifyListeners();
           continue;
         }
-        _notice = 'I did not catch that. Say “hey bot” or tap to try again.';
+        _notice = 'I did not catch that. Say “hey elvora” or tap to try again.';
         _active = false;
         break;
       }
 
       if (_awaitingWake) {
         if (!CoachPersona.heardWakePhrase(heard)) {
-          _notice = 'Say “hey bot” to wake me.';
+          _notice = 'Say “hey elvora” to wake me.';
           notifyListeners();
           continue;
         }

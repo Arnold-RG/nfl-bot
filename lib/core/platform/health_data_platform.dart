@@ -10,7 +10,7 @@ import 'ai_memory.dart';
 import 'data_source.dart';
 import 'now_decision.dart';
 
-/// Central NFL BOT Health Data Platform.
+/// Central Elvora Health Data Platform.
 ///
 /// Engines do not own isolated truth. They read/write through this profile so
 /// activity, food, training and recovery stay one coherent loop.

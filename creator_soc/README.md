@@ -1,6 +1,6 @@
-# NFL BOT · Creator SOC
+# Elvora · Creator SOC
 
-Standalone **creator / admin ops console** for NFL BOT. This is a **separate product** from the Flutter member app — not embedded in Flutter UI, and not built with Flutter.
+Standalone **creator / admin ops console** for Elvora. This is a **separate product** from the Flutter member app — not embedded in Flutter UI, and not built with Flutter.
 
 ## What this is
 

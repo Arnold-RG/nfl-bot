@@ -1,5 +1,5 @@
 /// Internal ids keep listen/live/pulse for billing compatibility;
-/// UI presents Free / Pro / Ultra.
+/// UI presents Free / Plus / Pro.
 enum PlanId { free, listen, live, pulse }
 
 /// Monthly plans authored in PLN (15–29 zł) and converted to the member's currency.
@@ -20,9 +20,9 @@ class SubscriptionPlan {
 
   static const listen = SubscriptionPlan(
     id: PlanId.listen,
-    name: 'Pro',
+    name: 'Plus',
     pricePln: 15,
-    promise: 'Unlimited live voice coaching in your language.',
+    promise: 'Personalized AI workout and meal planning.',
     perks: [
       'Unlimited ChatGPT-style voice turns',
       'Coach replies in any language you pick',
@@ -33,11 +33,11 @@ class SubscriptionPlan {
 
   static const live = SubscriptionPlan(
     id: PlanId.live,
-    name: 'Ultra',
+    name: 'Pro',
     pricePln: 22,
     promise: 'Voice plus instant food photos and a live watch link.',
     perks: [
-      'Everything in Pro',
+      'Everything in Plus',
       'Unlimited food photo analysis',
       'Smartwatch pairing and live vitals',
       'Hands-free conversation that keeps going',
@@ -47,11 +47,11 @@ class SubscriptionPlan {
 
   static const pulse = SubscriptionPlan(
     id: PlanId.pulse,
-    name: 'Ultra+',
+    name: 'Pro+',
     pricePln: 29,
     promise: 'The full trainer: voice, plate, watch, and weekly body reports.',
     perks: [
-      'Everything in Ultra',
+      'Everything in Pro',
       'Weekly spoken body report',
       'Priority neural voice',
       'Export of meals, vitals, and chat',
@@ -69,7 +69,7 @@ class SubscriptionPlan {
       id: PlanId.free,
       name: 'Free',
       pricePln: 0,
-      promise: 'Try the AI health coach before you pay.',
+      promise: 'Essential fitness and nutrition tracking.',
       perks: ['3 voice turns a day', '1 plate photo a day'],
     ),
   };

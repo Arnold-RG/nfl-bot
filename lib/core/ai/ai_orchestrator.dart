@@ -21,7 +21,7 @@ class AiOrchestrator {
   final HealthDataPlatform platform;
 
   static const medicalDisclaimer =
-      'NFL BOT provides wellness and fitness guidance and is not a substitute '
+      'Elvora provides wellness and fitness guidance and is not a substitute '
       'for professional medical advice, diagnosis or treatment.';
 
   AiIntent classify(String raw) {

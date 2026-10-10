@@ -374,7 +374,7 @@ class _YouHub extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'Wake Bot anytime with “${CoachPersona.wakePhrase}”. '
+                'Wake Elvora anytime with “${CoachPersona.wakePhrase}”. '
                 'Bot never invents numbers — only your logs count.',
                 style: theme.textTheme.bodySmall,
                 textAlign: TextAlign.center,

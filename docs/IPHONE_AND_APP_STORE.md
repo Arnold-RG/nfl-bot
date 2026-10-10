@@ -1,4 +1,4 @@
-# Get NFL BOT on your iPhone 15 (App Store / TestFlight)
+# Get Elvora on your iPhone 15 (App Store / TestFlight)
 
 Goal: open the **App Store** (or TestFlight), tap **Get**, install on iPhone 15.
 
@@ -37,7 +37,7 @@ Without this, App Store / TestFlight is impossible.
 1. Open [https://appstoreconnect.apple.com](https://appstoreconnect.apple.com)  
 2. **My Apps** → **+** → New App  
 3. Platforms: **iOS**  
-4. Name: e.g. `NFL BOT` (check trademark risk for “NFL”)  
+4. Name: e.g. `Elvora` (check trademark risk for “NFL”)  
 5. Bundle ID: register `com.nfbot.nfbotApp` under Certificates, Identifiers & Profiles if needed  
 6. SKU: `nflbot001`  
 7. Copy the numeric **Apple ID** of the app (App Information) → put it in `codemagic.yaml` as `APP_STORE_APPLE_ID`
@@ -61,7 +61,7 @@ Without this, App Store / TestFlight is impossible.
 4. Team settings → **Integrations** → **Developer Portal** → add API key  
    - Name it exactly: `NFLBOT_ASC` (matches `codemagic.yaml`)  
 5. Enable **code signing** / fetch certificates for bundle `com.nfbot.nfbotApp`  
-6. Start workflow **NFL BOT — iOS TestFlight**  
+6. Start workflow **Elvora — iOS TestFlight**  
 7. Wait for green build → IPA uploaded to TestFlight  
 
 Config file in this repo: [`codemagic.yaml`](../codemagic.yaml)
@@ -72,7 +72,7 @@ Config file in this repo: [`codemagic.yaml`](../codemagic.yaml)
 
 1. iPhone 15 → install **TestFlight** from the App Store  
 2. Use the **same Apple ID** as your Developer account (or add yourself as Internal Tester)  
-3. Open the TestFlight email/invite → **Install NFL BOT**  
+3. Open the TestFlight email/invite → **Install Elvora**  
 4. App appears on home screen like any store app  
 
 This is the easy install you want — before public App Store approval.

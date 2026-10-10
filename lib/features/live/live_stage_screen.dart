@@ -70,7 +70,7 @@ class _LiveStageScreenState extends State<LiveStageScreen> {
               VoiceOrbState.thinking => copy.t('thinking'),
               VoiceOrbState.speaking => copy.t('speaking'),
               VoiceOrbState.idle =>
-                _session.isActive ? copy.t('handsFree') : 'Say “hey bot” or tap Bot',
+                _session.isActive ? copy.t('handsFree') : 'Say “hey elvora” or tap Coach',
             };
             final spoken = _session.liveTranscript.isNotEmpty
                 ? _session.liveTranscript
@@ -95,7 +95,7 @@ class _LiveStageScreenState extends State<LiveStageScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'NFL BOT',
+                                  'ELVORA',
                                   style: theme.textTheme.titleLarge,
                                 ),
                                 Text(
@@ -136,9 +136,9 @@ class _LiveStageScreenState extends State<LiveStageScreen> {
                           const SizedBox(height: 10),
                           Text(
                             _session.awaitingWake && !_session.isActive
-                                ? 'Say “hey bot” or tap Bot'
+                                ? 'Say “hey elvora” or tap Coach'
                                 : (_session.awaitingWake
-                                    ? 'Listening for “hey bot”…'
+                                    ? 'Listening for “hey elvora”…'
                                     : status),
                             textAlign: TextAlign.center,
                             style: theme.textTheme.titleSmall,

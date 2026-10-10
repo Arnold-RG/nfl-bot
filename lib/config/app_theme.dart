@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// NFL BOT — calm charcoal + warm bronze. One accent, clear hierarchy.
+/// Elvora — calm charcoal + warm bronze. One accent, clear hierarchy.
 class AppTheme {
   // Surfaces — near-black charcoal, not muddy brown
   static const Color labBg = Color(0xFF0C0C0B);

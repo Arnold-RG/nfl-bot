@@ -1,4 +1,4 @@
-# Launch NFL BOT on Google Play (Android)
+# Launch Elvora on Google Play (Android)
 
 This is the **practical** store path from your Windows PC. Android SDK is already working on this machine.
 
@@ -7,7 +7,7 @@ This is the **practical** store path from your Windows PC. Android SDK is alread
 - Or sideload a release APK / internal testing track first  
 
 Package ID: `com.nfbot.nfbot_app`  
-App name on device: **NFL BOT**
+App name on device: **Elvora**
 
 ---
 
@@ -63,7 +63,7 @@ Then copy `build/app/outputs/flutter-apk/app-release.apk` to the phone and open 
 ## Step 4 — Create the app in Play Console
 
 1. Play Console → **Create app**  
-2. App name: `NFL BOT`  
+2. App name: `Elvora`  
 3. Default language, app/game = App, free/paid  
 4. Accept declarations  
 

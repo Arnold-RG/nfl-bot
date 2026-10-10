@@ -29,12 +29,12 @@
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>NFLBot uses your microphone so the AI trainer can hear you and talk back.</string>
+	<string>Elvora uses your microphone so the AI trainer can hear you and talk back.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>NFLBot uses speech recognition so you can talk to the AI trainer out loud.</string>
+	<string>Elvora uses speech recognition so you can talk to the AI trainer out loud.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>NFLBot needs the camera to photograph meals for nutrition analysis.</string>
+	<string>Elvora needs the camera to photograph meals for nutrition analysis.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>NFLBot uses Bluetooth to find and pair your smart watch.</string>
+	<string>Elvora uses Bluetooth to find and pair your smart watch.</string>
 </dict>
 </plist>

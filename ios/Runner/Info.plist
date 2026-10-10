@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>NFLBot</string>
+	<string>Elvora</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>CFBundleURLTypes</key>
@@ -29,27 +29,27 @@
 		<string>http</string>
 	</array>
 	<key>NSCameraUsageDescription</key>
-	<string>NFLBot needs camera access to scan and analyze your meals.</string>
+	<string>Elvora needs camera access to scan and analyze your meals.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>NFLBot needs photo access to analyze food images from your gallery.</string>
+	<string>Elvora needs photo access to analyze food images from your gallery.</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>NFLBot may save analyzed meal photos to your library.</string>
+	<string>Elvora may save analyzed meal photos to your library.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>NFLBot uses your microphone so the AI trainer can hear you and talk back.</string>
+	<string>Elvora uses your microphone so the AI trainer can hear you and talk back.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>NFLBot uses speech recognition so you can talk to the AI trainer out loud.</string>
+	<string>Elvora uses speech recognition so you can talk to the AI trainer out loud.</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>NFLBot uses Bluetooth to find and pair your smart watch.</string>
+	<string>Elvora uses Bluetooth to find and pair your smart watch.</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>NFLBot uses Bluetooth to connect to your smart watch.</string>
+	<string>Elvora uses Bluetooth to connect to your smart watch.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>NFLBot uses your location to show your map route and track outdoor activity.</string>
+	<string>Elvora uses your location to show your map route and track outdoor activity.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>NFLBot can keep tracking your route while you train outdoors.</string>
+	<string>Elvora can keep tracking your route while you train outdoors.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>NFLBot uses motion data to count your steps.</string>
+	<string>Elvora uses motion data to count your steps.</string>
 	<key>NSFaceIDUsageDescription</key>
-	<string>NFLBot can lock the app with Face ID if you turn that on in Settings.</string>
+	<string>Elvora can lock the app with Face ID if you turn that on in Settings.</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

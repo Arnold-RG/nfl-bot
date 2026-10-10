@@ -6,8 +6,8 @@ class AppCopy {
   const AppCopy(this.languageCode);
 
   static const _en = {
-    'app': 'NFL BOT',
-    'tagline': 'Your body. Your data. Your AI coach.',
+    'app': 'Elvora',
+    'tagline': 'Your trainer, nutritionist, and health dashboard.',
     'live': 'Live',
     'plate': 'Plate',
     'watch': 'Watch',

@@ -1,6 +1,6 @@
 # Nutrition Fitness Loop (Fuel)
 
-NFL BOT’s member experience is aligned with [CalorieLab](https://calorielab.app/)-style nutrition UX.
+Elvora’s member experience is aligned with [CalorieLab](https://calorielab.app/)-style nutrition UX.
 
 ## App structure
 

@@ -1,9 +1,9 @@
-# Documentation hub — NFL BOT
+# Documentation hub — Elvora
 
-Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arnold-RG/nfl-bot)**.
+Technical and product docs for **Elvora** ([nfl-bot](https://github.com/Arnold-RG/nfl-bot) repository).
 
 **Live:** [Website](https://arnold-rg.github.io/nfl-bot/) · [Web app](https://arnold-rg.github.io/nfl-bot/app/)  
-**Visuals:** **[SHOWCASE.md](SHOWCASE.md)** — every screen with images
+**Visuals:** **[SHOWCASE.md](SHOWCASE.md)**
 
 ## Start here
 
@@ -13,27 +13,11 @@ Welcome to the technical and product docs for **[nfl-bot](https://github.com/Arn
 4. [Architecture](ARCHITECTURE.md) — engines and platform  
 5. [API contract](API_CONTRACT.md) — backend modules  
 
-## Ship
-
-| Guide | Platform |
-|-------|----------|
-| [PLAY_STORE_LAUNCH.md](PLAY_STORE_LAUNCH.md) | Google Play (Android) |
-| [PLAY_CONSOLE_NOW.md](PLAY_CONSOLE_NOW.md) | Internal testing checklist |
-| [PLAY_STORE_LISTING_DRAFT.md](PLAY_STORE_LISTING_DRAFT.md) | Store copy |
-| [IPHONE_AND_APP_STORE.md](IPHONE_AND_APP_STORE.md) | TestFlight / App Store |
-| [APP_STORE_LISTING_DRAFT.md](APP_STORE_LISTING_DRAFT.md) | Apple listing copy |
-| [EMERGENT_APP_STORE.md](EMERGENT_APP_STORE.md) | Why Emergent ≠ this Flutter repo |
-
 ## Design
 
-Product UI uses a **dark bronze** theme. Coach identity: **Bot** (wake phrase **hey bot**).  
+Product UI uses a **dark bronze** theme. Coach identity: **Elvora** (wake phrase **hey elvora**).  
 Screenshots live in [`screenshots/`](screenshots/).
-
-## Legal starter
-
-- [privacy_policy.html](privacy_policy.html) — host on HTTPS before store review; replace contact email
 
 ## Disclaimer
 
-NFL BOT is a wellness / fitness product. It is not intended for medical diagnosis or treatment.  
-Not affiliated with the National Football League.
+Elvora is a wellness / fitness product. It is not intended for medical diagnosis or treatment.

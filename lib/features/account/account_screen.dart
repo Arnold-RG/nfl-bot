@@ -119,7 +119,7 @@ class _AccountScreenState extends State<AccountScreen> {
                           ),
                           const SizedBox(height: 4),
                           Text(
-                            'Say “hey bot” anytime',
+                            'Say “hey elvora” anytime',
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
                         ],
@@ -296,7 +296,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'NFL BOT',
+                            'ELVORA',
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium

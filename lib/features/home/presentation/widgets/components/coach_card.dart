@@ -18,7 +18,7 @@ class CoachCard extends StatelessWidget {
       builder: (context, state, _) {
         final msg = state.coachMessage.isNotEmpty
             ? state.coachMessage
-            : '${state.coach.name} is ready. Say “hey bot” or tap to talk.';
+            : '${state.coach.name} is ready. Say “hey elvora” or tap to talk.';
 
         return Material(
           color: Colors.transparent,
@@ -90,7 +90,7 @@ class CoachCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 5),
                             Text(
-                              'Say “hey bot” · tap to talk',
+                              'Say “hey elvora” · tap to talk',
                               style: GoogleFonts.dmSans(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w700,

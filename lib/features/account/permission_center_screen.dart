@@ -47,12 +47,12 @@ class _PermissionCenterScreenState extends State<PermissionCenterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('NFL BOT data permissions')),
+      appBar: AppBar(title: const Text('Elvora data permissions')),
       body: ListView(
         padding: const EdgeInsets.fromLTRB(20, 12, 20, 40),
         children: [
           Text(
-            'Choose what NFL BOT may use. You can change this anytime. '
+            'Choose what Elvora may use. You can change this anytime. '
             'Turning a toggle off keeps historical logs you already saved.',
             style: Theme.of(context).textTheme.bodyMedium,
           ),

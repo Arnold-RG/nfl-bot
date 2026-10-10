@@ -1,5 +1,5 @@
 /**
- * NFL BOT · Creator SOC — seeded mock ops data + UI
+ * Elvora · Creator SOC — seeded mock ops data + UI
  * Standalone; no Flutter dependency. Linked to member app by URL only.
  */
 (function () {

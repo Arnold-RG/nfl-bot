@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen>
     if (state.biometricEnabled && canUseBiometrics) {
       final supported = await AppServices.security.canUseBiometrics();
       if (supported) {
-        await AppServices.security.authenticate(reason: 'Unlock NFLBot');
+        await AppServices.security.authenticate(reason: 'Unlock Elvora');
       }
     }
 
@@ -117,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen>
                         ),
                         const SizedBox(height: 28),
                         Text(
-                          'NFLBot',
+                          'Elvora',
                           style: GoogleFonts.syne(
                             color: Colors.white,
                             fontSize: 44,

@@ -1,4 +1,4 @@
-# Visual showcase — NFL BOT
+# Visual showcase — Elvora
 
 Every major surface explained with images.  
 Live site: [arnold-rg.github.io/nfl-bot](https://arnold-rg.github.io/nfl-bot/) · Web app: [/app](https://arnold-rg.github.io/nfl-bot/app/)
@@ -24,7 +24,7 @@ Honest home. Briefing and next-best-move only use real logs.
 ![Today](screenshots/01-today-home.png)
 
 ### Bot
-Wake with **hey bot**. Mouth moves while speaking.
+Wake with **hey elvora**. The signal mark reacts while speaking.
 
 ![Bot](screenshots/02-bot-talking.png)
 
@@ -75,7 +75,7 @@ Public how-it-works page with live phone mocks, download QR, and embedded web ap
 | Feature | Status |
 |---------|--------|
 | Today + Bot briefing | ✅ |
-| Live Bot + hey bot wake | ✅ |
+| Live coach + hey elvora wake | ✅ |
 | Hands-free / mute / quiet hours | ✅ |
 | Meal scan + confirm gate | ✅ |
 | Water (+250 / +500 / workout) | ✅ |

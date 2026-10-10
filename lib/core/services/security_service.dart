@@ -18,7 +18,7 @@ class SecurityService {
     }
   }
 
-  Future<bool> authenticate({String reason = 'Unlock NFLBot'}) async {
+  Future<bool> authenticate({String reason = 'Unlock Elvora'}) async {
     try {
       return await _auth.authenticate(
         localizedReason: reason,

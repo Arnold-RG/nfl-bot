@@ -81,7 +81,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 child: Row(
                   children: [
                     Text(
-                      'NFLBot',
+                      'Elvora',
                       style: GoogleFonts.syne(
                         fontSize: 20,
                         fontWeight: FontWeight.w800,
@@ -115,7 +115,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     const _Slide(
                       title: 'A coach that\ntalks back',
                       desc:
-                          'NFLBot is a live AI voice trainer. Ask it anything out loud and '
+                          'Elvora is a live AI voice trainer. Ask it anything out loud and '
                           'it answers out loud, using your own numbers.',
                       child: AiVoiceOrb(
                         size: 168,

@@ -1,8 +1,8 @@
-# Emergent AI + Apple App Store (NFL BOT)
+# Emergent AI + Apple App Store (Elvora)
 
 ## Short answer
 
-**Emergent cannot publish this NFL BOT Flutter project to the App Store as-is.**
+**Emergent cannot publish this Elvora Flutter project to the App Store as-is.**
 
 | Fact | Detail |
 |------|--------|
@@ -32,7 +32,7 @@ This ships the Glass AI Stage app you already built.
 **Cost:** You rebuild features; Flutter work is a *spec*, not the binary Apple installs.
 
 ### Option 3 — Wrap a deployed web URL (Median / similar)
-1. Host NFL BOT web (`build/web`) on HTTPS  
+1. Host Elvora web (`build/web`) on HTTPS  
 2. Use a wrapper (e.g. Median) to make a native shell and upload IPA  
 3. Still need Apple Developer + store listing  
 
@@ -45,7 +45,7 @@ Good for “get something on device fast,” weaker for mic / Health / deep nati
 Use this in Emergent **Mobile app** mode:
 
 ```text
-Build NFL BOT — Glass AI Stage, an AI health & fitness coach for iPhone.
+Build Elvora — Glass AI Stage, an AI health & fitness coach for iPhone.
 
 Visual style (exact): dark glassmorphism, neon electric green #22E38A on near-black #05070D.
 Center: photoreal studio condenser microphone in a glowing green glass orb (live AI).
@@ -73,7 +73,7 @@ Then follow Emergent’s guide:
 
 ## What I recommend for *your* iPhone 15
 
-1. **Keep building NFL BOT in Flutter** (this repo)  
+1. **Keep building Elvora in Flutter** (this repo)  
 2. Enroll **Apple Developer**  
 3. Run **Codemagic** → **TestFlight** → install on iPhone 15  
 4. Submit App Store when listing is ready  

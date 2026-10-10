@@ -34,7 +34,7 @@ void main() async {
   runApp(
     ChangeNotifierProvider<AppState>.value(
       value: AppServices.appState,
-      child: const NFLBotApp(),
+      child: const ElvoraApp(),
     ),
   );
 }
@@ -142,16 +142,16 @@ Future<void> _bootstrap() async {
   await _safe('steps', AppServices.steps.start);
 }
 
-class NFLBotApp extends StatefulWidget {
-  const NFLBotApp({super.key});
+class ElvoraApp extends StatefulWidget {
+  const ElvoraApp({super.key});
 
   @override
-  State<NFLBotApp> createState() => _NFLBotAppState();
+  State<ElvoraApp> createState() => _ElvoraAppState();
 }
 
 enum _LaunchPhase { splash, onboarding, main }
 
-class _NFLBotAppState extends State<NFLBotApp> {
+class _ElvoraAppState extends State<ElvoraApp> {
   _LaunchPhase _phase = _LaunchPhase.splash;
 
   void _onSplashDone() {

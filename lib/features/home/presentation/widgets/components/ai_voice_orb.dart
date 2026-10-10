@@ -7,7 +7,7 @@ enum VoiceOrbState { idle, listening, thinking, speaking }
 
 extension VoiceOrbStateLabel on VoiceOrbState {
   String get label => switch (this) {
-    VoiceOrbState.idle => 'Say hey bot',
+    VoiceOrbState.idle => 'Say hey elvora',
     VoiceOrbState.listening => 'Listening',
     VoiceOrbState.thinking => 'Thinking',
     VoiceOrbState.speaking => 'Speaking',

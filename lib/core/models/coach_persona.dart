@@ -1,5 +1,4 @@
-/// The two selectable synthetic voices. There is no human likeness — the
-/// coach is presented as an AI named Bot.
+/// Selectable synthetic voices. The coach is presented as Elvora's AI.
 enum CoachVoice { nova, atlas }
 
 /// The coach's current disposition.
@@ -18,24 +17,24 @@ class CoachPersona {
     required this.greeting,
   });
 
-  /// Wake phrase users say to activate Bot.
-  static const wakePhrase = 'hey bot';
+  /// Wake phrase users say to activate the coach.
+  static const wakePhrase = 'hey elvora';
 
   static const nova = CoachPersona(
     voice: CoachVoice.nova,
-    name: 'Bot',
-    tagline: 'Your AI coach — say “hey bot” to start',
+    name: 'Elvora',
+    tagline: 'Your AI coach — say “hey elvora” to start',
     greeting:
-        'I am Bot. Say hey bot anytime you want me. Ask about food, training, '
+        'I am Elvora. Say hey elvora anytime. Ask about food, training, '
         'or recovery — I answer from your data when you have logged it.',
   );
 
   static const atlas = CoachPersona(
     voice: CoachVoice.atlas,
-    name: 'Bot',
-    tagline: 'Your AI coach — say “hey bot” to start',
+    name: 'Elvora',
+    tagline: 'Your AI coach — say “hey elvora” to start',
     greeting:
-        'Bot here. Say hey bot to wake me. Tell me what you need — I stay '
+        'Elvora here. Say hey elvora to wake me. Tell me what you need — I stay '
         'quiet until you call.',
   );
 
@@ -51,14 +50,14 @@ class CoachPersona {
         .replaceAll(RegExp(r'[^a-z0-9 ]'), ' ')
         .replaceAll(RegExp(r'\s+'), ' ')
         .trim();
-    return t.contains('hey bot');
+    return t.contains('hey elvora');
   }
 
   /// Strip wake phrase from the start of a transcript.
   static String stripWakePhrase(String text) {
     return text
         .replaceFirst(
-          RegExp(r'^\s*hey[\s,.-]*bot[\s,.-]*', caseSensitive: false),
+          RegExp(r'^\s*hey[\s,.-]*elvora[\s,.-]*', caseSensitive: false),
           '',
         )
         .trim();

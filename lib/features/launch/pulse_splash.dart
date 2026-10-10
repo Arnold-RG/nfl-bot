@@ -68,20 +68,20 @@ class _PulseSplashState extends State<PulseSplash>
                       ),
                       const SizedBox(height: 28),
                       Text(
-                        'NFL BOT',
+                        'ELVORA',
                         style: theme.textTheme.displayMedium?.copyWith(
                           color: AppTheme.labInk,
-                          letterSpacing: -0.8,
+                          letterSpacing: 2.4,
                         ),
                       ),
                       const SizedBox(height: 10),
                       Text(
-                        'Your AI health coach',
+                        'Premium AI fitness & nutrition',
                         style: theme.textTheme.bodyMedium,
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        'Say “hey bot” anytime',
+                        'Say “hey elvora” anytime',
                         style: theme.textTheme.labelLarge,
                       ),
                       const SizedBox(height: 36),

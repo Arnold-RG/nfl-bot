@@ -140,7 +140,7 @@ class PreferencesService {
   Future<void> setCustomFastHours(int v) =>
       _prefs.setInt(_keyCustomFastHours, v);
 
-  /// Granular NFL BOT data permissions (product controls; OS still gates sensors).
+  /// Granular Elvora data permissions (product controls; OS still gates sensors).
   bool dataPerm(String key, {bool fallback = true}) =>
       _prefs.getBool('data_perm_$key') ?? fallback;
 

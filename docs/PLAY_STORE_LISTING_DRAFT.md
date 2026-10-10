@@ -1,13 +1,13 @@
-# Google Play listing draft — NFL BOT
+# Google Play listing draft — Elvora
 
 ## App name
-NFL BOT
+Elvora
 
 ## Short description (≤80 characters)
 AI health coach: steps, training, nutrition, recovery — Glass AI Stage.
 
 ## Full description
-NFL BOT is your AI health and fitness coach for Android.
+Elvora is your AI health and fitness coach for Android.
 
 • Glass AI Stage — live mic coaching  
 • Steps & daily movement  
@@ -17,7 +17,7 @@ NFL BOT is your AI health and fitness coach for Android.
 
 Ask “What should I do next?” and get a clear action for today.
 
-NFL BOT provides wellness and fitness guidance and is not a substitute for professional medical advice, diagnosis, or treatment.
+Elvora provides wellness and fitness guidance and is not a substitute for professional medical advice, diagnosis, or treatment.
 
 ## Category
 Health & Fitness

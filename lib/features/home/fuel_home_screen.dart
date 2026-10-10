@@ -80,7 +80,7 @@ class _FuelHomeScreenState extends State<FuelHomeScreen>
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'NFL BOT',
+                                'ELVORA',
                                 style: theme.textTheme.labelMedium?.copyWith(
                                   color: AppTheme.bronze,
                                   letterSpacing: 1.4,

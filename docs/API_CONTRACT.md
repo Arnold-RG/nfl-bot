@@ -1,4 +1,4 @@
-# NFL BOT — API Contract (MVP)
+# Elvora — API Contract (MVP)
 
 REST-ish surface for the FastAPI modular monolith in `backend/`.  
 All endpoints below are **stubs** in the skeleton unless noted; shapes are stable enough for Flutter client scaffolding.

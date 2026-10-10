@@ -8,7 +8,7 @@ Browser should be open at Play Console signup. Follow in order.
 
 ## B. Create the app
 1. **Create app**  
-2. Name: `NFL BOT`  
+2. Name: `Elvora`  
 3. Language: English (or your default)  
 4. App / Free  
 5. Accept declarations → Create  

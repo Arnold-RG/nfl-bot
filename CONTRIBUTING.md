@@ -1,6 +1,6 @@
-# Contributing to NFL BOT
+# Contributing to Elvora
 
-Thanks for your interest in improving NFL BOT.
+Thanks for your interest in improving Elvora.
 
 ## Ways to help
 - Open an **Issue** for bugs or feature ideas

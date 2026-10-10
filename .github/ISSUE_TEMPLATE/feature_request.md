@@ -1,6 +1,6 @@
 ---
 name: Feature request
-about: Suggest an idea for NFL BOT
+about: Suggest an idea for Elvora
 title: "[Feature] "
 labels: enhancement
 ---

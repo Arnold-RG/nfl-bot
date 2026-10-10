@@ -4,7 +4,7 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Stylized N mark for NFLBot -->
+    <!-- Stylized E mark for Elvora -->
     <path
         android:fillColor="#4CC9A8"
         android:pathData="M34,28 L46,28 L46,80 L34,80 Z" />
