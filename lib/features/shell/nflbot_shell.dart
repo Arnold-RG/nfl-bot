@@ -20,7 +20,7 @@ import '../wellness/extras_screens.dart';
 import '../wellness/progress_photos_screen.dart';
 import '../wellness/water_screen.dart';
 
-/// Adaptive shell: Today · Diary · Add · Bot · You
+/// Adaptive shell: Today · Diary · Add · Coach · You
 class NflBotShell extends StatefulWidget {
   const NflBotShell({super.key});
 
@@ -159,9 +159,9 @@ class _NflBotShellState extends State<NflBotShell> {
                         label: Text('Diary'),
                       ),
                       NavigationRailDestination(
-                        icon: Icon(Icons.smart_toy_outlined),
-                        selectedIcon: Icon(Icons.smart_toy_rounded),
-                        label: Text('Bot'),
+                        icon: Icon(Icons.graphic_eq_outlined),
+                        selectedIcon: Icon(Icons.graphic_eq_rounded),
+                        label: Text('Coach'),
                       ),
                       NavigationRailDestination(
                         icon: Icon(Icons.person_outline),

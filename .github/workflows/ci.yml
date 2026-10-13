@@ -15,5 +15,7 @@ jobs:
           channel: stable
           cache: true
       - run: flutter pub get
+      - name: Stub local secrets for public build
+        run: cp lib/config/local_secrets.example.dart lib/config/local_secrets.dart
       - run: flutter analyze --no-fatal-infos
       - run: flutter test

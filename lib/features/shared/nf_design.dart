@@ -297,8 +297,21 @@ class _NfRevealState extends State<NfReveal>
       duration: const Duration(milliseconds: 420),
     );
     Future.delayed(Duration(milliseconds: widget.delayMs), () {
-      if (mounted) _c.forward();
+      if (!mounted) return;
+      if (MediaQuery.disableAnimationsOf(context)) {
+        _c.value = 1;
+        return;
+      }
+      _c.forward();
     });
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (MediaQuery.disableAnimationsOf(context)) {
+      _c.value = 1;
+    }
   }
 
   @override

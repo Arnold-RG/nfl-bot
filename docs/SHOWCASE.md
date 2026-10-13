@@ -62,7 +62,7 @@ Profile, Bot voice, hands-free, quiet hours, coach voice, goals, watch, permissi
 
 ## Marketing website
 
-Public how-it-works page with live phone mocks, download QR, and embedded web app.
+Public page for the product: the day’s structure, the coach, and a link into the web app. The panel on the homepage is an empty day, the same way the app starts.
 
 ![Website hero](screenshots/09-website-hero.png)
 
