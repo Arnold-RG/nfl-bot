@@ -3,142 +3,280 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="description" content="Elvora — premium AI fitness and nutrition. Trainer, nutritionist, and health dashboard in one. Say hey elvora.">
+  <title>Elvora — fitness, nutrition, and a coach</title>
+  <meta name="description" content="Elvora is a personal trainer, nutritionist, and health dashboard. Say hey elvora. It never invents a number you did not log.">
   <meta name="theme-color" content="#0C0C0B">
-  <title>Elvora — Premium AI fitness & nutrition</title>
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://arnold-rg.github.io/nfl-bot/">
+  <link rel="icon" href="assets/branding/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Elvora">
+  <meta property="og:title" content="Elvora — fitness, nutrition, and a coach">
+  <meta property="og:description" content="A personal trainer, a nutritionist, and the day you actually lived. Say hey elvora.">
+  <meta property="og:url" content="https://arnold-rg.github.io/nfl-bot/">
+  <meta property="og:image" content="https://arnold-rg.github.io/nfl-bot/assets/og.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Elvora. A personal trainer, a nutritionist, and the day you actually lived.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Elvora — fitness, nutrition, and a coach">
+  <meta name="twitter:description" content="A personal trainer, a nutritionist, and the day you actually lived. Say hey elvora.">
+  <meta name="twitter:image" content="https://arnold-rg.github.io/nfl-bot/assets/og.png">
+  <meta name="twitter:image:alt" content="Elvora. A personal trainer, a nutritionist, and the day you actually lived.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/styles.css">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Elvora",
+    "applicationCategory": "HealthApplication",
+    "operatingSystem": "Web, Android, iOS",
+    "url": "https://arnold-rg.github.io/nfl-bot/app/",
+    "description": "Personal trainer, nutritionist, and health dashboard. Wake the coach with hey elvora. Numbers come from your logs.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  }
+  </script>
 </head>
 <body>
-  <div class="glow" aria-hidden="true"></div>
+  <a class="skip" href="#content">Skip to content</a>
 
-  <header class="nav">
-    <a class="nav__brand" href="#top">
+  <header class="bar">
+    <a class="brand" href="#top">
       <img src="assets/branding/coach-mark.svg" alt="" width="28" height="28">
-      ELVORA
+      <span class="brand__name">Elvora</span>
     </a>
-    <nav class="nav__links" aria-label="Primary">
-      <a href="#pillars">Product</a>
-      <a href="#how">How it works</a>
+    <nav class="bar__nav" id="site-nav" aria-label="Primary">
+      <a href="#product">Product</a>
+      <a href="#day">The day</a>
       <a href="#coach">Coach</a>
-      <a href="#download">Get Elvora</a>
+      <a href="#open">Open</a>
     </nav>
-    <a class="nav__cta" href="#download">Open the app</a>
+    <a class="bar__open" href="app/">
+      <span class="wide">Open the app</span>
+      <span class="short">Open</span>
+    </a>
+    <button class="menu" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="menu__label">Menu</span>
+    </button>
   </header>
 
-  <main id="top">
-    <section class="hero">
-      <p class="eyebrow">Premium AI fitness & nutrition</p>
-      <h1>A personal trainer, nutritionist, and health dashboard — in one.</h1>
-      <p class="hero__sub">
-        Elvora connects workouts, meals, hydration, sleep, and coaching.
-        It stays quiet until you say <em>hey elvora</em> — and it never invents numbers you did not log.
-      </p>
-      <div class="hero__cta">
-        <a class="btn btn--fill" href="#download">Try Elvora</a>
-        <a class="btn btn--ghost" href="#how">See the loop</a>
-      </div>
-
-      <div class="hero__stage">
-        <div class="mark-wrap" id="coach-signal" data-state="listening">
-          <img class="mark" src="assets/branding/coach-mark.svg" alt="Elvora coach signal mark">
-          <span class="mark-ring"></span>
+  <main id="content">
+    <div class="wrap">
+      <section class="hero" id="top">
+        <svg class="hero__arc" viewBox="0 0 400 400" aria-hidden="true">
+          <path d="M28 340a250 250 0 0 1 332-292" fill="none" stroke="currentColor" stroke-width="1.25"/>
+          <path d="M70 340a190 190 0 0 1 250-230" fill="none" stroke="currentColor" stroke-width="1"/>
+        </svg>
+        <div class="hero__copy">
+          <p class="kicker">Fitness and nutrition</p>
+          <h1>A personal trainer, a nutritionist, and <em>the day you actually lived.</em></h1>
+          <p class="lede">
+            Elvora keeps workouts, meals, water, sleep, and coaching in one place.
+            It stays quiet until you say <em>hey elvora</em>, and it will not invent a calorie, a step, or a night of sleep.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--fill" href="app/">Open the web app</a>
+            <a class="btn btn--ghost" href="#day">See how a day is built</a>
+          </div>
         </div>
-        <p class="hero__wake">Say “hey elvora” · the signal reacts while the coach listens and speaks</p>
-      </div>
-    </section>
 
-    <section class="features" id="pillars">
-      <header>
-        <p class="eyebrow">Four pillars</p>
-        <h2>Built as a platform, not a calorie counter</h2>
-      </header>
-      <div class="grid">
-        <article>
-          <h3>Fitness intelligence</h3>
-          <p>Adaptive workouts, progressive overload, GPS activity, and form demos that match your equipment and recovery.</p>
-        </article>
-        <article>
-          <h3>Smart nutrition</h3>
-          <p>Photo, voice, and text logging with confirmation. Macros, micronutrients, meal plans, and regional foods.</p>
-        </article>
-        <article>
-          <h3>Personal AI coach</h3>
-          <p>Voice and chat that understand your logs. Plans you can edit. Memory you can inspect and delete.</p>
-        </article>
-        <article>
-          <h3>Health insights</h3>
-          <p>Readiness, sleep, hydration, streaks, and progress — with a clear split between measured data and estimates.</p>
-        </article>
-      </div>
-    </section>
+        <figure class="specimen">
+          <div class="specimen__screen" aria-hidden="true">
+            <p class="specimen__mark">Elvora</p>
+            <p class="specimen__greet" id="greet">Good morning</p>
+            <p class="specimen__name">Athlete</p>
+            <div class="specimen__coach">
+              <img src="assets/branding/coach-mark.svg" alt="" width="46" height="46">
+              <div>
+                <strong>Talk to coach</strong>
+                <span>Say “hey elvora” or tap to open</span>
+              </div>
+            </div>
+            <ul class="specimen__vitals">
+              <li><b>0.0L</b><span>Water</span></li>
+              <li><b>0</b><span>Steps</span></li>
+              <li><b>Log</b><span>Sleep</span></li>
+            </ul>
+            <div class="specimen__next">
+              <p>Next move</p>
+              <strong>Drink a glass of water</strong>
+              <span>Hydration is empty. Open Water and add 250–500 ml.</span>
+            </div>
+          </div>
+          <figcaption>
+            Empty on purpose. With nothing logged, the first suggestion is water — the same rule the app uses.
+          </figcaption>
+        </figure>
+      </section>
 
-    <section class="strip" id="how">
-      <h2>Five destinations. One connected day.</h2>
-      <ol class="steps">
-        <li>
-          <span>Home</span>
-          <h3>Daily command center</h3>
-          <p>Readiness, calories versus effort, macros, water, steps, sleep, and your next best action.</p>
-        </li>
-        <li>
-          <span>Train</span>
-          <h3>Intelligent fitness</h3>
-          <p>Plans for gym, home, or outdoors. Logging, substitutions, and GPS walks or runs.</p>
-        </li>
-        <li>
-          <span>Nutrition</span>
-          <h3>Food intelligence</h3>
-          <p>Diary, plate scan, recipes, hydration, and meal suggestions from remaining targets.</p>
-        </li>
-        <li>
-          <span>Coach</span>
-          <h3>Voice assistant</h3>
-          <p>Wake Elvora, ask about your day, and get guidance that cites your own records.</p>
-        </li>
-        <li>
-          <span>Progress</span>
-          <h3>Personal analytics</h3>
-          <p>Measurements, photos, weekly recaps, and exports. Privacy first.</p>
-        </li>
-      </ol>
-    </section>
-
-    <section class="coach" id="coach">
-      <div class="coach__copy">
-        <p class="eyebrow">Elvora Coach</p>
-        <h2>Intelligent, but never medical.</h2>
+      <section class="rule" aria-labelledby="rule-title">
+        <p class="kicker">The only rule</p>
+        <h2 id="rule-title">If a number is on the screen, you put it there, or a sensor you connected did.</h2>
         <p>
-          The coach connects every feature: workouts, meals, recovery, and goals.
-          Recommendations show their source. Uncertain photo or voice logs wait for your confirmation.
+          Estimates are labeled as estimates. A photo of a plate does not enter the diary until you confirm it.
+          Uncertain voice logs wait the same way.
         </p>
-        <ul>
-          <li>Wake phrase: hey elvora</li>
-          <li>No diagnoses, no invented calories</li>
-          <li>Memory with inspect / edit / delete</li>
-        </ul>
-      </div>
-      <div class="coach__visual">
-        <img src="assets/branding/coach-mark.svg" alt="" width="200" height="200">
-      </div>
-    </section>
+      </section>
 
-    <section class="download" id="download">
-      <h2>Get Elvora</h2>
-      <p>Open the Flutter app from GitHub, or use the public Pages build.</p>
-      <div class="download__row">
-        <a class="btn btn--fill" href="https://github.com/Arnold-RG/nfl-bot">GitHub repository</a>
-        <a class="btn btn--ghost" href="https://arnold-rg.github.io/nfl-bot/">Live Pages</a>
-      </div>
-      <p class="fine">Wellness guidance only — not medical advice. Free, Plus, and Pro plans are planned; basic data access is never locked.</p>
-    </section>
+      <section class="block" id="product" aria-labelledby="product-title">
+        <p class="kicker">Product</p>
+        <div>
+          <h2 id="product-title">Four parts of one day</h2>
+          <p class="block__intro">Not a calorie counter with a few extra screens bolted on. The pieces share one record of you.</p>
+          <ol class="ledger">
+            <li>
+              <span class="ledger__n">01</span>
+              <div>
+                <h3>Fitness</h3>
+                <p>Adaptive workouts, load that progresses, GPS for a walk or a run, and form demos that follow your equipment and how recovered you are.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ledger__n">02</span>
+              <div>
+                <h3>Nutrition</h3>
+                <p>Log by photo, voice, or text, then confirm before anything is saved. Macros, micronutrients, meal plans, and foods from where you live.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ledger__n">03</span>
+              <div>
+                <h3>Coach</h3>
+                <p>Voice and chat that read what you logged. Plans you can edit. Memory you can open, change, and delete.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ledger__n">04</span>
+              <div>
+                <h3>Health</h3>
+                <p>Readiness, sleep, water, streaks, and progress. A measurement and an estimate are not written the same way.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="block" id="day" aria-labelledby="day-title">
+        <p class="kicker">The day</p>
+        <div>
+          <h2 id="day-title">Five places to work</h2>
+          <p class="block__intro">The app stays small on purpose. Profile, devices, privacy, and subscriptions live under You.</p>
+          <ol class="ledger">
+            <li>
+              <span class="ledger__n">Home</span>
+              <div>
+                <h3>Daily command</h3>
+                <p>Readiness, calories against effort, macros, water, steps, sleep, and the next useful action.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ledger__n">Train</span>
+              <div>
+                <h3>The session</h3>
+                <p>Plans for the gym, home, or outdoors. Logging, substitutions, and a GPS track when you go out.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ledger__n">Nutrition</span>
+              <div>
+                <h3>The diary</h3>
+                <p>Meals, a plate scan, recipes, water, and suggestions from whatever is still left in the day’s targets.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ledger__n">Coach</span>
+              <div>
+                <h3>The voice</h3>
+                <p>Wake Elvora, ask about the day, and get an answer that can point at your own records.</p>
+              </div>
+            </li>
+            <li>
+              <span class="ledger__n">Progress</span>
+              <div>
+                <h3>The record</h3>
+                <p>Measurements, photos, a weekly recap, and an export. Yours to keep or delete.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="block" id="coach" aria-labelledby="coach-title">
+        <p class="kicker">Coach</p>
+        <div>
+          <h2 id="coach-title">Useful, and not a clinic.</h2>
+          <div class="coach">
+            <div class="coach__stage">
+              <svg class="signal" id="signal" viewBox="0 0 120 120" data-state="listening" role="img" aria-label="Elvora signal mark, shown listening">
+                <circle class="signal__ring" cx="60" cy="60" r="52"/>
+                <path class="signal__arc" d="M60 8a52 52 0 0 1 40 88"/>
+                <g class="signal__waves">
+                  <path d="M42 60a18 18 0 0 1 36 0"/>
+                  <path d="M36 60a24 24 0 0 1 48 0"/>
+                  <path d="M30 60a30 30 0 0 1 60 0"/>
+                </g>
+                <path class="signal__gem" d="M60 42 L72 60 L60 78 L48 60 Z"/>
+                <circle cx="60" cy="60" r="5" fill="#0C0C0B" opacity="0.55"/>
+              </svg>
+              <p class="signal__now" id="signal-state">Listening</p>
+              <button class="text-btn" type="button" id="signal-pause" aria-pressed="false">Pause motion</button>
+            </div>
+            <div class="coach__copy">
+              <p>
+                The coach connects workouts, meals, recovery, and goals. A suggestion shows where it came from.
+                It does not diagnose, and it does not guess a calorie.
+              </p>
+              <ul class="states">
+                <li><strong>Listening</strong> after you say hey elvora</li>
+                <li><strong>Thinking</strong> while it reads your logs</li>
+                <li><strong>Speaking</strong> when the answer is ready</li>
+              </ul>
+              <ul class="plain">
+                <li>Uncertain photo and voice logs wait for you</li>
+                <li>Memory can be inspected, edited, and deleted</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="open" id="open" aria-labelledby="open-title">
+        <div>
+          <p class="kicker">Get Elvora</p>
+          <h2 id="open-title">The web app is open. No account required to look around.</h2>
+          <p>
+            iOS and Android live in the repository. Store pages appear after publishing.
+            Free, Plus, and Pro plans are planned; basic data access is never locked.
+          </p>
+        </div>
+        <div class="open__actions">
+          <a class="btn btn--fill" href="app/">Open the web app</a>
+          <a class="btn btn--ghost" href="https://github.com/Arnold-RG/nfl-bot">View the source</a>
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="foot">
-    <span>ELVORA</span>
-    <span>Say hey elvora</span>
+    <div class="wrap foot__grid">
+      <div>
+        <p class="foot__name">Elvora</p>
+        <p class="foot__note">Wellness guidance only — not medical advice, diagnosis, or treatment.</p>
+      </div>
+      <nav class="foot__nav" aria-label="Footer">
+        <a href="app/">Web app</a>
+        <a href="https://github.com/Arnold-RG/nfl-bot">Source</a>
+        <a href="privacy.html">Privacy</a>
+      </nav>
+      <p class="foot__place">ARNOVA Group, Kigali</p>
+    </div>
   </footer>
 
   <script src="assets/js/main.js"></script>

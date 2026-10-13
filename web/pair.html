@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090908">
   <title>Open Elvora</title>
   <style>
     body {
@@ -10,33 +11,46 @@
       min-height: 100vh;
       display: grid;
       place-items: center;
-      background: #05050f;
-      color: #e8eefc;
-      font-family: system-ui, sans-serif;
+      background: #090908;
+      color: #f6f1e8;
+      font-family: "Iowan Old Style", Palatino, Georgia, serif;
       text-align: center;
       padding: 24px;
     }
-    a {
-      color: #6c9bff;
-      font-weight: 700;
-    }
+    p { margin: 0.4rem 0; }
+    a { color: #e7d3ae; }
   </style>
   <script>
     (function () {
       var params = new URLSearchParams(window.location.search);
       var watch = params.get("watch") || params.get("pair") || "";
-      var origin = window.location.origin;
-      var next = watch
-        ? origin + "/?watch=" + encodeURIComponent(watch) + "#/watch"
-        : origin + "/";
-      window.location.replace(next);
+      var next = new URL("./", window.location.href);
+      if (watch) {
+        next.searchParams.set("watch", watch);
+        next.hash = "/watch";
+      }
+      window.location.replace(next.href);
     })();
   </script>
 </head>
 <body>
   <main>
     <p>Opening Elvora…</p>
-    <p><a href="/">Continue to the app</a></p>
+    <p><a id="continue" href="./">Continue to the app</a></p>
   </main>
+  <script>
+    (function () {
+      var link = document.getElementById("continue");
+      if (!link) return;
+      var params = new URLSearchParams(window.location.search);
+      var watch = params.get("watch") || params.get("pair") || "";
+      var next = new URL("./", window.location.href);
+      if (watch) {
+        next.searchParams.set("watch", watch);
+        next.hash = "/watch";
+      }
+      link.href = next.href;
+    })();
+  </script>
 </body>
 </html>

@@ -55,6 +55,33 @@ void main() {
     expect(WorldCountries.byIso('PL').currencyCode, 'PLN');
   });
 
+  test('pairing links keep the app directory, not just the host', () {
+    expect(
+      PairingLink.directoryOf(
+        Uri.parse('https://arnold-rg.github.io/nfl-bot/app/'),
+      ),
+      'https://arnold-rg.github.io/nfl-bot/app/',
+    );
+    expect(
+      PairingLink.directoryOf(
+        Uri.parse('https://arnold-rg.github.io/nfl-bot/app/index.html'),
+      ),
+      'https://arnold-rg.github.io/nfl-bot/app/',
+    );
+    expect(
+      PairingLink.directoryOf(
+        Uri.parse('https://arnold-rg.github.io/nfl-bot/app'),
+      ),
+      'https://arnold-rg.github.io/nfl-bot/app/',
+    );
+    expect(
+      PairingLink.directoryOf(
+        Uri.parse('http://192.168.0.107:8080/pair.html?watch=garmin-venu-3'),
+      ),
+      'http://192.168.0.107:8080/',
+    );
+  });
+
   test('pairing QR decodes http links and legacy nfbot schemes', () {
     expect(
       PairingLink.decode(

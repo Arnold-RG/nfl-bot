@@ -1,49 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="description" content="Elvora — premium AI fitness and nutrition. Say hey elvora to activate.">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Elvora — a personal trainer, nutritionist, and health dashboard. Say hey elvora.">
+  <meta name="theme-color" content="#090908">
+  <meta name="color-scheme" content="dark">
+  <meta property="og:title" content="Elvora">
+  <meta property="og:description" content="A personal trainer, a nutritionist, and the day you actually lived.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://arnold-rg.github.io/nfl-bot/app/">
+  <meta property="og:image" content="https://arnold-rg.github.io/nfl-bot/assets/og.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Elvora">
+  <meta name="twitter:description" content="A personal trainer, a nutritionist, and the day you actually lived.">
+  <meta name="twitter:image" content="https://arnold-rg.github.io/nfl-bot/assets/og.png">
 
-  <!-- iOS home-screen install (Add to Home Screen) -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Elvora">
-  <meta name="theme-color" content="#05070D">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
   <link rel="apple-touch-icon" sizes="512x512" href="icons/Icon-512.png">
-
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png">
 
   <title>Elvora</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    html, body { margin: 0; height: 100%; background: #090908; color: #f6f1e8; }
+    .boot {
+      min-height: 100%;
+      display: grid;
+      place-items: center;
+      font-family: "Iowan Old Style", Palatino, "Palatino Linotype", serif;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+    .boot span {
+      width: 2.5rem;
+      height: 1px;
+      margin: 0.9rem auto 0;
+      display: block;
+      background: #c6a36a;
+    }
+    @media (prefers-reduced-motion: no-preference) {
+      .boot span { animation: boot-line 1.8s ease-in-out infinite; }
+      @keyframes boot-line {
+        0%, 100% { opacity: 0.35; transform: scaleX(0.6); }
+        50% { opacity: 1; transform: scaleX(1); }
+      }
+    }
+  </style>
 </head>
 <body>
-  <!--
-    You can customize the "flutter_bootstrap.js" script.
-    This is useful to provide a custom configuration to the Flutter loader
-    or to give the user feedback during the initialization process.
-
-    For more details:
-    * https://docs.flutter.dev/platform-integration/web/initialization
-  -->
+  <div class="boot" id="elvora-boot">Elvora<span></span></div>
+  <script>
+    window.addEventListener("flutter-first-frame", function () {
+      var boot = document.getElementById("elvora-boot");
+      if (boot) boot.remove();
+    });
+  </script>
   <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>

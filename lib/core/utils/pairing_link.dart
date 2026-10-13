@@ -10,13 +10,37 @@ class PairingLink {
 
   /// Public URL encoded into the on-screen QR.
   static String encode({required String watchId}) {
-    final base = _publicOrigin();
-    return Uri.parse('$base/pair.html').replace(
+    return Uri.parse(_publicBase()).resolve('pair.html').replace(
       queryParameters: {
         'watch': watchId,
         'ts': DateTime.now().millisecondsSinceEpoch.toString(),
       },
     ).toString();
+  }
+
+  /// Directory of a web app URL, including a trailing slash.
+  ///
+  /// Pages serves the app under `/nfl-bot/app/`. Using only the origin
+  /// would send a scanned watch to the host root, where `pair.html` is not.
+  static String directoryOf(Uri uri) {
+    var path = uri.path;
+    if (path.endsWith('/index.html')) {
+      path = path.substring(0, path.length - 'index.html'.length);
+    }
+    if (path.isEmpty) path = '/';
+    if (!path.endsWith('/')) {
+      final slash = path.lastIndexOf('/');
+      final last = slash >= 0 ? path.substring(slash + 1) : path;
+      // A dotted segment is a file (index.html, pair.html). A bare
+      // directory such as `/nfl-bot/app` should keep its name.
+      if (last.contains('.')) {
+        path = slash <= 0 ? '/' : path.substring(0, slash + 1);
+      } else {
+        path = '$path/';
+      }
+    }
+    final text = uri.replace(path: path, query: '', fragment: '').toString();
+    return text.endsWith('/') ? text : '$text/';
   }
 
   /// Read a watch id from a scanned/pasted payload of any supported shape.
@@ -60,10 +84,10 @@ class PairingLink {
     return host == 'localhost' || host == '127.0.0.1' || host == '::1';
   }
 
-  static String _publicOrigin() {
+  static String _publicBase() {
     if (kIsWeb && Uri.base.host.isNotEmpty) {
-      return Uri.base.origin;
+      return directoryOf(Uri.base);
     }
-    return 'https://nfbot.app';
+    return 'https://nfbot.app/';
   }
 }

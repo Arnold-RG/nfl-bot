@@ -46,6 +46,7 @@ Elvora is not a calorie counter with extra screens. It is a connected health and
 |---|---|
 | **Marketing site** | https://arnold-rg.github.io/nfl-bot/ |
 | **Web app** | https://arnold-rg.github.io/nfl-bot/app/ |
+| **Privacy** | https://arnold-rg.github.io/nfl-bot/privacy.html |
 | **Source** | https://github.com/Arnold-RG/nfl-bot |
 
 ---
