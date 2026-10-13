@@ -39,8 +39,13 @@ class PairingLink {
         path = '$path/';
       }
     }
-    final text = uri.replace(path: path, query: '', fragment: '').toString();
-    return text.endsWith('/') ? text : '$text/';
+    return Uri(
+      scheme: uri.scheme,
+      userInfo: uri.userInfo,
+      host: uri.host,
+      port: uri.hasPort ? uri.port : null,
+      path: path,
+    ).toString();
   }
 
   /// Read a watch id from a scanned/pasted payload of any supported shape.

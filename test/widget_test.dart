@@ -20,7 +20,7 @@ void main() {
     );
 
     expect(state.userName, 'Alex');
-    expect(state.coach.name, 'NOVA');
+    expect(state.coach.name, 'Elvora');
     expect(state.caloriesConsumed, 0);
     expect(state.steps, 0);
   });
