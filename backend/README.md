@@ -69,4 +69,12 @@ backend/
 - Stub endpoints return JSON placeholders with `"meta": {"stub": true}`.  
 - `HealthProfile` is the canonical “central brain” schema.  
 - AI routes go through the orchestrator + safety helpers (no medical diagnosis).  
-- Free vs Pro: do not paywall core health data ownership — see billing entitlements stub.  
+- Free vs Pro: do not paywall core health data ownership — see billing entitlements stub.
+
+## Security
+
+- Never commit `.env`, API keys, or signing secrets. Copy from `.env.example` only.
+- CORS should allow the Flutter web origin and Creator SOC host you run locally — not `*`.
+- Health data is member-owned; export and delete paths must remain reachable without a paid plan.
+- AI / coaching responses are wellness guidance only — not diagnosis or treatment.
+- See root [`SECURITY.md`](../SECURITY.md) for vulnerability reporting.  

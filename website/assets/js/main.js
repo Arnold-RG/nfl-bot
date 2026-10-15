@@ -5,13 +5,23 @@
   const menu = document.querySelector(".menu");
   const greet = document.getElementById("greet");
 
+  if (window.ArnovaSecure) {
+    window.ArnovaSecure.hardenExternalLinks(document);
+    window.ArnovaSecure.initReveals(document);
+  }
+
   if (greet) {
     const hour = new Date().getHours();
-    greet.textContent = hour < 12
-      ? "Good morning"
-      : hour < 17
-        ? "Good afternoon"
-        : "Good evening";
+    window.ArnovaSecure
+      ? window.ArnovaSecure.text(
+          greet,
+          hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening",
+        )
+      : (greet.textContent = hour < 12
+          ? "Good morning"
+          : hour < 17
+            ? "Good afternoon"
+            : "Good evening");
   }
 
   const closeNav = () => {

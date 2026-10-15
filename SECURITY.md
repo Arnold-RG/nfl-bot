@@ -21,4 +21,6 @@ We aim to acknowledge reports within 7 days and publish a fix or mitigation when
 - No secrets in source; use `.env.example` only
 - Prefer `textContent` over `innerHTML` for untrusted data
 - External links use `rel="noopener noreferrer"`
+- Flutter + FastAPI: member health data ownership, least-privilege Actions, no invented vitals
+- Marketing site (`website/`) is static — no tokens baked into Pages
 - Dependabot / Actions least privilege where applicable
