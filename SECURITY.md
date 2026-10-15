@@ -1,22 +1,24 @@
 # Security Policy
 
 ## Supported versions
-The `main` branch of [Arnold-RG/nfl-bot](https://github.com/Arnold-RG/nfl-bot) is the supported line for fixes.
+
+Security updates apply to the latest commit on the default branch of this repository.
 
 ## Reporting a vulnerability
-Please **do not** open a public issue for security-sensitive reports.
 
-Contact the maintainer privately via GitHub: https://github.com/Arnold-RG
+Email **rurangwaarnold32@gmail.com** with:
 
-Include:
-- Description of the issue
-- Steps to reproduce
-- Impact assessment (if known)
+- Repository name and affected URL/path
+- Description and impact
+- Steps to reproduce (proof of concept if available)
 
-## Secrets
-Never commit:
-- Android signing keys / `key.properties`
-- Cloud API keys
-- OAuth client secrets
+Please do **not** open a public issue for unpatched vulnerabilities.
 
-If a secret is accidentally committed, rotate it immediately and contact the maintainer.
+We aim to acknowledge reports within 7 days and publish a fix or mitigation when confirmed.
+
+## Practice
+
+- No secrets in source; use `.env.example` only
+- Prefer `textContent` over `innerHTML` for untrusted data
+- External links use `rel="noopener noreferrer"`
+- Dependabot / Actions least privilege where applicable
