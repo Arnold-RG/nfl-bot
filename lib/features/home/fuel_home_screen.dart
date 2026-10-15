@@ -94,19 +94,24 @@ class _FuelHomeScreenState extends State<FuelHomeScreen>
                               Text(
                                 'ELVORA',
                                 style: theme.textTheme.labelMedium?.copyWith(
-                                  color: AppTheme.bronze,
-                                  letterSpacing: 1.4,
+                                  color: AppTheme.ember,
+                                  letterSpacing: 2.2,
+                                  fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              const SizedBox(height: 6),
+                              const SizedBox(height: 8),
                               Text(
                                 '${_greeting()},',
-                                style: theme.textTheme.bodyMedium,
+                                style: theme.textTheme.bodyMedium?.copyWith(
+                                  color: AppTheme.labMuted,
+                                ),
                               ),
+                              const SizedBox(height: 2),
                               Text(
                                 name,
                                 style: theme.textTheme.displaySmall?.copyWith(
-                                  color: AppTheme.labInk,
+                                  color: AppTheme.sand,
+                                  height: 1.05,
                                 ),
                               ),
                             ],
@@ -123,11 +128,13 @@ class _FuelHomeScreenState extends State<FuelHomeScreen>
                           },
                           style: IconButton.styleFrom(
                             backgroundColor: AppTheme.labCard,
-                            side: const BorderSide(color: AppTheme.labBorder),
+                            side: BorderSide(
+                              color: AppTheme.ember.withValues(alpha: 0.28),
+                            ),
                           ),
                           icon: const Icon(
                             Icons.person_outline_rounded,
-                            color: AppTheme.labMuted,
+                            color: AppTheme.sand,
                             size: 20,
                           ),
                         ),
@@ -305,17 +312,36 @@ class _CoachHero extends StatelessWidget {
     final theme = Theme.of(context);
     return NfGlassCard(
       onTap: onTap,
-      padding: const EdgeInsets.fromLTRB(16, 14, 16, 14),
+      padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
+      gradient: LinearGradient(
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+        colors: [
+          AppTheme.labLift,
+          AppTheme.labCard,
+          AppTheme.ember.withValues(alpha: 0.12),
+        ],
+      ),
       child: Row(
         children: [
           AnimatedBuilder(
             animation: pulse,
             builder: (context, _) {
-              return CoachMark(
-                size: 64,
-                state: VoiceOrbState.listening,
-                pulse: pulse.value * 0.28,
-                showGlow: false,
+              return Stack(
+                alignment: Alignment.center,
+                children: [
+                  NfPulseRing(
+                    size: 76,
+                    color: AppTheme.ember,
+                    progress: pulse.value,
+                  ),
+                  CoachMark(
+                    size: 64,
+                    state: VoiceOrbState.listening,
+                    pulse: pulse.value * 0.34,
+                    showGlow: true,
+                  ),
+                ],
               );
             },
           ),
@@ -327,7 +353,7 @@ class _CoachHero extends StatelessWidget {
                 Text(
                   'Talk to coach',
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: AppTheme.labInk,
+                    color: AppTheme.sand,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -338,9 +364,9 @@ class _CoachHero extends StatelessWidget {
               ],
             ),
           ),
-          const Icon(
+          Icon(
             Icons.graphic_eq_rounded,
-            color: AppTheme.bronze,
+            color: AppTheme.ember.withValues(alpha: 0.9),
             size: 22,
           ),
         ],

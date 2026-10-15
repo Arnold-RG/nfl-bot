@@ -50,9 +50,12 @@
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (!reduceMotion && "IntersectionObserver" in window) {
-    const rises = Array.from(document.querySelectorAll(".rule, .block, .open"));
+    const rises = Array.from(document.querySelectorAll(".rule, .block, .open, .ledger li"));
     const reveal = (el) => el.classList.add("is-in");
-    rises.forEach((el) => el.classList.add("rise"));
+    rises.forEach((el, i) => {
+      el.classList.add("rise");
+      el.style.setProperty("--rise-delay", `${Math.min(i % 6, 5) * 70}ms`);
+    });
     const visibleNow = (el) => {
       const box = el.getBoundingClientRect();
       return box.top < window.innerHeight * 0.92 && box.bottom > 0;
@@ -68,7 +71,21 @@
       if (visibleNow(el)) reveal(el);
       else observer.observe(el);
     });
-    window.setTimeout(() => rises.forEach(reveal), 1600);
+    window.setTimeout(() => rises.forEach(reveal), 1800);
+  }
+
+  /* Parallax ember wash on hero specimen */
+  const specimen = document.querySelector(".specimen__screen");
+  if (specimen && !reduceMotion) {
+    window.addEventListener(
+      "pointermove",
+      (event) => {
+        const x = (event.clientX / window.innerWidth - 0.5) * 8;
+        const y = (event.clientY / window.innerHeight - 0.5) * 8;
+        specimen.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+      },
+      { passive: true },
+    );
   }
 
   const signal = document.getElementById("signal");

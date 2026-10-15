@@ -26,7 +26,7 @@ class NfLayout {
   }
 }
 
-/// Quiet elevated panel — flat, bordered, no heavy glass blur.
+/// Quiet elevated panel — warm clay surface with ember edge light.
 class NfGlassCard extends StatelessWidget {
   final Widget child;
   final EdgeInsetsGeometry padding;
@@ -49,9 +49,25 @@ class NfGlassCard extends StatelessWidget {
       padding: padding,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        border: Border.all(color: AppTheme.labBorder),
-        color: gradient == null ? (color ?? AppTheme.labCard) : null,
-        gradient: gradient,
+        border: Border.all(
+          color: AppTheme.bronze.withValues(alpha: 0.22),
+        ),
+        gradient: gradient ??
+            LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                color ?? AppTheme.labCard,
+                AppTheme.labLift,
+              ],
+            ),
+        boxShadow: [
+          BoxShadow(
+            color: AppTheme.bronze.withValues(alpha: 0.06),
+            blurRadius: 28,
+            offset: const Offset(0, 12),
+          ),
+        ],
       ),
       child: child,
     );
@@ -62,15 +78,15 @@ class NfGlassCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(AppTheme.radiusMd),
-        splashColor: AppTheme.bronze.withValues(alpha: 0.08),
-        highlightColor: AppTheme.bronze.withValues(alpha: 0.04),
+        splashColor: AppTheme.bronze.withValues(alpha: 0.12),
+        highlightColor: AppTheme.bronze.withValues(alpha: 0.06),
         child: body,
       ),
     );
   }
 }
 
-/// Soft ambient wash behind hero surfaces — restrained, not neon.
+/// Soft ambient wash — ember glow on warm clay.
 class NfAmbientBackdrop extends StatelessWidget {
   final Widget child;
 
@@ -83,14 +99,19 @@ class NfAmbientBackdrop extends StatelessWidget {
       children: [
         const ColoredBox(color: AppTheme.labBg),
         Positioned(
-          top: -120,
-          right: -40,
-          child: _blob(AppTheme.bronze.withValues(alpha: 0.07), 280),
+          top: -140,
+          right: -60,
+          child: _blob(AppTheme.ember.withValues(alpha: 0.14), 320),
         ),
         Positioned(
-          bottom: 80,
-          left: -100,
-          child: _blob(AppTheme.copper.withValues(alpha: 0.05), 300),
+          bottom: 40,
+          left: -120,
+          child: _blob(AppTheme.copper.withValues(alpha: 0.09), 340),
+        ),
+        Positioned(
+          top: MediaQuery.sizeOf(context).height * 0.35,
+          left: MediaQuery.sizeOf(context).width * 0.4,
+          child: _blob(AppTheme.sand.withValues(alpha: 0.03), 180),
         ),
         child,
       ],
@@ -106,7 +127,7 @@ class NfAmbientBackdrop extends StatelessWidget {
           shape: BoxShape.circle,
           color: color,
           boxShadow: [
-            BoxShadow(color: color, blurRadius: 100, spreadRadius: 24),
+            BoxShadow(color: color, blurRadius: 120, spreadRadius: 28),
           ],
         ),
       ),
@@ -274,7 +295,7 @@ class NfGroup extends StatelessWidget {
   }
 }
 
-/// Entrance fade + slide for list sections.
+/// Entrance fade + slide for list sections (respects reduce-motion).
 class NfReveal extends StatefulWidget {
   final Widget child;
   final int delayMs;
@@ -294,7 +315,7 @@ class _NfRevealState extends State<NfReveal>
     super.initState();
     _c = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 420),
+      duration: const Duration(milliseconds: 560),
     );
     Future.delayed(Duration(milliseconds: widget.delayMs), () {
       if (!mounted) return;
@@ -329,8 +350,12 @@ class _NfRevealState extends State<NfReveal>
         return Opacity(
           opacity: t,
           child: Transform.translate(
-            offset: Offset(0, (1 - t) * 12),
-            child: widget.child,
+            offset: Offset(0, (1 - t) * 18),
+            child: Transform.scale(
+              scale: 0.97 + (0.03 * t),
+              alignment: Alignment.topCenter,
+              child: widget.child,
+            ),
           ),
         );
       },

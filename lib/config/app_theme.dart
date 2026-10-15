@@ -2,27 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-/// Elvora — calm charcoal + warm bronze. One accent, clear hierarchy.
+/// Elvora — warm clay ground, ember orange accent, sand ink.
+/// Fitness / nutrition palette (not purple).
 class AppTheme {
-  // Surfaces — near-black charcoal, not muddy brown
-  static const Color labBg = Color(0xFF0C0C0B);
-  static const Color labCard = Color(0xFF161614);
-  static const Color labLift = Color(0xFF1C1C1A);
-  static const Color labInk = Color(0xFFF4F1EC);
-  static const Color labMuted = Color(0xFF8A857C);
-  static const Color labBorder = Color(0xFF2A2926);
+  // Surfaces — warm clay
+  static const Color labBg = Color(0xFF1A120C);
+  static const Color labCard = Color(0xFF241A12);
+  static const Color labLift = Color(0xFF2E2116);
+  static const Color labInk = Color(0xFFF3D9B1);
+  static const Color labMuted = Color(0xFFB89A78);
+  static const Color labBorder = Color(0xFF3D2C1E);
 
-  // Brand — warm bronze, used sparingly
-  static const Color bronze = Color(0xFFC4A484);
-  static const Color bronzeDeep = Color(0xFF9A7A58);
-  static const Color bronzeSoft = Color(0xFFD9C4A8);
-  static const Color copper = Color(0xFFC9966A);
+  // Brand — ember + sand
+  static const Color bronze = Color(0xFFE08A45);
+  static const Color bronzeDeep = Color(0xFFC46A2E);
+  static const Color bronzeSoft = Color(0xFFF3D9B1);
+  static const Color copper = Color(0xFFE8A06A);
+  static const Color sand = Color(0xFFF3D9B1);
+  static const Color clay = Color(0xFF1A120C);
+  static const Color ember = Color(0xFFE08A45);
 
-  // Functional accents
-  static const Color labWater = Color(0xFF7A9EAE);
-  static const Color labMuscle = Color(0xFF6BA3E0);
-  static const Color labOrange = bronze;
-  static const Color labGreen = Color(0xFF8FA876);
+  // Functional accents (warm-adjacent, still readable)
+  static const Color labWater = Color(0xFF7BA8B8);
+  static const Color labMuscle = Color(0xFFE08A45);
+  static const Color labOrange = ember;
+  static const Color labGreen = Color(0xFF9BB87A);
   static const Color labBlue = bronzeDeep;
   static const Color labPink = copper;
 
@@ -54,7 +58,7 @@ class AppTheme {
 
   static const Color successColor = labGreen;
   static const Color warningColor = copper;
-  static const Color errorColor = Color(0xFFD96B5F);
+  static const Color errorColor = Color(0xFFE07A6A);
 
   static const Color darkBg = navy;
   static const Color darkSurface = navyLift;
@@ -67,27 +71,31 @@ class AppTheme {
   static const Color magenta = copper;
   static const Color mist = labMuted;
 
-  static const double radiusSm = 12;
-  static const double radiusMd = 16;
-  static const double radiusLg = 20;
+  static const double radiusSm = 14;
+  static const double radiusMd = 18;
+  static const double radiusLg = 24;
 
   static TextTheme _textTheme(Brightness brightness) {
     final base = labInk;
     final muted = labMuted;
-    final display = GoogleFonts.outfit(
+    final display = GoogleFonts.syne(
       color: base,
-      fontWeight: FontWeight.w600,
-      letterSpacing: -0.6,
-      height: 1.15,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.7,
+      height: 1.12,
     );
-    final body = GoogleFonts.inter(color: base, height: 1.45, letterSpacing: -0.1);
+    final body = GoogleFonts.dmSans(
+      color: base,
+      height: 1.45,
+      letterSpacing: -0.1,
+    );
 
     return TextTheme(
-      displayLarge: display.copyWith(fontSize: 36, fontWeight: FontWeight.w700),
-      displayMedium: display.copyWith(fontSize: 30, fontWeight: FontWeight.w700),
-      displaySmall: display.copyWith(fontSize: 26, fontWeight: FontWeight.w600),
-      headlineMedium: display.copyWith(fontSize: 22, fontWeight: FontWeight.w600),
-      titleLarge: display.copyWith(fontSize: 18, fontWeight: FontWeight.w600),
+      displayLarge: display.copyWith(fontSize: 36, fontWeight: FontWeight.w800),
+      displayMedium: display.copyWith(fontSize: 30, fontWeight: FontWeight.w800),
+      displaySmall: display.copyWith(fontSize: 26, fontWeight: FontWeight.w700),
+      headlineMedium: display.copyWith(fontSize: 22, fontWeight: FontWeight.w700),
+      titleLarge: display.copyWith(fontSize: 18, fontWeight: FontWeight.w700),
       titleMedium: body.copyWith(fontSize: 16, fontWeight: FontWeight.w600),
       titleSmall: body.copyWith(fontSize: 14, fontWeight: FontWeight.w600),
       bodyLarge: body.copyWith(fontSize: 16),
@@ -102,7 +110,7 @@ class AppTheme {
       labelMedium: body.copyWith(
         fontSize: 11,
         fontWeight: FontWeight.w600,
-        letterSpacing: 0.6,
+        letterSpacing: 0.8,
         color: muted,
       ),
     );
@@ -136,9 +144,9 @@ class AppTheme {
         scrolledUnderElevation: 0,
         foregroundColor: labInk,
         systemOverlayStyle: SystemUiOverlayStyle.light,
-        titleTextStyle: GoogleFonts.outfit(
+        titleTextStyle: GoogleFonts.syne(
           fontSize: 18,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
           color: labInk,
           letterSpacing: -0.3,
         ),
@@ -157,10 +165,10 @@ class AppTheme {
           backgroundColor: bronze,
           foregroundColor: labBg,
           elevation: 0,
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          textStyle: GoogleFonts.inter(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+          textStyle: GoogleFonts.dmSans(
             fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
             letterSpacing: -0.1,
           ),
           shape: RoundedRectangleBorder(
@@ -172,10 +180,10 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: labInk,
           side: const BorderSide(color: labBorder),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 14),
-          textStyle: GoogleFonts.inter(
+          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 15),
+          textStyle: GoogleFonts.dmSans(
             fontSize: 14,
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
             letterSpacing: -0.1,
           ),
           shape: RoundedRectangleBorder(
@@ -186,33 +194,33 @@ class AppTheme {
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: bronzeSoft,
-          textStyle: GoogleFonts.inter(
+          textStyle: GoogleFonts.dmSans(
             fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
           ),
         ),
       ),
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: labCard,
+        backgroundColor: labCard.withValues(alpha: 0.96),
         elevation: 0,
-        height: 68,
-        indicatorColor: bronze.withValues(alpha: 0.16),
+        height: 70,
+        indicatorColor: bronze.withValues(alpha: 0.18),
         overlayColor: WidgetStatePropertyAll(
-          bronze.withValues(alpha: 0.06),
+          bronze.withValues(alpha: 0.08),
         ),
         labelTextStyle: WidgetStateProperty.resolveWith((states) {
           final on = states.contains(WidgetState.selected);
-          return GoogleFonts.inter(
+          return GoogleFonts.dmSans(
             color: on ? bronzeSoft : labMuted,
             fontSize: 11,
-            fontWeight: on ? FontWeight.w600 : FontWeight.w500,
+            fontWeight: on ? FontWeight.w700 : FontWeight.w500,
             letterSpacing: -0.1,
           );
         }),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           final on = states.contains(WidgetState.selected);
           return IconThemeData(
-            color: on ? bronzeSoft : labMuted,
+            color: on ? bronze : labMuted,
             size: 22,
           );
         }),
@@ -231,7 +239,7 @@ class AppTheme {
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(radiusSm),
-          borderSide: const BorderSide(color: bronze, width: 1.2),
+          borderSide: const BorderSide(color: bronze, width: 1.4),
         ),
       ),
       listTileTheme: ListTileThemeData(
