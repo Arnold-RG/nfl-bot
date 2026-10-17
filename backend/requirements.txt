@@ -1,5 +1,7 @@
-fastapi==0.115.0
+fastapi==0.143.3
+# FastAPI 0.143.3 allows starlette>=0.46.0, which still includes advisory versions.
+starlette==1.8.0
 uvicorn[standard]==0.30.6
 pydantic==2.9.2
 pydantic-settings==2.5.2
-python-dotenv==1.0.1
+python-dotenv==1.2.4
