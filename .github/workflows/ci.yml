@@ -19,3 +19,19 @@ jobs:
         run: cp lib/config/local_secrets.example.dart lib/config/local_secrets.dart
       - run: flutter analyze --no-fatal-infos
       - run: flutter test
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version-file: .python-version
+          cache: pip
+          cache-dependency-path: |
+            backend/requirements.txt
+            backend/requirements-dev.txt
+      - name: Install backend dependencies
+        run: pip install -r backend/requirements.txt -r backend/requirements-dev.txt
+      - name: Run backend tests
+        run: pytest backend/tests
